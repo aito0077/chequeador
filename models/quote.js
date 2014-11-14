@@ -1,5 +1,6 @@
 var Quote,
     Quotes,
+    Category = require('./category').Category,
     _              = require('underscore'),
     Persistence    = require('./base');
 
@@ -26,9 +27,20 @@ Quote = Persistence.Model.extend({
     }
 }, {
 
+    read: function () {
+        return this.findOne.apply(this, arguments, {
+            withRelated: ['category']
+        });
+    },
+
     checkup: function () {
         return this.belongsTo(Checkup);
+    },
+
+    category: function() {
+        return this.belongsTo(Category, 'category_id');
     }
+
 
 
 });

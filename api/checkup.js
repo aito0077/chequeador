@@ -9,7 +9,10 @@ checkups = {
     browse: function browse(options) {
 
         debug("browse");
-        return persistence.Checkup.browse(options).then(function (result) {
+        var fetch_options = _.extend(options, {
+            withRelated: ['quote']
+        });
+        return persistence.Checkup.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
 
@@ -27,7 +30,9 @@ checkups = {
     },
 
     read: function read(args) {
-        return persistence.Checkup.read(args).then(function (result) {
+        return persistence.Checkup.read(args, {
+            withRelated: ['quote']
+        }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;

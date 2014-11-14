@@ -1,7 +1,8 @@
 var Checkup,
     Checkups,
-    _              = require('underscore'),
-    Persistence    = require('./base');
+    _ = require('underscore'),
+    Quote = require('./quote').Quote,
+    Persistence = require('./base');
 
 
 Checkup = Persistence.Model.extend({
@@ -13,9 +14,8 @@ Checkup = Persistence.Model.extend({
     ],
 
     quote: function() {
-        return this.hasOne(Quote, 'id');
-    }
-
+        return this.hasOne(Quote, 'checkup_id');
+    },
 
     validate: function () {
         return true;
@@ -31,7 +31,6 @@ Checkup = Persistence.Model.extend({
     }
 }, {
 
-    
 
 });
 
