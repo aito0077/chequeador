@@ -9,9 +9,7 @@ Quote = Persistence.Model.extend({
 
     tableName: 'Quote',
 
-    permittedAttributes: [
-
-    ],
+    permittedAttributes: ['category'],
 
     validate: function () {
         return true;
@@ -28,9 +26,7 @@ Quote = Persistence.Model.extend({
 }, {
 
     read: function () {
-        return this.findOne.apply(this, arguments, {
-            withRelated: ['category']
-        });
+        return this.findOne.apply(this, arguments);
     },
 
     checkup: function () {

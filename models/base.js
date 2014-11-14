@@ -18,6 +18,9 @@ Persistence.Model = Persistence.Model.extend({
 
         hasTimestamps: true,
 
+        permittedAttributes: [],
+
+
         defaults: function () {
             return {
             };
@@ -37,7 +40,6 @@ Persistence.Model = Persistence.Model.extend({
 
         saving: function () {
             this.attributes = this.pick(this.permittedAttributes);
-
         },
 
         fixDates: function (attrs) {
@@ -89,16 +91,17 @@ Persistence.Model = Persistence.Model.extend({
     },
 
     browse: function () {
-        return this.findAll.apply(this, arguments);
+        return this.findAll.apply(this, arguments );
     },
 
     findOne: function (args, options) {
         options = options || {};
+            
         return this.forge(args).fetch(options);
     },
 
     read: function () {
-        return this.findOne.apply(this, arguments);
+        return this.findOne.apply(this, arguments, {withRelated: this.populateWithRelations});
     },
 
     edit: function (editedObj, options) {

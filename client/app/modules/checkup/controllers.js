@@ -17,7 +17,42 @@ angular.module('checkupModule.controllers',[])
 
 .controller('CheckupViewController',function($scope,$stateParams,Checkup){
 
-    $scope.checkup=Checkup.get({id:$stateParams.id});
+    $scope.checkup=Checkup.get({id:1});
+
+    $scope.phases = [
+        {
+            id: 'creation',
+            title: 'Creación',
+            order: 'one',
+            icon: 'exclamation-sign'
+        },
+        {
+            id: 'sources',
+            title: 'Fuentes',
+            order: 'two',
+            icon: 'question-sign'
+        },
+        {
+            id: 'context',
+            title: 'Contexto',
+            order: 'three',
+            icon: 'info-sign'
+        },
+        {
+            id: 'qualification',
+            title: 'Calificación',
+            order: 'four',
+            icon: 'ok-sign'
+        }
+    ];
+
+    $scope.current_phase = $scope.phases[0];
+    
+    $scope.activePhase = function(phase) {
+        $scope.current_phase = _.find($scope.phases, function(phase_item) {
+            return phase_item.id == phase;
+        });
+    };
 
 })
 

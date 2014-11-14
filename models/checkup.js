@@ -2,6 +2,8 @@ var Checkup,
     Checkups,
     _ = require('underscore'),
     Quote = require('./quote').Quote,
+    Source = require('./source').Source,
+    Context = require('./context').Context,
     Persistence = require('./base');
 
 
@@ -15,6 +17,14 @@ Checkup = Persistence.Model.extend({
 
     quote: function() {
         return this.hasOne(Quote, 'checkup_id');
+    },
+
+    sources: function() {
+        return this.hasMany(Source, 'checkup_id');
+    },
+
+    contexts: function() {
+        return this.hasMany(Context, 'checkup_id');
     },
 
     validate: function () {
