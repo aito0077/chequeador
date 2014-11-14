@@ -33,8 +33,8 @@ DROP TABLE IF EXISTS `Checkup`;
         
 CREATE TABLE `Checkup` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(30) NULL,
-  `phase` VARCHAR(30) NULL,
+  `status` ENUM('OPEN', 'CLOSED', 'REMOVED'),
+  `phase` ENUM('CREATION', 'SOURCES', 'CONTEXT', 'QUALIFICATION'),
   `fork_from` INTEGER NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `created_by` VARCHAR(30) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `Quote` (
   `checkup_id` INTEGER NOT NULL,
   `text` MEDIUMTEXT NOT NULL,
   `author` INTEGER NOT NULL,
-  `where` MEDIUMTEXT NOT NULL,
+  `_where` MEDIUMTEXT NOT NULL,
   `when` DATE NULL,
   `category_id` INTEGER NULL,
   `rate` INTEGER NULL,
@@ -73,7 +73,7 @@ CREATE TABLE `Source` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `checkup_id` INTEGER NULL,
   `source_entity_id` INTEGER NULL,
-  `type` INTEGER NULL,
+  `type` INTEGER NOT NULL DEFAULT 0,
   `what` MEDIUMTEXT NULL,
   `checked` BIT DEFAULT 0,
   `observation` MEDIUMTEXT NULL,
@@ -272,6 +272,7 @@ DROP TABLE IF EXISTS `Score`;
         
 CREATE TABLE `Score` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `qualification` INTEGER NOT NULL DEFAULT 0,
   `code` VARCHAR(30) NULL,
   `description` VARCHAR(60) NULL,
   `created_by` VARCHAR(30) NOT NULL,
@@ -366,6 +367,7 @@ ALTER TABLE `Entity_Relation` ADD FOREIGN KEY (entity_id_to) REFERENCES `Entity`
 ALTER TABLE `Entity_Relation` ADD FOREIGN KEY (type) REFERENCES `Relation_Type` (`id`);
 ALTER TABLE `Action` ADD FOREIGN KEY (type) REFERENCES `Action_Type` (`id`);
 ALTER TABLE `Comment` ADD FOREIGN KEY (input_id) REFERENCES `Input` (`id`);
+ALTER TABLE `Score` ADD FOREIGN KEY (qualification) REFERENCES `Qualification` (`id`);
 
 -- ---
 -- Table Properties
@@ -396,44 +398,59 @@ ALTER TABLE `Comment` ADD FOREIGN KEY (input_id) REFERENCES `Input` (`id`);
 -- Test Data
 -- ---
 
--- INSERT INTO `Checkup` (`id`,`status`,`phase`,`fork_from`) VALUES
--- ('','','','');
--- INSERT INTO `Rates` (`id`,`checkup_id`,`user_id`,`qualification`,`score`) VALUES
--- ('','','','','');
--- INSERT INTO `Entity` (`id`,`name`,`description`,`type`) VALUES
--- ('','','','');
--- INSERT INTO `Source` (`id`,`checkup_id`,`source_entity_id`,`type`,`what`,`checked`,`observation`) VALUES
--- ('','','','','','','');
--- INSERT INTO `Checkup_User` (`user_id`,`checkup_id`,`role_id`) VALUES
--- ('','','');
--- INSERT INTO `Quote` (`id`,`checkup_id`,`text`,`author`,`where`,`when`,`category_id`,`rate`) VALUES
--- ('','','','','','','','');
--- INSERT INTO `User` (`id`,`provider`,`provider_id`,`mail`,`picture`) VALUES
--- ('','','','','');
--- INSERT INTO `Context` (`id`,`checkup_id`,`body`,`tags`) VALUES
--- ('','','','');
--- INSERT INTO `Source_Type` (`id`) VALUES
--- ('');
--- INSERT INTO `Entity_Type` (`id`) VALUES
--- ('');
--- INSERT INTO `Qualification` (`id`) VALUES
--- ('');
--- INSERT INTO `Score` (`id`) VALUES
--- ('');
+INSERT INTO `Entity_Type` (`code`, `description`) VALUES ('PART', 'Particular');
+INSERT INTO `Entity_Type` (`code`, `description`) VALUES ('INST', 'Institucion');
+INSERT INTO `Entity_Type` (`code`, `description`) VALUES ('MEDI', 'Medio');
+INSERT INTO `Entity_Type` (`code`, `description`) VALUES ('GOBI', 'Gobierno');
+
+INSERT INTO `Source_Type` (`code`, `description`) VALUES ('ORI', 'Original');
+INSERT INTO `Source_Type` (`code`, `description`) VALUES ('OFI', 'Oficial');
+INSERT INTO `Source_Type` (`code`, `description`) VALUES ('ALT', 'Alternativa');
+
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('TRU', '100% Verdadero');
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('FAL', 'Cualquiera');
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('NTR', 'Parcialmente Verdadera');
+
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (1, 'TRU', 'Verdadero');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (2, 'INS', 'Insostenible');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (2, 'FAL', 'Falso');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'VPE', 'Verdadero Pero');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'ENG', 'Engañoso');
+
+INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('TRA', 'Trabaja en');
+INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('AFI', 'Afiliado a');
+
+INSERT INTO `Role_Type` (`code`, `description`) VALUES ('ADM', 'Administrador');
+INSERT INTO `Role_Type` (`code`, `description`) VALUES ('COL', 'Colaborador');
+
+INSERT INTO `Category` (`code`, `description`) VALUES ('POL', 'Politica');
+INSERT INTO `Category` (`code`, `description`) VALUES ('CIE', 'Ciencia');
+INSERT INTO `Category` (`code`, `description`) VALUES ('MED', 'Medio');
+
+INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kierkegaard','aito0077@gmail.com','');
+
+INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
+
+INSERT INTO `Checkup` (`status`,`phase`,`created_by`) VALUES ('OPEN','CREATION','aito' );
+
+INSERT INTO `Quote` (`checkup_id`,`text`,`author`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
+
+-- INSERT INTO `Rates` (`checkup_id`,`user_id`,`qualification`,`score`) VALUES ('','','','','');
+-- INSERT INTO `Source` (`checkup_id`,`source_entity_id`,`type`,`what`,`checked`,`observation`) VALUES ('','','','','','','');
+-- INSERT INTO `Checkup_User` (`user_id`,`checkup_id`,`role_id`) VALUES ('','','');
+-- INSERT INTO `Context` (`checkup_id`,`body`,`tags`) VALUES ('','','','');
+
+
+
+-- INSERT INTO `Action_Type` (`code`, `description`) VALUES ('', '');
+
+
 -- INSERT INTO `Entity_Relation` (`entity_id_from`,`entity_id_to`,`type`) VALUES
 -- ('','','');
 -- INSERT INTO `Action` (`id`,`made_by`,`type`,`on`) VALUES
 -- ('','','','');
--- INSERT INTO `Relation_Type` (`id`) VALUES
--- ('');
--- INSERT INTO `Action_Type` (`id`) VALUES
--- ('');
--- INSERT INTO `Role_Type` (`id`) VALUES
--- ('');
 -- INSERT INTO `Comment` (`id`,`input_id`) VALUES
 -- ('','');
--- INSERT INTO `Category` (`id`) VALUES
--- ('');
 -- INSERT INTO `Input` (`id`,`type`,`refers_to`,`text`) VALUES
 -- ('','','','');
 

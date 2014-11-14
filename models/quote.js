@@ -26,6 +26,11 @@ Quote = Persistence.Model.extend({
     }
 }, {
 
+    checkup: function () {
+        return this.belongsTo(Checkup);
+    }
+
+
 });
 
 Quotes = Persistence.Collection.extend({

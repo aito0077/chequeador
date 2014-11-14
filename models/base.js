@@ -20,7 +20,6 @@ Persistence.Model = Persistence.Model.extend({
 
         defaults: function () {
             return {
-                uuid: uuid.v4()
             };
         },
 
@@ -39,7 +38,6 @@ Persistence.Model = Persistence.Model.extend({
         saving: function () {
             this.attributes = this.pick(this.permittedAttributes);
 
-            this.set('updated_by', 1);
         },
 
         fixDates: function (attrs) {

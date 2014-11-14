@@ -1,4 +1,5 @@
 var _ = require('underscore'),
+    debug = require('debug')('chequeador'),
     users = require('./users'),
     action = require('./action'),
     actionType = require('./actionType'),
@@ -29,13 +30,15 @@ requestHandler = function (apiMethod) {
             apiContext = {
                 user: req.session && req.session.user
             };
+        debug(options);
 
         return apiMethod.call(apiContext, options).then(function (result) {
             res.json(result || {});
         }, function (error) {
+            debug(error);
             var errorCode = error.errorCode || 500,
                 errorMsg = {error: _.isString(error) ? error : (_.isObject(error) ? error.message : 'Unknown API Error')};
-            res.json(errorCode, errorMsg);
+            res.status(errorCode).json(errorMsg)
         });
     };
 };

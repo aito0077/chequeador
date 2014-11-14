@@ -12,6 +12,11 @@ Checkup = Persistence.Model.extend({
 
     ],
 
+    quote: function() {
+        return this.hasOne(Quote, 'id');
+    }
+
+
     validate: function () {
         return true;
     },
@@ -25,6 +30,8 @@ Checkup = Persistence.Model.extend({
         return Persistence.Model.prototype.saving.apply(this, arguments);
     }
 }, {
+
+    
 
 });
 

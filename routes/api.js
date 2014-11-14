@@ -33,6 +33,7 @@ router.put('/categories/:id/', authAPI, api.requestHandler(api.categories.edit))
 router.get('/checkups/', authAPI, api.requestHandler(api.checkups.browse));
 router.get('/checkups/:id/', authAPI, api.requestHandler(api.checkups.read));
 router.put('/checkups/:id/', authAPI, api.requestHandler(api.checkups.edit));
+router.post('/checkups/', authAPI, api.requestHandler(api.checkups.add));
 
 router.get('/checkup-users/', authAPI, api.requestHandler(api.checkupUsers.browse));
 router.get('/checkup-users/:id/', authAPI, api.requestHandler(api.checkupUsers.read));
