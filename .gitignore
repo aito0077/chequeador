@@ -1,0 +1,8 @@
+node_modules
+client/app/bower_components
+*.swp
+config/keys.json
+config/config.json
+public/uploads/*
+
+*.leo
