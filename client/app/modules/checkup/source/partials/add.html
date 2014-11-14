@@ -1,0 +1,71 @@
+<div class="container" ng-controller="SourceCreateController" >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name"> Frase </label>
+                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Qué frase textual chequearías?"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                               Autor</label>
+                            <input type="text" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                Dónde</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="email" placeholder="Dónde la dijo?" required="required" /></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">
+                                Tema</label>
+                            <select id="subject" name="subject" class="form-control" required="required">
+                                <option value="politica">Politica</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                Valorar</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="email" placeholder="" required="required" /></div>
+                        </div>
+                    </div>
+ 
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> No es ni opinión, ni proyección y contiene datos contrastables
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                            Iniciar Chequeo</button>
+                    </div>
+ 
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+            <legend><span class="glyphicon glyphicon-bullhorn"></span> Fuente</legend>
+            <address>
+                Seleccionada la afirmación, se consulta a quien la dijo para conocer la fuente original del dato utilizado. Si se accede a ella en forma directa, se consulta a otras fuentes para corroborar su validez y explicar su relevancia e impacto. De no resultar ello posible, el chequeo se hace por vías alternativas: documentos (informes, análisis o recopilaciones estadísticas, públicas y privadas) y entrevistas a especialistas. En caso de que alguno mantenga una filiación partidaria conocida ella es mencionada. 
+            </address>
+            </form>
+        </div>
+    </div>
+</div>
+

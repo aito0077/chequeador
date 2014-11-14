@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+      <ul class="thumbnails list-unstyled">
+        <li class="col-md-3" ng-repeat="checkup in checkups">
+          <div class="thumbnail" style="padding: 0">
+            <!--div style="padding:4px">
+            </div-->
+            <div class="caption">
+              <h2>{{checkup.id}}</h2>
+              <p>My project description</p>
+              <p><i class="icon icon-map-marker"></i> {{checkup.status}}</p>
+            </div>
+            <div class="modal-footer" style="text-align: left">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    <span class="sr-only">60% Complete</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4"><b>60%</b><br/><small>{{checkup.phase}}</small></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+</div>

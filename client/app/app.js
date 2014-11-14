@@ -1,12 +1,18 @@
 'use strict';
 
-angular.module('myApp', [
+angular.module('checkApp', [
     'ngRoute',
+    'ngResource',
     'ui.bootstrap',
-    'myApp.view1',
-    'myApp.view2',
-    'myApp.home',
-    'myApp.version'
+    'ui.router',
+    'checkApp.services',
+    'checkApp.home',
+    'checkApp.checkupModule',
+    'checkApp.sourceModule',
+
+    'checkApp.view1',
+    'checkApp.view2',
+    'checkApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
