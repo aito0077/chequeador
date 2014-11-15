@@ -1,55 +1,50 @@
 <div class="container" ng-controller="SourceCreateController" >
     <div class="row">
+        <div class="col-md-4">
+            <h4>{{sourceTypeObject().method_order}} - Consultar fuente {{sourceTypeObject().description}}</h4>
+        </div>
+        <div class="col-md-8">
+            <h3>{{checkup.quote.text}}</h3>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="well well-sm">
                 <form>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name"> Frase </label>
-                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
-                                placeholder="Qué frase textual chequearías?"></textarea>
+                            <label for="name"> Contacto  </label>
+                            <input type="text" class="form-control" id="name" value="{{entity.name}}" placeholder="Nombre del Contacto?" required="required" />
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name">
-                               Autor</label>
+                            <label for="name"> Descripción Contacto </label>
+                            <input type="text" class="form-control" id="name" value="{{entity.description}}" placeholder="Por que es relevante?" required="required" />
+                        </div>
+
+
+                   </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Qué te dijo?"></textarea>
+                        </div>
+ 
+
+
+                        <div class="form-group">
+                            <label for="name"> Dato Chequeado </label>
                             <input type="text" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
                         </div>
+
                         <div class="form-group">
-                            <label for="email">
-                                Dónde</label>
-                            <div class="input-group">
-                                <input type="email" class="form-control" id="email" placeholder="Dónde la dijo?" required="required" /></div>
+                            <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                                Publicar
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">
-                                Tema</label>
-                            <select id="subject" name="subject" class="form-control" required="required">
-                                <option value="politica">Politica</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">
-                                Valorar</label>
-                            <div class="input-group">
-                                <input type="email" class="form-control" id="email" placeholder="" required="required" /></div>
-                        </div>
-                    </div>
  
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> No es ni opinión, ni proyección y contiene datos contrastables
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
-                            Iniciar Chequeo</button>
+
                     </div>
  
                 </div>
@@ -57,6 +52,60 @@
             </div>
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="well">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://placekitten.com/150/150">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">Receta 1</h4>
+                    <p class="text-right">By Francisco</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                        Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
+                        dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan
+                        Aliquam in felis sit amet augue.
+                    </p>
+                    <ul class="list-inline list-unstyled">
+                        <li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
+                        <li>|</li>
+                        <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+                        <li>|</li>
+                        <li>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                        </li>
+                        <li>|</li>
+                        <li>
+                            <span><i class="fa fa-facebook-square"></i></span>
+                            <span><i class="fa fa-twitter-square"></i></span>
+                            <span><i class="fa fa-google-plus-square"></i></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="row">
         <div class="col-md-12">
             <form>

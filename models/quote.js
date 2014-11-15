@@ -26,7 +26,9 @@ Quote = Persistence.Model.extend({
 }, {
 
     read: function () {
-        return this.findOne.apply(this, arguments);
+        return this.findOne.apply(this, arguments, {
+            withRelated: ['entityAuthor', 'category']
+        });
     },
 
     checkup: function () {
@@ -35,9 +37,11 @@ Quote = Persistence.Model.extend({
 
     category: function() {
         return this.belongsTo(Category, 'category_id');
+    },
+
+    entityAuthor: function() {
+        return this.belongsTo(Entity, 'author');
     }
-
-
 
 });
 

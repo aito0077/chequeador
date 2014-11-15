@@ -4,17 +4,12 @@
             <a href="/#/checkups/new" class="btn btn-success green"> Iniciar Nuevo Chuequeo</a>
         </div>
         <div class="col-md-3">
-            <label for="subject">
-                Tema</label>
-            <select id="subject" name="subject" class="form-control" required="required">
-                <option value="politica">Politica</option>
-            </select>
+            <label for="subject">Tema</label>
+            <select ng-model="selected_category" ng-options="category.description for category in categories"></select>
         </div>
         <div class="col-md-3">
             <label for="subject">Etapa</label>
-            <select id="subject" name="subject" class="form-control" required="required">
-                <option value="politica">Creacion</option>
-            </select>
+            <select ng-model="selected_phase" ng-options="phase.title for phase in phases"></select>
         </div>
 
 

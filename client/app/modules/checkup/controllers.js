@@ -1,6 +1,3 @@
-/**
- * Created by Sandeep on 01/06/14.
- */
 angular.module('checkupModule.controllers',[])
 
 .controller('CheckupListController',function($scope,$state,$window,Checkup){
@@ -56,12 +53,18 @@ angular.module('checkupModule.controllers',[])
 
 })
 
-.controller('CheckupCreateController',function($scope,$state,$stateParams,Checkup){
+.controller('CheckupCreateController',function($scope,$state,$stateParams,Checkup, Category){
 
     $scope.checkup=new Checkup();
 
+    var categories = Category.query(function(data) {
+        $scope.categories = categories;
+    });
+
+
     $scope.addCheckup=function(){
         $scope.checkup.$save(function(){
+            console.log('saved');
         });
     }
 

@@ -1,9 +1,6 @@
-/**
- * Created by Sandeep on 01/06/14.
- */
-angular.module('sourceModule.controllers',[])
+angular.module('sourceModule.controllers',['ngRoute'])
 
-.controller('SourceListController',function($scope,$state,$window,Source){
+.controller('SourceListController', ['$scope', '$routeParams', 'Source', function($scope,$routeParams, $window,Source){
 
     $scope.sources=Source.query();
 
@@ -13,26 +10,58 @@ angular.module('sourceModule.controllers',[])
         });
     }
 
-})
+}])
 
-.controller('SourceViewController',function($scope,$stateParams,Source){
+.controller('SourceViewController',['$scope', '$routeParams', 'Source', 'Checkup', function($scope,$routeParams,Source,Checkup){
 
-    $scope.source=Source.get({id:$stateParams.id});
+    $scope.checkup = Checkup.get({id:$routeParams.checkup_id});
+    $scope.source = Source.get({id:$routeParams.id});
 
-})
+}])
 
-.controller('SourceCreateController',function($scope,$state,$stateParams,Source){
+.controller('SourceCreateController', ['$scope', '$routeParams', 'Source', 'Checkup', 'Entity', function($scope,$routeParams,Source, Checkup, Entity){
 
-    $scope.source=new Source();
+    $scope.source = new Source();
+    $scope.checkup = Checkup.get({id:$routeParams.checkup_id}, function() {
+
+    var param_type = ($routeParams.type || '').toUpperCase();
+        $scope.source_type =  _.contains(['ORI', 'OFI', 'ALT'], param_type) ?  param_type :  'ALT';
+
+        if($scope.source_type === 'ORI') {
+            $scope.entity = Entity.get({id: $scope.checkup.quote.author});
+        } else {
+            $scope.entity = new Entity();
+        }
+    });
 
     $scope.addSource=function(){
         $scope.source.$save(function(){
+
         });
     }
 
-})
+    $scope.types = {
+        'ORI': {
+            description: 'Original',
+            method_order: 3
+        },
+        'OFI': {
+            description: 'Oficial',
+            method_order: 4
+        },
+        'ALT': {
+            description: 'Alternartiva',
+            method_order: 5
+        }
+    };
 
-.controller('SourceEditController',function($scope,$state,$stateParams,Source){
+    $scope.sourceTypeObject = function(){
+        return $scope.types[$scope.source_type];
+    }
+
+}])
+
+.controller('SourceEditController', ['$scope', '$routeParams', 'Source', function($scope,$routeParams,Source){
 
     $scope.updateSource=function(){
         $scope.source.$update(function(){
@@ -40,8 +69,8 @@ angular.module('sourceModule.controllers',[])
     };
 
     $scope.loadSource=function(){
-        $scope.source=Source.get({id:$stateParams.id});
+        $scope.source=Source.get({id:$routeParams.id});
     };
 
     $scope.loadSource();
-});
+}]);

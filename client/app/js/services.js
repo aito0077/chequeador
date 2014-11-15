@@ -48,6 +48,13 @@ angular.module('checkApp.services',['ngResource']).
             }
         });
     }]).
+    factory('Category',['$resource', function($resource){
+        return $resource('http://localhost:3000/api/categories/:id', { id:'@id' }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }]).
     factory('SourceType',['$resource', function($resource){
         return $resource('http://localhost:3000/api/source-types/:id', { id:'@id' }, {
             update: {

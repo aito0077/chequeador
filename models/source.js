@@ -1,6 +1,7 @@
 var Source,
     Sources,
     _              = require('underscore'),
+    SourceType     = require('./sourceType').SourceType,
     Persistence    = require('./base');
 
 
@@ -23,7 +24,13 @@ Source = Persistence.Model.extend({
 
     saving: function () {
         return Persistence.Model.prototype.saving.apply(this, arguments);
+    },
+
+    sourceType: function() {
+        return this.belongsTo(SourceType, 'type');
     }
+
+
 }, {
 
 });
@@ -36,12 +43,4 @@ module.exports = {
     Source: Source,
     Sources: Sources
 };
-
-
-
-
-
-
-
-
 

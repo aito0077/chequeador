@@ -1,5 +1,6 @@
 var Entity,
     Entities,
+    EntityType = require('./entityType').EntityType,
     _              = require('underscore'),
     Persistence    = require('./base');
 
@@ -19,6 +20,10 @@ Entity = Persistence.Model.extend({
     creating: function () {
         var self = this;
         Persistence.Model.prototype.creating.call(this);
+    },
+
+    entityType: function() {
+        return this.belongsTo(EntityType, 'type');
     },
 
     saving: function () {

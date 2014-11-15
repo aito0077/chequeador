@@ -3,19 +3,19 @@
 angular.module('checkApp.sourceModule', ['ngRoute','ngResource', 'sourceModule.controllers'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/sources', {
+  $routeProvider.when('/checkups/:checkup_id/sources', {
         templateUrl:'modules/checkup/source/partials/sources.html',
         controller:'SourceListController'
     }).
-    when('/sources/:id/view', {
+    when('/checkups/:checkup_id/sources/:id/view', {
        templateUrl:'modules/checkup/source/partials/view.html',
        controller:'SourceViewController'
     }).
-    when('/sources/new', {
-         templateUrl:'modules/checkup/source/partials/add.html',
+    when('/checkups/:checkup_id/sources/new', {
+        templateUrl:'modules/checkup/source/partials/add.html',
         controller:'SourceCreateController'
     }).
-    when('sources/:id/edit', {
+    when('/checkups/:checkup_id/sources/:id/edit', {
         templateUrl:'modules/checkup/source/partials/edit.html',
         controller:'SourceEditController'
     });

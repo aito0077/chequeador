@@ -23,7 +23,9 @@ entities = {
     },
 
     read: function read(args) {
-        return persistence.Entity.read(args).then(function (result) {
+        return persistence.Entity.read(args, {
+            withRelated: ['entityType']
+        }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;

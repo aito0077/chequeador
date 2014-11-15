@@ -23,7 +23,9 @@ sources = {
     },
 
     read: function read(args) {
-        return persistence.Source.read(args).then(function (result) {
+        return persistence.Source.read(args, {
+            withRelated: ['sourceType']
+        }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;
