@@ -1,12 +1,15 @@
 var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
-    filteredAttributes = ['created_by', 'created'],
+    filteredAttributes = [],
     sources;
 
 sources = {
     browse: function browse(options) {
-        return persistence.Source.browse(options).then(function (result) {
+        var fetch_options = _.extend(options, {
+            withRelated: ['sourceType', 'entity']
+        });
+        return persistence.Source.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
 

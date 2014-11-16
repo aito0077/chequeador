@@ -1,14 +1,35 @@
 angular.module('sourceModule.controllers',['ngRoute'])
 
-.controller('SourceListController', ['$scope', '$routeParams', 'Source', function($scope,$routeParams, $window,Source){
+.controller('SourceListController', ['$scope', '$routeParams', '$http', 'Source', function($scope,$routeParams, $http, Source){
 
-    $scope.sources=Source.query();
+    $scope.types = {
+        'ORI': {
+            class: 'success'
+        },
+        'OFI': {
+            class: 'secondary'
+        },
+        'ALT': {
+            class: 'info'
+        }
+    };
 
-    $scope.deleteSource=function(source){
-        source.$delete(function(){
-            $window.location.href='';
-        });
+    $scope.sourceTypeObject = function(code_type){
+        return $scope.types[code_type];
     }
+
+
+
+    $http.get('http://localhost:3000/api/sources', {
+        checkup_id: $routeParams.checkup_id
+    }).
+    success(function(data, status, headers, config) {
+        $scope.sources = data;
+    }).
+    error(function(data, status, headers, config) {
+        console.log(data);
+    });
+
 
 }])
 

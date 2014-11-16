@@ -4,7 +4,7 @@ angular.module('checkApp.sourceModule', ['ngRoute','ngResource', 'sourceModule.c
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/checkups/:checkup_id/sources', {
-        templateUrl:'modules/checkup/source/partials/sources.html',
+        templateUrl:'modules/checkup/source/partials/list.html',
         controller:'SourceListController'
     }).
     when('/checkups/:checkup_id/sources/:id/view', {

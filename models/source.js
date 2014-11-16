@@ -1,8 +1,9 @@
 var Source,
     Sources,
-    _              = require('underscore'),
-    SourceType     = require('./sourceType').SourceType,
-    Persistence    = require('./base');
+    _           = require('underscore'),
+    SourceType  = require('./sourceType').SourceType,
+    Entity      = require('./entity').Entity,
+    Persistence = require('./base');
 
 
 Source = Persistence.Model.extend({
@@ -24,6 +25,10 @@ Source = Persistence.Model.extend({
 
     saving: function () {
         return Persistence.Model.prototype.saving.apply(this, arguments);
+    },
+
+    entity: function() {
+        return this.belongsTo(Entity, 'source_entity_id');
     },
 
     sourceType: function() {
