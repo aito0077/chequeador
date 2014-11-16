@@ -22,7 +22,7 @@
                             <div class="col-md-10 col-md-offset-1">
                                 <h2>{{checkup.quote.text}}</h2>
                                 <h3>{{checkup.quote.where}}</h3>
-                                <h4>{{checkup.quote.when}}</h4>
+                                <h4>{{checkup.quote.when | date: "d 'de' MMMM yyyy" }}</h4>
                                 <div>
                                     <span class="badge badge-success">{{checkup.quote.category}}</span><div class="pull-right"><span class="label"></span> <span class="label">story</span> <span class="label">blog</span> <span class="label">personal</span></div>
                                 </div> 

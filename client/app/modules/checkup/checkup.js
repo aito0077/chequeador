@@ -12,7 +12,7 @@ angular.module('checkApp.checkupModule', ['ngRoute','ngResource', 'checkupModule
        controller:'CheckupViewController'
     }).
     when('/checkups/new', {
-         templateUrl:'modules/checkup/partials/add.html',
+        templateUrl:'modules/checkup/partials/add.html',
         controller:'CheckupCreateController'
     }).
     when('checkups/:id/edit', {
@@ -21,12 +21,3 @@ angular.module('checkApp.checkupModule', ['ngRoute','ngResource', 'checkupModule
     });
 }]);
 
-/*
-.controller('HomeController', ['$scope','$http', 'Checkup', function($scope, $http, Checkup) {
-
-    var checkups = Checkup.query(function(data) {
-        $scope.checkups = checkups;
-    });
-
-}]);
-*/

@@ -1,10 +1,10 @@
-angular.module('checkupModule.controllers',[])
+angular.module('checkupModule.controllers',['ngRoute'])
 
-.controller('CheckupListController',function($scope,$state,$window,Checkup){
+.controller('CheckupListController',function($scope,$window,Checkup){
 
-    $scope.checkups=Checkup.query();
+    $scope.checkups = Checkup.query();
 
-    $scope.deleteCheckup=function(checkup){
+    $scope.deleteCheckup = function(checkup){
         checkup.$delete(function(){
             $window.location.href='';
         });
@@ -12,9 +12,29 @@ angular.module('checkupModule.controllers',[])
 
 })
 
-.controller('CheckupViewController',function($scope,$stateParams,Checkup){
+.controller('CheckupCreateController',['$scope', 'Checkup', 'Quote', 'Category', '$window', function($scope,Checkup, Quote, Category, $window){
 
-    $scope.checkup=Checkup.get({id:1});
+    $scope.checkup = new Checkup();
+    $scope.checkup.quote = new Quote();
+
+    var categories = Category.query(function(data) {
+        $scope.categories = categories;
+    });
+
+
+    $scope.addCheckup = function(){
+        $scope.checkup.$save(function() {
+            $window.location.href='/#/checkups/'+$scope.checkup.id+'/view';
+        });
+    }
+
+}])
+
+.controller('CheckupViewController',['$scope', '$routeParams', 'Checkup', function($scope, $routeParams, Checkup) {
+
+    $scope.checkup = Checkup.get({
+        id: $routeParams.id
+    });
 
     $scope.phases = [
         {
@@ -51,29 +71,14 @@ angular.module('checkupModule.controllers',[])
         });
     };
 
-})
+}])
 
-.controller('CheckupCreateController',function($scope,$state,$stateParams,Checkup, Category){
-
-    $scope.checkup=new Checkup();
-
-    var categories = Category.query(function(data) {
-        $scope.categories = categories;
-    });
-
-
-    $scope.addCheckup=function(){
-        $scope.checkup.$save(function(){
-            console.log('saved');
-        });
-    }
-
-})
 
 .controller('CheckupEditController',function($scope,$state,$stateParams,Checkup){
 
     $scope.updateCheckup=function(){
         $scope.checkup.$update(function(){
+
         });
     };
 

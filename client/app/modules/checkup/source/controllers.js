@@ -16,9 +16,7 @@ angular.module('sourceModule.controllers',['ngRoute'])
 
     $scope.sourceTypeObject = function(code_type){
         return $scope.types[code_type];
-    }
-
-
+    };
 
     $http.get('http://localhost:3000/api/sources', {
         checkup_id: $routeParams.checkup_id

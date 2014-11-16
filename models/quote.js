@@ -9,8 +9,8 @@ Quote = Persistence.Model.extend({
 
     tableName: 'Quote',
 
-    permittedAttributes: ['category'],
-
+    permittedAttributes: [ 'id', 'checkup_id', 'text', 'author', '_where', 'when', 'category_id', 'rate', 'created_by'],
+ 
     validate: function () {
         return true;
     },
