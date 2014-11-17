@@ -46,6 +46,7 @@ router.put('/comments/:id/', authAPI, api.requestHandler(api.comments.edit));
 router.get('/contexts/', authAPI, api.requestHandler(api.contexts.browse));
 router.get('/contexts/:id/', authAPI, api.requestHandler(api.contexts.read));
 router.put('/contexts/:id/', authAPI, api.requestHandler(api.contexts.edit));
+router.post('/contexts/', authAPI, api.requestHandler(api.contexts.add));
 
 router.get('/entities/', authAPI, api.requestHandler(api.entities.browse));
 router.get('/entities/:id/', authAPI, api.requestHandler(api.entities.read));
@@ -87,6 +88,7 @@ router.get('/scores/', authAPI, api.requestHandler(api.scores.browse));
 router.get('/scores/:id/', authAPI, api.requestHandler(api.scores.read));
 router.put('/scores/:id/', authAPI, api.requestHandler(api.scores.edit));
 
+router.get('/checkups/:checkup_id/sources', authAPI, api.requestHandler(api.sources.browse));
 router.get('/sources/', authAPI, api.requestHandler(api.sources.browse));
 router.get('/sources/:id/', authAPI, api.requestHandler(api.sources.read));
 router.put('/sources/:id/', authAPI, api.requestHandler(api.sources.edit));

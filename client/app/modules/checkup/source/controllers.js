@@ -18,8 +18,8 @@ angular.module('sourceModule.controllers',['ngRoute'])
         return $scope.types[code_type];
     };
 
-    $http.get('http://localhost:3000/api/sources', {
-        checkup_id: $routeParams.checkup_id
+    $http.get('http://localhost:3000/api/checkups/'+$routeParams.checkup_id+'/sources', {
+        checkup_id: $routeParams.checkup_id || $routeParams.id
     }).
     success(function(data, status, headers, config) {
         $scope.sources = data;
@@ -49,7 +49,7 @@ angular.module('sourceModule.controllers',['ngRoute'])
         
 
         if($scope.source_type === 'ORI') {
-            $scope.entity = Entity.get({
+            $scope.ntity = Entity.get({
                 id: $scope.checkup.quote.author
             });
         } else {
@@ -60,7 +60,7 @@ angular.module('sourceModule.controllers',['ngRoute'])
     $scope.addSource=function(){
         $scope.source.checkup_id = $scope.checkup.id;
         $scope.source.type = $scope.source_type; 
-        $scope.source.entity = $scope.entity; 
+        $scope.source.entity = angular.fromJson($scope.entity); 
         $scope.source.$save(function(){
             $window.location.href='/#/checkups/'+$scope.checkup.id+'/view';
         });

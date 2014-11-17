@@ -1,4 +1,5 @@
 var express = require('express'),
+    debug = require('debug')('chequeador'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
@@ -35,6 +36,8 @@ app.use(function(req, res, next) {
 
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+
+        debug(err.message);
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,

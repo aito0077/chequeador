@@ -8,9 +8,7 @@ Context = Persistence.Model.extend({
 
     tableName: 'Context',
 
-    permittedAttributes: [
-
-    ],
+    permittedAttributes: ['id', 'checkup_id', 'body', 'tags', 'created_by'],
 
     validate: function () {
         return true;

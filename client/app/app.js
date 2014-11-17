@@ -10,6 +10,7 @@ angular.module('checkApp', [
     'checkApp.userModule',
     'checkApp.checkupModule',
     'checkApp.sourceModule',
+    'checkApp.contextModule',
 
     'checkApp.view1',
     'checkApp.view2',

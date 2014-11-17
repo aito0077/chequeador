@@ -46,9 +46,12 @@
                             </div>
                         </div>
                         <div class="tab-pane {{'context' == current_phase.id ? 'in active' : ''}} fade " id="context">
-                            <div ng-repeat="context in checkup.contexts">
-                                <h2>{{context.body}}</h2>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a href="/#/checkups/{{checkup.id}}/contexts/new" class="btn btn-success"> Agregar Contexto</a>
+                                    </div>
+                                </div>
+                            <ng-include src="'modules/checkup/context/partials/list.html'"></ng-include>
                         </div>
                         <div class="tab-pane {{'qualification' == current_phase.id ? 'in active' : ''}} fade " id="qualification">
                             <p>
