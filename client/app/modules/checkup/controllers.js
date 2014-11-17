@@ -1,4 +1,4 @@
-angular.module('checkupModule.controllers',['ngRoute'])
+angular.module('checkupModule.controllers',['ngRoute', 'sourceModule.controllers'])
 
 .controller('CheckupListController',function($scope,$window,Checkup){
 

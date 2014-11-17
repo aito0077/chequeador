@@ -7,6 +7,7 @@ angular.module('checkApp', [
     'ui.router',
     'checkApp.services',
     'checkApp.home',
+    'checkApp.userModule',
     'checkApp.checkupModule',
     'checkApp.sourceModule',
 

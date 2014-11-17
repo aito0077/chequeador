@@ -29,10 +29,7 @@
                             </div>
                         </div>
                         <div class="tab-pane {{'sources' == current_phase.id ? 'in active' : ''}} fade " id="sources">
-                            <div ng-repeat="source in checkup.sources">
-                                <h2>{{source.what}}</h2>
-                                <h2>{{source.type}}</h2>
-                            </div>
+                            <ng-include src="'modules/checkup/source/partials/list.html'"></ng-include>
                         </div>
                         <div class="tab-pane {{'context' == current_phase.id ? 'in active' : ''}} fade " id="context">
                             <div ng-repeat="context in checkup.contexts">
