@@ -9,9 +9,8 @@ Entity = Persistence.Model.extend({
 
     tableName: 'Entity',
 
-    permittedAttributes: [
 
-    ],
+    permittedAttributes: ['id', 'name', 'description', 'type', 'created_by'],
 
     validate: function () {
         return true;

@@ -5,14 +5,11 @@ var Source,
     Entity      = require('./entity').Entity,
     Persistence = require('./base');
 
-
 Source = Persistence.Model.extend({
 
     tableName: 'Source',
 
-    permittedAttributes: [
-
-    ],
+    permittedAttributes: [ 'id', 'checkup_id', 'source_entity_id', 'type', 'what', 'checked', 'observation', 'created_by' ],
 
     validate: function () {
         return true;

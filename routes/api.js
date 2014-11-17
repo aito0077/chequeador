@@ -90,6 +90,7 @@ router.put('/scores/:id/', authAPI, api.requestHandler(api.scores.edit));
 router.get('/sources/', authAPI, api.requestHandler(api.sources.browse));
 router.get('/sources/:id/', authAPI, api.requestHandler(api.sources.read));
 router.put('/sources/:id/', authAPI, api.requestHandler(api.sources.edit));
+router.post('/sources/', authAPI, api.requestHandler(api.sources.add));
 
 router.get('/source-types/', authAPI, api.requestHandler(api.sourceTypes.browse));
 router.get('/source-types/:id/', authAPI, api.requestHandler(api.sourceTypes.read));

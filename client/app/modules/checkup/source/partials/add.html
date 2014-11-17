@@ -1,3 +1,4 @@
+
 <div class="container" ng-controller="SourceCreateController" >
     <div class="row">
         <div class="col-md-4">
@@ -10,16 +11,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="well well-sm">
-                <form>
+
+                <form  ng-submit="addSource()">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name"> Contacto  </label>
-                            <input type="text" class="form-control" id="name" value="{{entity.name}}" placeholder="Nombre del Contacto?" required="required" />
+                            <label for="entity_name"> Contacto  </label>
+                            <input type="text" class="form-control" ng-model="entity.name" id="entity_name" placeholder="Nombre del Contacto?" required="required" />
                         </div>
                         <div class="form-group">
-                            <label for="name"> Descripción Contacto </label>
-                            <input type="text" class="form-control" id="name" value="{{entity.description}}" placeholder="Por que es relevante?" required="required" />
+                            <label for="entity_description"> Descripción Contacto </label>
+                            <input type="text" class="form-control" ng-model="entity.description" id="entity_description" placeholder="Por que es relevante?" required="required" />
                         </div>
 
 
@@ -27,7 +29,7 @@
                     <div class="col-md-6">
 
                         <div class="form-group">
-                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                            <textarea name="what" id="what" ng-model="source.what" class="form-control" rows="9" cols="25" required="required"
                                 placeholder="Qué te dijo?"></textarea>
                         </div>
  
@@ -35,7 +37,7 @@
 
                         <div class="form-group">
                             <label for="name"> Dato Chequeado </label>
-                            <input type="text" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
+                            <input type="text" ng-model="source.checked" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
                         </div>
 
                         <div class="form-group">

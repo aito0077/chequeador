@@ -38,24 +38,31 @@ angular.module('sourceModule.controllers',['ngRoute'])
 
 }])
 
-.controller('SourceCreateController', ['$scope', '$routeParams', 'Source', 'Checkup', 'Entity', function($scope,$routeParams,Source, Checkup, Entity){
+.controller('SourceCreateController', ['$scope', '$routeParams', '$window', 'Source', 'Checkup', 'Entity', function($scope,$routeParams, $window, Source, Checkup, Entity){
 
     $scope.source = new Source();
-    $scope.checkup = Checkup.get({id:$routeParams.checkup_id}, function() {
-
-    var param_type = ($routeParams.type || '').toUpperCase();
+    $scope.checkup = Checkup.get({
+        id: $routeParams.checkup_id
+    }, function() {
+        var param_type = ($routeParams.type || '').toUpperCase();
         $scope.source_type =  _.contains(['ORI', 'OFI', 'ALT'], param_type) ?  param_type :  'ALT';
+        
 
         if($scope.source_type === 'ORI') {
-            $scope.entity = Entity.get({id: $scope.checkup.quote.author});
+            $scope.entity = Entity.get({
+                id: $scope.checkup.quote.author
+            });
         } else {
             $scope.entity = new Entity();
         }
     });
 
     $scope.addSource=function(){
+        $scope.source.checkup_id = $scope.checkup.id;
+        $scope.source.type = $scope.source_type; 
+        $scope.source.entity = $scope.entity; 
         $scope.source.$save(function(){
-
+            $window.location.href='/#/checkups/'+$scope.checkup.id+'/view';
         });
     }
 

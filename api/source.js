@@ -1,5 +1,6 @@
 var when = require('when'),
     _ = require('underscore'),
+    entities = require('./entity'),
     persistence = require('../models'),
     filteredAttributes = [],
     sources;
@@ -50,6 +51,27 @@ sources = {
 
     add: function add(data) {
         return persistence.Source.add(data);
+
+        var source_to_persist = {
+                created: 'aito' //SESSION
+            },
+            entity = data.entity,
+            new_entity = {
+                name: entity.name,
+                description: entity.description,
+                type: entity.type || 1
+            };
+
+        entities.add(new_entity).then(function (result_entity) {
+            return persistence.Source.add(source_to_persist).then(function (result) {
+                if (result) {
+                    return result;
+                }
+                return when.reject({errorCode: 404, message: 'Source not inserted'});
+            });
+        });
+
+
     }
 
 
