@@ -1,26 +1,67 @@
-<div class="container" ng-controller="HomeController" >
+<div ng-controller="HomeController" >
+            
+            <div class="status-bar row">
+                <div class="col-md-9">
+                    <div>
+                        <a ng-href="#/checkup/new">Iniciar un Chequeo</a>
+                    </div> 
+                </div>
+                <div class="col-md-3 text-left">
+                    <span id="help-action"> Ayuda </span>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="main-content">
+
+                    <div class="col-sm-9">
+                        <div ui-view></div>
+                    </div>
+                    
+                    <div id="sidebar-wrapper" class="col-sm-3">
+                        <div class="sidebar-module sidebar-module-inset">
+                            <p>
+                                El Chequeador es una herramienta participativa para realizar chequeos en forma colectiva desde cualquier plataforma gestionada de forma colectiva
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+</div>
+
+<!--div>
+
     <div class="row">
-        <div class="col-md-3">
-            <a href="/#/checkups/new" class="btn btn-success green"> Iniciar Nuevo Chequeo</a>
+        <div class="col-md-4">
+            <a href="/#/checkups/new" class="btn btn-success green" > Iniciar Nuevo Chequeo</a>
+            <span class="btn btn-success green" ng-click="changeState()" > test2</span>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="subject">Tema</label>
             <select ng-model="selected_category" ng-options="category.description for category in categories"></select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="subject">Etapa</label>
             <select ng-model="selected_phase" ng-options="phase.title for phase in phases"></select>
         </div>
 
 
     </div>
+    <div ui-view></div>
     <div class="row">
       <ul class="thumbnails list-unstyled">
         <li class="col-md-3" ng-repeat="checkup in checkups">
         <a href="/#/checkups/{{checkup.id}}/view">
           <div class="thumbnail" style="padding: 0">
-            <!--div style="padding:4px">
-            </div-->
+            
             <div class="caption">
               <h2>{{checkup.id}}</h2>
               <p>{{checkup.quote.text}}</p>
@@ -41,4 +82,4 @@
         </li>
       </ul>
     </div>
-</div>
+</div-->

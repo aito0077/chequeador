@@ -1,0 +1,85 @@
+<div class="container col-md-12" ng-controller="CheckupQuoteController" >
+
+        <div class="step-centered">
+
+            <article class="step-entry">
+
+                <div class="row">
+                    <div class="step-entry-inner col-md-2">
+
+                        <div class="step-icon">
+                            1
+                        </div>
+
+                        <div class="step-label">
+                        </div>
+
+                    </div>
+                    <style>
+.col-centered {
+    margin: 0 auto;
+    float: none;
+}
+                    </style>
+
+                    <div class="well-sm col-md-9" ng-switch on="isCheckupPersisted()">
+                        <div ng-switch-when="false">
+        
+                            <form  ng-submit="addCheckup()">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <textarea name="text" ng-model="checkup.quote.text" class="form-control" rows="3" cols="25" required="required" placeholder="Qué frase textual chequearías?"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text"  ng-model="checkup.quote.author" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" ng-model="checkup.quote.where" class="form-control" placeholder="Dónde la dijo?" required="required" />
+                                    </div>
+                                    <div class="form-group col-md-6 col-md-offset-3">
+                                        <select class="form-control" ng-model="checkup.quote.category" ng-options="category.description for category in categories"></select>
+                                    </div>
+             
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <button type="submit" class="btn btn-default">
+                                            Siguiente
+                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                 
+                                </div>
+                            </form>
+                        </div>
+                        <div ng-switch-when="true">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <h1>Felicitaciones!</h1>
+                                        <h3>Finalizaste con éxito el primer paso!</h3>
+                                    </div>
+                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <button class="btn btn-default" ng-click="close()">
+                                           Ir al siguiente paso
+                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                 
+                                </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    
+</div>
+

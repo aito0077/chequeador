@@ -9,7 +9,7 @@ Quote = Persistence.Model.extend({
 
     tableName: 'Quote',
 
-    permittedAttributes: [ 'id', 'checkup_id', 'text', 'author', '_where', 'when', 'category_id', 'rate', 'created_by'],
+    permittedAttributes: [ 'id', 'checkup_id', 'text', 'entity_id', '_where', 'when', 'category_id', 'rate', 'created_by'],
  
     validate: function () {
         return true;
@@ -40,7 +40,7 @@ Quote = Persistence.Model.extend({
     },
 
     entityAuthor: function() {
-        return this.belongsTo(Entity, 'author');
+        return this.belongsTo(Entity);
     }
 
 });

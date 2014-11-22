@@ -35,6 +35,8 @@ CREATE TABLE `Checkup` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `status` ENUM('OPEN', 'CLOSED', 'REMOVED'),
   `phase` ENUM('CREATION', 'SOURCES', 'CONTEXT', 'QUALIFICATION'),
+  `entity_id` INTEGER NOT NULL,
+  `rate` INTEGER NOT NULL DEFAULT 0,
   `fork_from` INTEGER NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `created_by` VARCHAR(30) NOT NULL,
@@ -52,7 +54,7 @@ CREATE TABLE `Quote` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `checkup_id` INTEGER NOT NULL,
   `text` MEDIUMTEXT NOT NULL,
-  `author` INTEGER NOT NULL,
+  `entity_id` INTEGER NOT NULL,
   `_where` MEDIUMTEXT NOT NULL,
   `when` DATE NULL,
   `category_id` INTEGER NULL,
@@ -360,8 +362,9 @@ ALTER TABLE `Source` ADD FOREIGN KEY (type) REFERENCES `Source_Type` (`id`);
 ALTER TABLE `Checkup_User` ADD FOREIGN KEY (user_id) REFERENCES `User` (`id`);
 ALTER TABLE `Checkup_User` ADD FOREIGN KEY (checkup_id) REFERENCES `Checkup` (`id`);
 ALTER TABLE `Quote` ADD FOREIGN KEY (checkup_id) REFERENCES `Checkup` (`id`);
-ALTER TABLE `Quote` ADD FOREIGN KEY (author) REFERENCES `Entity` (`id`);
+ALTER TABLE `Quote` ADD FOREIGN KEY (entity_id) REFERENCES `Entity` (`id`);
 ALTER TABLE `Quote` ADD FOREIGN KEY (category_id) REFERENCES `Category` (`id`);
+ALTER TABLE `Checkup` ADD FOREIGN KEY (entity_id) REFERENCES `Entity` (`id`);
 ALTER TABLE `Context` ADD FOREIGN KEY (checkup_id) REFERENCES `Checkup` (`id`);
 ALTER TABLE `Entity_Relation` ADD FOREIGN KEY (entity_id_to) REFERENCES `Entity` (`id`);
 ALTER TABLE `Entity_Relation` ADD FOREIGN KEY (type) REFERENCES `Relation_Type` (`id`);
@@ -431,9 +434,9 @@ INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kier
 
 INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
 
-INSERT INTO `Checkup` (`status`,`phase`,`created_by`) VALUES ('OPEN','CREATION','aito' );
+INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
 
-INSERT INTO `Quote` (`checkup_id`,`text`,`author`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
+INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
 
 -- INSERT INTO `Rates` (`checkup_id`,`user_id`,`qualification`,`score`) VALUES ('','','','','');
 -- INSERT INTO `Source` (`checkup_id`,`source_entity_id`,`type`,`what`,`checked`,`observation`) VALUES ('','','','','','','');

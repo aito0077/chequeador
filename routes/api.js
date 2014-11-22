@@ -75,6 +75,7 @@ router.put('/quotes/:id/', authAPI, api.requestHandler(api.quotes.edit));
 router.get('/rates/', authAPI, api.requestHandler(api.rates.browse));
 router.get('/rates/:id/', authAPI, api.requestHandler(api.rates.read));
 router.put('/rates/:id/', authAPI, api.requestHandler(api.rates.edit));
+router.post('/rates/', authAPI, api.requestHandler(api.rates.add));
 
 router.get('/relation-types/', authAPI, api.requestHandler(api.relationTypes.browse));
 router.get('/relation-types/:id/', authAPI, api.requestHandler(api.relationTypes.read));

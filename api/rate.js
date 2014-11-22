@@ -6,7 +6,10 @@ var when = require('when'),
 
 rates = {
     browse: function browse(options) {
-        return persistence.Rate.browse(options).then(function (result) {
+        var fetch_options = _.extend(options, {
+            withRelated: ['qualified', 'scored']
+        });
+        return persistence.Rate.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
 

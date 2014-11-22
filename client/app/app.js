@@ -8,13 +8,13 @@ angular.module('checkApp', [
     'checkApp.services',
     'checkApp.home',
     'checkApp.userModule',
-    'checkApp.checkupModule',
+    'checkApp.checkupModule'
+/*
+,
     'checkApp.sourceModule',
-    'checkApp.contextModule',
+    'checkApp.contextModule'
+*/
 
-    'checkApp.view1',
-    'checkApp.view2',
-    'checkApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});

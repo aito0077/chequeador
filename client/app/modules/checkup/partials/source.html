@@ -1,0 +1,131 @@
+<div class="container col-md-12" ng-controller="CheckupQuoteController" >
+
+        <div class="step-centered">
+
+            <article class="step-entry">
+
+                <div class="row">
+                    <div class="step-entry-inner col-md-2">
+
+                        <div class="step-icon">
+                            1
+                        </div>
+
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="step-icon">
+                            2
+                        </div>
+
+                        <div class="step-label">
+                        </div>
+
+                    </div>
+
+                    <div class="well-sm col-md-9" ng-switch on="isCheckupPersisted()">
+                        <div ng-switch-when="false">
+        
+                            <form ng-submit="addSource()">
+
+                                <div class="row">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label ng-click="setType('ORI')" class="btn active">
+                                            <input type="radio" ng-model="current_type" name="current_type" ng-value="ORI" autocomplete="off" checked> Fuente Original
+                                        </label>
+                                        <label class="btn" ng-click="setType('OFI')">
+                                            <input type="radio" ng-model="current_type" name="current_type" ng-value="OFI" autocomplete="off"> Fuente Oficial
+                                        </label>
+                                        <label class="btn" ng-click="setType('ALT')">
+                                            <input type="radio" ng-model="current_type" name="current_type" ng-value="ALT" autocomplete="off"> Fuente Alternativa
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div id="original_source" ng-show="current_type == 'ORI'">
+                                     <div class="row">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="name" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ng-model="source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="what" id="what" ng-model="source.what" class="form-control" rows="9" cols="25" required="required" placeholder="Qué te dijo?"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div ng-show="current_type != 'ORI'">
+                                     <div class="row" ng-repeat="item_source in sources[current_type]">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="name" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                        </div>
+                                        <div class="form-group" ng-show="current_type == 'ALT'">
+                                            <input type="text" class="form-control" ng-model="item_source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="what" ng-model="item_source.what" class="form-control" rows="3" cols="25" required="required" placeholder="Qué te dijo?"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <span ng-show="item_source.invalid" class="error">No esta completo</span>
+                                        </div>
+                                        <br/>
+                                    </div>
+
+                                    <div class="row">
+                                        <button ng-click="addNewSource()" class="btn">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button>
+                                           Conoces otra fuente? <span>Sumala!</span> 
+                                    </div>
+                     
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <button type="submit" class="btn ">
+                                            Siguiente
+                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                 
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div ng-switch-when="true">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <h1>Felicitaciones!</h1>
+                                        <h3>Finalizaste con éxito el primer paso!</h3>
+                                    </div>
+                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <button class="btn " ng-click="close()">
+                                           Ir al siguiente paso
+                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                 
+                                </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    
+</div>
+

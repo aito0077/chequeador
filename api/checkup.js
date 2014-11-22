@@ -3,6 +3,7 @@ var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
     quotes = require('./quote'),
+    entity = require('./entity'),
     filteredAttributes = ['created_by', 'created'],
     checkups;
 
@@ -11,12 +12,12 @@ checkups = {
 
         debug("browse");
         var fetch_options = _.extend(options, {
-            withRelated: ['quote']
+            withRelated: ['quote', 'entity']
         });
         return persistence.Checkup.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
-
+            
             if (result) {
                 omitted = result.toJSON();
                 debug(omitted);
@@ -32,7 +33,7 @@ checkups = {
 
     read: function read(args) {
         return persistence.Checkup.read(args, {
-            withRelated: ['quote', 'sources', 'contexts']
+            withRelated: ['quote', 'sources', 'contexts', 'entity']
         }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
@@ -62,7 +63,7 @@ checkups = {
         quote = data.quote,
         new_quote = {
             text: quote.text,
-            author: quote.author.id || 1, //ENTITY
+            entity: quote.author.id || 1, //ENTITY
             _where: quote.where,
             when:   quote.when,
             category_id: quote.category.id,

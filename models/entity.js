@@ -1,5 +1,7 @@
 var Entity,
     Entities,
+    Checkup = require('./checkup').Checkup,
+    Quote = require('./quote').Quote,
     EntityType = require('./entityType').EntityType,
     _              = require('underscore'),
     Persistence    = require('./base');
@@ -25,9 +27,14 @@ Entity = Persistence.Model.extend({
         return this.belongsTo(EntityType, 'type');
     },
 
+    checkup: function() {
+        this.hasMany(Checkup, 'entity_id');
+    },
+
     saving: function () {
         return Persistence.Model.prototype.saving.apply(this, arguments);
     }
+
 }, {
 
 });

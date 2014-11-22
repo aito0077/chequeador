@@ -1,16 +1,16 @@
 var Rate,
     Rates,
-    _              = require('underscore'),
-    Persistence    = require('./base');
+    _ = require('underscore'),
+    Qualification = require('./qualification').Qualification,
+    Score = require('./score').Score,
+    Persistence = require('./base');
 
 
 Rate = Persistence.Model.extend({
 
     tableName: 'Rate',
 
-    permittedAttributes: [
-
-    ],
+    permittedAttributes: ['id', 'checkup_id', 'user_id', 'qualification', 'score', 'created_by' ],
 
     validate: function () {
         return true;
@@ -23,7 +23,16 @@ Rate = Persistence.Model.extend({
 
     saving: function () {
         return Persistence.Model.prototype.saving.apply(this, arguments);
+    },
+
+    qualified: function() {
+        return this.belongsTo(Qualification, 'qualification');
+    },
+
+    scored: function() {
+        return this.belongsTo(Score, 'score');
     }
+
 }, {
 
 });
