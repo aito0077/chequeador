@@ -9,18 +9,18 @@
         <title>{{ title }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
-        <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/normalize.css">
+        <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/main.css">
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/static/app.css">
 
-        <link rel="stylesheet" href="modules/checkup/checkup.css">
+        <link rel="stylesheet" href="/static/modules/checkup/checkup.css">
 
         <!--link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"-->
-        <link rel="stylesheet" href="modules/user/user.css">
+        <link rel="stylesheet" href="/static/modules/user/user.css">
 
-        <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="/static/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <div class="container header">
@@ -30,10 +30,16 @@
                 </div>
                 <div class="login col-md-3 text-left">
                     <ul class="social-menu">
+                    {{#user}}
+                        <li>{{ name }}</li>
+                        <li><img src="{{ picture }}"</li>
+                    {{/user}}
+                    {{^user}}
                         <li>Login</li>
-                        <li><a href="#/facebook">f</a></li>
-                        <li><a href="#/twitter">t</a></li>
-                        <li><a href="#/mail">m</a></li>
+                        <li><a href="/auth/facebook">f</a></li>
+                        <li><a href="/auth/twitter">t</a></li>
+                        <li><a href="/auth/mail">m</a></li>
+                    {{/user}}
                     </ul>
                 </div>
             </div>
@@ -51,26 +57,26 @@
             </div>
         </div>
 
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/static/bower_components/underscore/underscore-min.js"></script>
 
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/static/bower_components/angular/angular.js"></script>
+        <script src="/static/bower_components/angular-route/angular-route.js"></script>
+        <script src="/static/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="/static/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="/static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-        <script src="js/services.js"></script>
-        <script src="app.js"></script>
-        <script src="modules/home/home.js?1"></script>
+        <script src="/static/js/services.js"></script>
+        <script src="/static/app.js"></script>
+        <script src="/static/modules/home/home.js?1"></script>
 
-        <script src="modules/user/user.js"></script>
-        <script src="modules/user/controllers.js"></script>
+        <script src="/static/modules/user/user.js"></script>
+        <script src="/static/modules/user/controllers.js"></script>
 
-        <script src="modules/checkup/checkup.js"></script>
-        <script src="modules/checkup/controllers.js"></script>
+        <script src="/static/modules/checkup/checkup.js"></script>
+        <script src="/static/modules/checkup/controllers.js"></script>
 
     </body>
 </html>

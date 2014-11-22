@@ -10,24 +10,18 @@ var passport = require('passport'),
 
 
 passport.serializeUser(function(user, done) {
+    debug('seralizando');
+    debug(user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
 
-    User.read({id: id}, {}).then(function (result) {
-        done(null, result);
-        return when.reject({errorCode: 404, message: 'Checkup not found'});
+    User.read({id: id}).then(function (result) {
+        return done(null, result);
     });
 
 });
-
-
-var success_login = function(req, res, done) {
-    debug('redirecting');
-    res.redirect('/');
-};
-
 
 
 module.exports = function() {
@@ -38,7 +32,10 @@ for(var strategy in keys) {
 
     router.get('/' + provider, passport.authenticate(provider));
 
-    router.get('/' + provider + '/callback', passport.authenticate(provider, { failureRedirect: '/#/home' }), success_login );
+    router.get('/' + provider + '/callback', passport.authenticate(provider, { 
+        failureRedirect: '/',
+        successRedirect: '/'
+    }));
 
     var Strategy = require('passport-' + provider).Strategy;
 
