@@ -9,10 +9,7 @@ User = Persistence.Model.extend({
     tableName: 'User',
 
     permittedAttributes: [
-        'id', 'uuid', 'name', 'slug', 'password', 'email', 'image', 'cover', 'bio', 'website', 'location',
-        'accessibility', 'status', 'language', 'meta_title', 'meta_description', 'last_login', 'created_at',
-        'created_by', 'updated_at', 'updated_by'
-    ],
+        'id', 'name', 'password', 'mail', 'picture', 'provider', 'provider_id', 'username' ],
 
     validate: function () {
         //Persistence.validator.check(this.get('email'), "Please enter a valid email address. That one looks a bit dodgy.").isEmail();
@@ -46,6 +43,7 @@ User = Persistence.Model.extend({
 
         var self = this,
             userData = _.extend({}, _user);
+            return Persistence.Model.add.call(self, userData);
         /*
         return validatePasswordLength(userData.password).then(function () {
             return self.forge().fetch();

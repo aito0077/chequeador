@@ -1,53 +1,50 @@
 var passport = require('passport'),
+    when = require('when'),
     config = require('./config/config.json'),
-    keys = require('./config/keys.json');
+    keys = require('./config/keys.json'),
+    debug = require('debug')('chequeador'),
+    gravatar = require('gravatar'),
+    express = require('express'),
+    router = express.Router(),
+    User = require('./models/user').User;
 
-var User = mongoose.model('User');
 
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user){
-    done(err, user);
-  });
+
+    User.read({id: id}, {}).then(function (result) {
+        done(null, result);
+        return when.reject({errorCode: 404, message: 'Checkup not found'});
+    });
+
 });
 
+
+var success_login = function(req, res, done) {
+    debug('redirecting');
+    res.redirect('/');
+};
+
+
+
 module.exports = function() {
-
-var saveSubdomain = function(req, res, next) {
-  if(!req.session) req.session = {};
-  req.session.subdomain = (req.subdomains.length && req.subdomains[0]) || '';
-  next();
-};
-
-var redirectSubdomain = function(req, res) {
-  var domain = app.get('config').host;
-  if (req.session.subdomain !== '') {
-    domain = req.session.subdomain + '.' + domain;
-  }
-  res.redirect('http://' + domain + ':' + app.get('config').port);
-};
-
-
-app.set('providers', Object.keys(keys));
 
 for(var strategy in keys) {
 
   (function(provider){
 
-    app.get('/auth/' + provider, saveSubdomain,
-passport.authenticate(provider));
-    app.get('/auth/' + provider + '/callback', passport.authenticate(provider, {
-failureRedirect: '/' }), redirectSubdomain);
+    router.get('/' + provider, passport.authenticate(provider));
+
+    router.get('/' + provider + '/callback', passport.authenticate(provider, { failureRedirect: '/#/home' }), success_login );
 
     var Strategy = require('passport-' + provider).Strategy;
-    passport.use(new Strategy(keys[provider],
-    function(token, tokenSecret, profile, done) {
-      User.findOne({provider_id: profile.id, provider: provider}, function(err,
-user){
 
+    passport.use(new Strategy(keys[provider], function(token, tokenSecret, profile, done) {
+
+      User.read({provider_id: profile.id, provider: provider}, {}).then(function(user) {
         function setPicture(){
           if(profile.photos && profile.photos.length && profile.photos[0].value) {
             user.picture =  profile.photos[0].value.replace('_normal', '_bigger');
@@ -62,43 +59,44 @@ user){
         }
 
         if(!user) {
-          var user = new User();
+            debug('New user');
+          var user = {};
           user.provider = provider;
           user.provider_id = profile.id;
 
           if(profile.emails && profile.emails.length && profile.emails[0].value)
-            user.email = profile.emails[0].value;
+            user.mail = profile.emails[0].value;
 
           setPicture();
           
           user.name = profile.displayName || '';
           user.username = profile.username || profile.displayName;
-          user.save(function(err, user){  
-            done(null, user);
+
+
+          User.add(user).then(function(user_persisted){
+            done(null, user_persisted);
           });
         } else { 
+            debug('Existing user');
+            var picBefore = user.picture;
+            setPicture();
 
-          //Update user picture provider if url changed
-          var picBefore = user.picture;
-          setPicture();
-          
-          if (user.picture !== picBefore){
-            user.save(function(err, user){  
-              done(null, user);
-            });
-          }
-          else {
-            done(null, user);
-          }
+            if (user.picture !== picBefore){
+                User.update(user.toJSON()).then(function(user_persisted) {  
+                    done(null, user);
+                });
+            } else {
+                done(null, user);
+            }
 
         }
-      });
+      }) ;
     }));
 
   })(strategy);
 
 }
-
+    return router;
 };
 
 

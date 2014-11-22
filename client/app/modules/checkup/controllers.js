@@ -1,4 +1,3 @@
-//angular.module('checkupModule.controllers',['ngRoute', 'ui.router', 'sourceModule.controllers', 'contextModule.controllers'])
 angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
 .controller('CheckupViewController',['$scope', '$state', '$routeParams', 'Checkup', function($scope, $state, $routeParams, Checkup) {
@@ -84,8 +83,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         });
     };
 
-
-
 }])
 
 .controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', function($scope,Checkup, Quote, Category, $state){
@@ -101,15 +98,15 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.checkup.$save(function() {
 
         });
-    }
+    };
 
     $scope.isCheckupPersisted = function(){
         return $scope.checkup.id != null;
-    }
+    };
 
     $scope.close = function(){
         $state.go('view');
-    }
+    };
 
 }])
 
@@ -157,7 +154,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             default:
                 break;
         }
-    }    
+    };   
 
     $scope.addNewSource = function() {
         //validate
@@ -171,7 +168,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             new_source.type = $scope.current_type;
             $scope.sources[$scope.current_type].push(new_source);
         }
-    }
+    };
 
     $scope.addSource = function(){
         //validate
@@ -181,11 +178,11 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.source.$save(function(){
             $state.go('view');
         });
-    }
+    };
 
     $scope.entityDescriptionPlaceholder = function() {
         return $scope.current_type == 'ORI' ? 'Qué cargo/rol tiene?' : 'Por qué es relevante?';
-    }
+    };
 
 }])
 
@@ -216,117 +213,81 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
     $scope.close = function(){
         $state.go('view');
-    }
+    };
 
     $scope.isPersisted = function() {
         return persisted;
-    }
+    };
 
     $scope.addNewContext = function() {
         $scope.context = new Context();
-    }
+    };
 
     $scope.isCreating = function() {
         return $scope.context != null;
-    }
-
-
+    };
 
 }])
 
+.controller('CheckupQualificationController',['$scope', '$routeParams', '$state', 'Checkup', 'Rate', 'Qualification', 'Score', function($scope, $routeParams, $state, Checkup, Rate, Qualification, Score){
 
+    var persisted = false;
 
+    $scope.qualification = null;
 
-
-
-
-
-
-.controller('CheckupListController',function($scope,$window,Checkup){
-
-    $scope.checkups = Checkup.query();
-
-    $scope.deleteCheckup = function(checkup){
-        checkup.$delete(function(){
-            $window.location.href='';
-        });
-    }
-
-})
-
-.controller('CheckupCreateController',['$scope', 'Checkup', 'Quote', 'Category', '$window', function($scope,Checkup, Quote, Category, $window){
-
-    $scope.checkup = new Checkup();
-    $scope.checkup.quote = new Quote();
-
-    var categories = Category.query(function(data) {
-        $scope.categories = categories;
-    });
-
-
-    $scope.addCheckup = function(){
-        $scope.checkup.$save(function() {
-            $window.location.href='/#/checkups/'+$scope.checkup.id+'/view';
-        });
-    }
-
-}])
-
-.controller('CheckupItemViewController',['$scope', '$routeParams', 'Checkup', function($scope, $routeParams, Checkup) {
+    $scope.qualifications = [];
 
     $scope.checkup = Checkup.get({
-        id: $routeParams.id
+        id: $routeParams.checkup_id || 1
+    }, function() {
+        $scope.qualifications = $scope.checkup.qualifications;        
+        if(_.size($scope.qualifications) == 0) {
+           $scope.qualification = new Rate(); 
+        }
+
     });
 
-    $scope.phases = [
-        {
-            id: 'creation',
-            title: 'Creación',
-            order: 'one',
-            icon: 'exclamation-sign'
-        },
-        {
-            id: 'sources',
-            title: 'Fuentes',
-            order: 'two',
-            icon: 'question-sign'
-        },
-        {
-            id: 'context',
-            title: 'Contexto',
-            order: 'three',
-            icon: 'info-sign'
-        },
-        {
-            id: 'qualification',
-            title: 'Calificación',
-            order: 'four',
-            icon: 'ok-sign'
-        }
-    ];
+    var quality_measures = Qualification.query(function(data) {
+        $scope.quality_measures = quality_measures;
+    });
 
-    $scope.current_phase = $scope.phases[0];
-    
-    $scope.activePhase = function(phase) {
-        $scope.current_phase = _.find($scope.phases, function(phase_item) {
-            return phase_item.id == phase;
+    var scores_measures = Score.query(function(data) {
+        $scope.scores_measures = scores_measures;
+    });
+
+    $scope.addQualification = function(){
+        $scope.qualification.checkup_id = $scope.checkup.id;
+        $scope.qualification.$save(function(){
+            persisted = true;
+        });
+    }
+
+    $scope.close = function(){
+        $state.go('view');
+    };
+
+    $scope.isPersisted = function() {
+        return persisted;
+    };
+
+    $scope.addNewQualification = function() {
+        $scope.qualification = new Rate();
+    };
+
+    $scope.isCreating = function() {
+        return $scope.qualification != null;
+    };
+
+    $scope.scoreByType = function(type) {
+        return _.filter($scope.scores_measures, function(score) {
+            return score.qualification == type;
         });
     };
 
-}])
-
-
-.controller('CheckupEditController',function($scope,$state,$stateParams,Checkup){
-
-    $scope.updateCheckup=function(){
-        $scope.checkup.$update(function(){
-
-        });
+    $scope.setType = function(type) {
+        $scope.qualify_type = type;
     };
 
-    $scope.loadCheckup=function(){
-        $scope.checkup=Checkup.get({id:$stateParams.id});
-    };
+}]);
 
-    $scope.loadCheckup();
-});
+

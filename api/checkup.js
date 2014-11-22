@@ -33,7 +33,7 @@ checkups = {
 
     read: function read(args) {
         return persistence.Checkup.read(args, {
-            withRelated: ['quote', 'sources', 'contexts', 'entity']
+            withRelated: ['quote', 'sources', 'contexts', 'entity', 'qualifications']
         }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);

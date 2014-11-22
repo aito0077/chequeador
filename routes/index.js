@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+    debug = require('debug')('chequeador'),
+    router = express.Router();
 
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });

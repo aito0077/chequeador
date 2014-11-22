@@ -34,6 +34,20 @@ angular.module('checkApp.services',['ngResource']).
             }
         });
     }]).
+    factory('Rate',['$resource', function($resource){
+        return $resource('http://localhost:3000/api/rates/:id', { id:'@id' }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }]).
+    factory('Score',['$resource', function($resource){
+        return $resource('http://localhost:3000/api/scores/:id', { id:'@id' }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    }]).
     factory('Qualification',['$resource', function($resource){
         return $resource('http://localhost:3000/api/qualifications/:id', { id:'@id' }, {
             update: {

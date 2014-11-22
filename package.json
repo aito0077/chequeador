@@ -23,6 +23,7 @@
     "passport-google": "0.3.0",
     "underscore": "1.7.0",
     "moment": "2.8.3",
-    "when": "3.6.2"
+    "when": "3.6.2",
+    "gravatar": "~1.0.6"
   }
 }

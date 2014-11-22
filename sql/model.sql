@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS `User`;
         
 CREATE TABLE `User` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(60) NULL,
   `username` VARCHAR(30) NULL,
   `password` VARCHAR(30) NULL,
   `provider` VARCHAR(30) NULL,

@@ -26,7 +26,7 @@ angular.module('checkApp.checkupModule', ['ngRoute','ui.router','ngResource', 'c
      })
      .state('qualification', {
         templateUrl: 'modules/checkup/partials/qualification.html',
-        controller: 'CheckupViewController'
+        controller: 'CheckupQualificationController'
      });
 
 }])

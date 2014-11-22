@@ -1,4 +1,5 @@
 var express = require('express'),
+    passport = require('passport'),
     debug = require('debug')('chequeador'),
     path = require('path'),
     favicon = require('serve-favicon'),
@@ -7,12 +8,14 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     routes = require('./routes/index'),
     users = require('./routes/users'),
+    auth = require('./auth'),
     api = require('./routes/api'),
     app = express();
 
-//app.set('views', path.join(__dirname, 'views'));
-app.set('views', path.join(__dirname, 'client/app'));
+app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'client/app'));
 app.set('view engine', 'hjs');
+
 
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -21,12 +24,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/app')));
 
-app.use('/', routes);
 //app.use('/users', users);
 app.use('/api', api);
+
+app.use('/auth', auth());
+
+app.use('/', routes);
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

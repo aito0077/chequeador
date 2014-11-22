@@ -1,0 +1,170 @@
+<div class="container col-md-12" ng-controller="CheckupQualificationController" >
+
+        <div class="step-centered">
+
+            <article class="step-entry">
+
+                <div class="row">
+                    <div class="step-entry-inner col-md-2">
+
+                        <div class="step-icon">
+                            1
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="step-icon">
+                            2
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="step-icon">
+                            3
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+
+                        <div class="step-icon">
+                            4
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="well-sm col-md-9" ng-switch on="isPersisted()">
+
+                        <div ng-switch-when="false">
+
+
+
+                            <div ng-show="!isCreating()" class="row">
+
+
+                                <div class="row">
+                                    
+                                    <small>LA FRASE</small>
+                                    <h2>"{{checkup.quote.text}}"</h2>
+                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <small>TU VALORACION ES</small>
+                                        <span class="btn black"> 
+                                            {{rate.qualification.description}}
+                                        </span>
+                                    </div>
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <small>TU CALIFICACION ES</small>
+                                        <span class="btn green"> 
+                                            {{rate.qualification.description}}
+                                        </span>
+                                    </div>
+                 
+                                </div>
+
+
+
+
+                                <button ng-click="addNewQualification()" class="btn">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                                    ¿Quisieras analizar el qualificationo de manera diferente?
+                                    <span>Abrir un debate</span> 
+                            </div>
+                 
+
+
+        
+                            <form ng-show="isCreating()" ng-submit="addQualification()">
+
+                                <div class="row">
+                                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                                        <label ng-click="setType(calification.id)" class="btn col-md-4" ng-repeat = 'calification in quality_measures'>
+                                            <input type="radio" ng-model="current_type" name="qualify_type" ng-value="calification.code" autocomplete="off"> {{calification.description}}
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" ng-show="qualify_type != null">
+                                    <div class="col-md-4">
+                                        <div class="btn-group" data-toggle="buttons"> 
+                                            <label ng-click="setScore(score_1 .id)" class="btn"  ng-repeat = 'score_1 in scoreByType(1)'  ng-disabled="qualify_type != 1">
+                                                <input type="radio"  name="score_type_1" autocomplete="off"> {{score_1.description}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" >
+                                        <div class="btn-group" data-toggle="buttons" >
+                                            <label ng-click="setScore(score_2.id)" class="btn"  ng-repeat = 'score_2 in scoreByType(2)' ng-disabled="qualify_type != 2">
+                                                <input type="radio" name="score_type_2" autocomplete="off"> {{score_2.description}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="btn-group" data-toggle="buttons"> 
+                                            <label ng-click="setScore(score_3.id)" class="btn"  ng-repeat='score_3 in scoreByType(3)'  ng-disabled="qualify_type != 3">
+                                                <input type="radio" name="score_type_2" autocomplete="off"> {{score_3.description}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row footer">
+                                    <div class="pull-right col-md-3">
+                                        <button type="submit" class="btn ">
+                                           Finalizar 
+                                        </button>
+                                    </div>
+                 
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div ng-switch-when="true">
+
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <h2>Felicitaciones!</h2>
+                                        <h4>Finalizaste con éxito los cuatro pasos del proceso!</h4>
+                                    </div>
+                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-3">
+                                        <button class="btn " ng-click="close()">
+                                           Volver al listado
+                                        </button>
+                                    </div>
+                 
+                                </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    
+</div>
+

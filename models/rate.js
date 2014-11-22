@@ -8,7 +8,7 @@ var Rate,
 
 Rate = Persistence.Model.extend({
 
-    tableName: 'Rate',
+    tableName: 'Rates',
 
     permittedAttributes: ['id', 'checkup_id', 'user_id', 'qualification', 'score', 'created_by' ],
 
