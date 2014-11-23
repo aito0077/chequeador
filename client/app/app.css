@@ -128,3 +128,28 @@ a:hover, a:visited, a:link, a:active {
 .voteBox.danger {
     color: #ff1f1f;
 }
+
+.process-view {
+    padding-top: 30px;
+    padding-left: 0px;
+    margin-left: 0px;
+    font-size: 18px;
+}
+
+.process-view small {
+    font-size: 12px;
+}
+
+.process-view .step-call {
+    cursor: pointer;
+}
+
+.process-view small:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+h5 {
+    color: #ff0000;
+}
+
