@@ -1,38 +1,34 @@
 <div class="row" ng-repeat="checkup in checkups">
-    <div class="col-md-9 checkup-row" data-checkup-id="{{checkup.id}}" >
+    <div class="col-md-12 checkup-row" data-checkup-id="{{checkup.id}}" >
         <div class="checkup-body">
-            <div class="col-md-1 checkup-status {{checkup.phase}} pull-left">
-                <span class="glyphicon glyphicon-tasks"></span>
-            </div>
-            <div class="col-md-7">
-                <a ng-href="#/checkup/{{checkup.id}}">
-                    <p>
+            <div class="col-md-8">
+                <a class="quote-text" ng-href="#/checkup/{{checkup.id}}">
+                <i class="fa fa-ellipsis-v"></i>
                      {{checkup.quote.text}}
-                    </p>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-1">
                 <small class="pull-right text-muted">
-                    {{checkup.entity.name}}
+                 {{checkup.entity.name}}
                 </small>
             </div>
             <div class="votacion col-md-1">
-                <div class="voteBox text-center" style="width: auto; font-size:14pt;">
+                <div class="voteBox text-center {{getClassByRate(checkup.rate)}}" style="width: auto; font-size:14pt;">
                     <div class="text-center">
-                        <i class="glyphicon glyphicon-chevron-up" title="+1"></i>
+                        <i class="glyphicon glyphicon-chevron-up" ng-click="voteUp(checkup.id)" title="+1" ng-show="user_id"></i>
                     </div>
-                    <div style="color:#737373;" class="text-center voteCount">
+                    <div class="text-center voteCount ">
                         {{checkup.rate}}
                     </div>
                     <div class="text-center">
-                        <i class="glyphicon glyphicon-chevron-down" title="-1"></i>
+                        <i class="glyphicon glyphicon-chevron-down" ng-click="voteDown(checkup.id)" title="-1" ng-show="user_id"></i>
                     </div>
                 </div>
             </div>
+            <div class="col-md-2 checkup-collaborators">
+                <small>Colaboraron</small>
+            </div>
         </div>
-    </div>
-    <div class="col-md-3 checkup-collaborators">
-        colaboradores
     </div>
 </div>
 

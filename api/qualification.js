@@ -1,6 +1,7 @@
 var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
+    action = require('./action'),
     filteredAttributes = ['created_by', 'created'],
     qualifications;
 

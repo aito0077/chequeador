@@ -8,9 +8,7 @@ Action = Persistence.Model.extend({
 
     tableName: 'Action',
 
-    permittedAttributes: [
-
-    ],
+    permittedAttributes: [ 'id', 'made_by', 'type', 'on', 'created_by' ],
 
     validate: function () {
         return true;

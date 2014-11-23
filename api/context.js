@@ -1,6 +1,7 @@
 var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
+    action = require('./action'),
     filteredAttributes = ['created_by', 'created'],
     contexts;
 
@@ -44,7 +45,15 @@ contexts = {
     },
 
     add: function add(data) {
-        return persistence.Context.add(data);
+        var user_id = this.user.id;
+        return persistence.Context.add(data).then(function(result) {
+            action.add({
+                made_by: user_id,
+                on: result.id,
+                type: 2,
+                created_by: user_id
+            });
+        });
     }
 
 

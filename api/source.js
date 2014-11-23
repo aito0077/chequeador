@@ -3,6 +3,7 @@ var when = require('when'),
     _ = require('underscore'),
     entities = require('./entity'),
     persistence = require('../models'),
+    action = require('./action'),
     filteredAttributes = [],
     sourceTypes = ['ORI', 'OFI', 'ALT'],
     sources;
@@ -52,9 +53,8 @@ sources = {
     },
 
     add: function add(data) {
-        debug(data);
-        debug(data['entity']);
         var entity = data.entity,
+            user_id = this.user.id,
             new_entity = {
                 name: entity.name,
                 description: entity.description,
@@ -66,9 +66,15 @@ sources = {
             });
 
         persistence.Entity.add(new_entity).then(function (result_entity) {
-            debug(result_entity);
             source_to_persist.source_entity_id = result_entity.id || 1;
-            return persistence.Source.add(source_to_persist);
+            return persistence.Source.add(source_to_persist).then(function(){
+                 action.add({
+                    made_by: user_id,
+                    on: result_entity.id,
+                    type: 2,
+                    created_by: user_id
+                });
+            });
         });
 
 

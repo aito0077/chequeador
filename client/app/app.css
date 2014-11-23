@@ -1,19 +1,66 @@
 /* app css stylesheet */
 
-#main_container {
+body {
+    font-family: font-family: 'Droid Sans', sans-serif !important;
+}
 
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}
+
+
+.session-bar {
+    padding: 10px 15px 0 15px;
+}
+
+.session-bar a {
+    color: #000;
+}
+
+.brand {
+    font-size: 24px;
+}
+
+.login{
+    font-size: 15px;
+}
+
+.login-name {
+    font-size: 15px;
+    color: #ff0000;
+}
+
+.login-picture {
+    heigth: 30px;
+    width: 30px;
+}
+
+.status-bar {
+    color: #FFF;
+    background-color: #ff0000;
+    font-size: 15px; 
+    height: 65px;
+    padding: 25px 15px 0 15px;
+} 
+
+.status-bar .status-action {
+    text-transform: uppercase;
+}
+
+.status-bar a {
+    color: #FFF;
+}
+
+
+#main_container {
     min-height: 400px;
 }
 
 .header {
   list-style: none;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+  margin: 0px;
+  padding: 0px;
 }
-
-.header > .session-bar {
-
-} 
 
 .header > .session-bar > login {
   display: inline;
@@ -33,13 +80,51 @@
   padding-right: 0.3em;
 }
 
+.social-menu > li:nth-child(1) {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
 .social-menu > li:nth-child(1):before {
   content: "";
   padding: 0;
 }
 
-.header > .status-bar {
-    color: #FFF;
-    background-color: #ff0000;
-} 
+.social-menu > li:nth-child(2):before {
+  content: "";
+  padding: 0;
+}
 
+.footer {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.footer-brand {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+.checkup-body {
+    font-size: 15px; 
+    height: 65px;
+    padding: 25px 15px 0 15px;
+}
+
+.quote-text {
+    color: #000;
+    font-size: 20px;
+}
+
+.quote-text a:hover, .quote-text a:visited, .quote-text a:link, .quote-text a:active {
+    text-decoration: none;
+}
+
+.voteBox.success {
+    color: #00ff00;
+}
+
+.voteBox.danger {
+    color: #ff1f1f;
+}

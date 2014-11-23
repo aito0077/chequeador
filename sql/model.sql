@@ -350,6 +350,7 @@ CREATE TABLE `Category` (
 -- ---
 -- Foreign Keys 
 -- ---
+/*
 
 ALTER TABLE `Rates` ADD FOREIGN KEY (checkup_id) REFERENCES `Checkup` (`id`);
 ALTER TABLE `Rates` ADD FOREIGN KEY (user_id) REFERENCES `Checkup_User` (`user_id`);
@@ -373,6 +374,7 @@ ALTER TABLE `Action` ADD FOREIGN KEY (type) REFERENCES `Action_Type` (`id`);
 ALTER TABLE `Comment` ADD FOREIGN KEY (input_id) REFERENCES `Input` (`id`);
 ALTER TABLE `Score` ADD FOREIGN KEY (qualification) REFERENCES `Qualification` (`id`);
 
+*/
 -- ---
 -- Table Properties
 -- ---
@@ -438,6 +440,14 @@ INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'D
 INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
 
 INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
+
+
+INSERT INTO `Action_Type` (`code`, `description`) VALUES ('VOU', 'Voto +');
+INSERT INTO `Action_Type` (`code`, `description`) VALUES ('COL', 'Colaboro');
+INSERT INTO `Action_Type` (`code`, `description`) VALUES ('CRE', 'Creo');
+INSERT INTO `Action_Type` (`code`, `description`) VALUES ('CAL', 'Califico');
+INSERT INTO `Action_Type` (`code`, `description`) VALUES ('VOD', 'Voto -');
+
 
 -- INSERT INTO `Rates` (`checkup_id`,`user_id`,`qualification`,`score`) VALUES ('','','','','');
 -- INSERT INTO `Source` (`checkup_id`,`source_entity_id`,`type`,`what`,`checked`,`observation`) VALUES ('','','','','','','');

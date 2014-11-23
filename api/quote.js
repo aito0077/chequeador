@@ -45,8 +45,6 @@ quotes = {
     },
 
     add: function add(data) {
-        debug('adding quote');
-        debug(data);
         return persistence.Quote.add(data);
     }
 

@@ -21,6 +21,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
 }])
 .controller('HomeController', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
 
+    console.log($scope.user_id);
     $scope.phases = [
         {
             id: 'creation',
@@ -52,5 +53,40 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         $scope.categories = categories;
     });
 
+    $scope.voteUp = function(checkup_id) {
+        $http.get('/api/checkup/vote-up/'+checkup_id).
+        success(function(data, status, headers, config) {
+            console.log('llego');
+            var checkups = Checkup.query(function(data) {
+                $scope.checkups = checkups;
+            });
+        }).
+        error(function(data, status, headers, config) {
+            console.log('err');
+        });
+    };
+
+    $scope.voteDown = function(checkup_id) {
+        $http.get('/api/checkup/vote-down/'+checkup_id).
+        success(function(data, status, headers, config) {
+            console.log('llego');
+            var checkups = Checkup.query(function(data) {
+                $scope.checkups = checkups;
+            });
+        }).
+        error(function(data, status, headers, config) {
+            console.log('err');
+        });
+    };
+
+    $scope.getClassByRate = function(rate) {
+        if(rate > 0) {
+            return 'success';
+        }   
+        if(rate < 0) {
+            return 'danger';
+        }   
+        return '';
+    }
 }]);
 

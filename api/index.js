@@ -24,14 +24,15 @@ var _ = require('underscore'),
     requestHandler;
 
 
+/*
 requestHandler = function (apiMethod) {
     return function (req, res) {
+        debug('options');
+        debug(req.user);
         var options = _.extend(req.body, req.files, req.query, req.params),
             apiContext = {
-                user: req.session && req.session.user
+                user: req.user
             };
-        debug(options);
-
         return apiMethod.call(apiContext, options).then(function (result) {
             res.json(result || {});
         }, function (error) {
@@ -42,6 +43,7 @@ requestHandler = function (apiMethod) {
         });
     };
 };
+*/
 
 module.exports = {
     users: users,
@@ -63,6 +65,7 @@ module.exports = {
     roleTypes: roleType,
     scores: score,
     sources: source,
-    sourceTypes: sourceType,
+    sourceTypes: sourceType/*,
     requestHandler: requestHandler
+    */
 };

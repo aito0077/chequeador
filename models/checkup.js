@@ -13,7 +13,7 @@ Checkup = Persistence.Model.extend({
 
     tableName: 'Checkup',
 
-    permittedAttributes: ['id', 'status', 'phase', 'fork_from', 'created_by' ],
+    permittedAttributes: ['id', 'status', 'phase', 'fork_from', 'created_by', 'rate', 'entity_id' ],
 
     quote: function() {
         return this.hasOne(Quote, 'checkup_id');

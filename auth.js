@@ -10,15 +10,13 @@ var passport = require('passport'),
 
 
 passport.serializeUser(function(user, done) {
-    debug('seralizando');
-    debug(user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
 
     User.read({id: id}).then(function (result) {
-        return done(null, result);
+        return done(null, result.toJSON());
     });
 
 });

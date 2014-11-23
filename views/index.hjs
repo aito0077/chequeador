@@ -13,32 +13,46 @@
         <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/main.css">
         <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/static/app.css">
+
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 
         <link rel="stylesheet" href="/static/modules/checkup/checkup.css">
 
-        <!--link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"-->
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/modules/user/user.css">
 
+        <link rel="stylesheet" href="/static/app.css">
         <script src="/static/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <div class="container header">
             <div class="session-bar row">
                 <div class="brand col-md-9">
-                    chequeador
+                    <a href="/"> chequeador</a>
                 </div>
-                <div class="login col-md-3 text-left">
+                <div class="login col-md-3 text-left pull-right">
                     <ul class="social-menu">
                     {{#user}}
-                        <li>{{ name }}</li>
-                        <li><img src="{{ picture }}"</li>
+                        <li class="login-name">{{ name }}</li>
+                        <li><img class="login-picture" src="{{ picture }}"</li>
                     {{/user}}
                     {{^user}}
                         <li>Login</li>
-                        <li><a href="/auth/facebook">f</a></li>
-                        <li><a href="/auth/twitter">t</a></li>
-                        <li><a href="/auth/mail">m</a></li>
+                        <li><a href="/auth/facebook"> 
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a></li>
+                        <li><a href="/auth/twitter">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a></li>
+                        <!--li><a href="/auth/mail">
+
+                        </a></li-->
                     {{/user}}
                     </ul>
                 </div>
@@ -50,7 +64,7 @@
 
         <div class="footer" >
             <div class="col-md-4 text-left">
-                Es un proyecto de chequeado
+                Es un proyecto de <span class="footer-brand">chequeado</span>
             </div>
             <div class="col-md-4 text-right">
                 Motorizado por HackHackers
@@ -64,8 +78,6 @@
         <script src="/static/bower_components/angular/angular.js"></script>
         <script src="/static/bower_components/angular-route/angular-route.js"></script>
         <script src="/static/bower_components/angular-resource/angular-resource.min.js"></script>
-        <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-        <script src="/static/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script src="/static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
         <script src="/static/js/services.js"></script>
@@ -77,6 +89,12 @@
 
         <script src="/static/modules/checkup/checkup.js"></script>
         <script src="/static/modules/checkup/controllers.js"></script>
+        
+        {{#user}}
+        <script>
+            window.user_id = {{user.id}};
+        </script>
+        {{/user}}
 
     </body>
 </html>

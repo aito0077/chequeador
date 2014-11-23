@@ -1,102 +1,121 @@
 var api = require('../api'),
     express = require('express'),
+    _ = require('underscore'),
+    debug = require('debug')('chequeador'),
     router = express.Router();
 
+var requestHandler = function (apiMethod) {
+    return function (req, res) {
+        var options = _.extend(req.body, req.files, req.query, req.params),
+            apiContext = {
+                user: req.user
+            };
+        
+        return apiMethod.call(apiContext, options).then(function (result) {
+            res.json(result || {});
+        }, function (error) {
+            debug(error);
+            var errorCode = error.errorCode || 500,
+                errorMsg = {error: _.isString(error) ? error : (_.isObject(error) ? error.message : 'Unknown API Error')};
+            res.status(errorCode).json(errorMsg)
+        });
+    };
+};
 
 var authAPI = function(req, res, next) {
-    /*
-    if (false && (!req.session || !req.session.user)) {
+    if ((!req.user)) {
         res.json(401, { error: 'Please sign in' });
         return;
     }
-    */
 
     next();
 };
 
-router.get('/users/', authAPI, api.requestHandler(api.users.browse));
-router.get('/users/:id/', authAPI, api.requestHandler(api.users.read));
-router.put('/users/:id/', authAPI, api.requestHandler(api.users.edit));
+router.get('/users/', requestHandler(api.users.browse));
+router.get('/users/:id/', requestHandler(api.users.read));
+router.put('/users/:id/', requestHandler(api.users.edit));
 
-router.get('/actions/', authAPI, api.requestHandler(api.actions.browse));
-router.get('/actions/:id/', authAPI, api.requestHandler(api.actions.read));
-router.put('/actions/:id/', authAPI, api.requestHandler(api.actions.edit));
+router.get('/actions/', requestHandler(api.actions.browse));
+router.get('/actions/:id/', requestHandler(api.actions.read));
+router.put('/actions/:id/', requestHandler(api.actions.edit));
 
-router.get('/action-types/', authAPI, api.requestHandler(api.actionTypes.browse));
-router.get('/action-types/:id/', authAPI, api.requestHandler(api.actionTypes.read));
-router.put('/action-types/:id/', authAPI, api.requestHandler(api.actionTypes.edit));
+router.get('/action-types/', requestHandler(api.actionTypes.browse));
+router.get('/action-types/:id/', requestHandler(api.actionTypes.read));
+router.put('/action-types/:id/', authAPI, requestHandler(api.actionTypes.edit));
 
-router.get('/categories/', authAPI, api.requestHandler(api.categories.browse));
-router.get('/categories/:id/', authAPI, api.requestHandler(api.categories.read));
-router.put('/categories/:id/', authAPI, api.requestHandler(api.categories.edit));
+router.get('/categories/', requestHandler(api.categories.browse));
+router.get('/categories/:id/', requestHandler(api.categories.read));
+router.put('/categories/:id/', authAPI, requestHandler(api.categories.edit));
 
-router.get('/checkups/', authAPI, api.requestHandler(api.checkups.browse));
-router.get('/checkups/:id/', authAPI, api.requestHandler(api.checkups.read));
-router.put('/checkups/:id/', authAPI, api.requestHandler(api.checkups.edit));
-router.post('/checkups/', authAPI, api.requestHandler(api.checkups.add));
+router.get('/checkups/', requestHandler(api.checkups.browse));
+router.get('/checkups/:id/', requestHandler(api.checkups.read));
+router.get('/checkup/vote-up/:id', authAPI, requestHandler(api.checkups.voteUp));
+router.get('/checkup/vote-down/:id', authAPI, requestHandler(api.checkups.voteDown));
+router.put('/checkups/:id/', authAPI, requestHandler(api.checkups.edit));
+router.post('/checkups/', authAPI, requestHandler(api.checkups.add));
 
-router.get('/checkup-users/', authAPI, api.requestHandler(api.checkupUsers.browse));
-router.get('/checkup-users/:id/', authAPI, api.requestHandler(api.checkupUsers.read));
-router.put('/checkup-users/:id/', authAPI, api.requestHandler(api.checkupUsers.edit));
+router.get('/checkup-users/', requestHandler(api.checkupUsers.browse));
+router.get('/checkup-users/:id/', requestHandler(api.checkupUsers.read));
+router.put('/checkup-users/:id/', authAPI, requestHandler(api.checkupUsers.edit));
 
-router.get('/comments/', authAPI, api.requestHandler(api.comments.browse));
-router.get('/comments/:id/', authAPI, api.requestHandler(api.comments.read));
-router.put('/comments/:id/', authAPI, api.requestHandler(api.comments.edit));
+router.get('/comments/', requestHandler(api.comments.browse));
+router.get('/comments/:id/', requestHandler(api.comments.read));
+router.put('/comments/:id/', authAPI, requestHandler(api.comments.edit));
 
-router.get('/contexts/', authAPI, api.requestHandler(api.contexts.browse));
-router.get('/contexts/:id/', authAPI, api.requestHandler(api.contexts.read));
-router.put('/contexts/:id/', authAPI, api.requestHandler(api.contexts.edit));
-router.post('/contexts/', authAPI, api.requestHandler(api.contexts.add));
+router.get('/contexts/', requestHandler(api.contexts.browse));
+router.get('/contexts/:id/', requestHandler(api.contexts.read));
+router.put('/contexts/:id/', authAPI, requestHandler(api.contexts.edit));
+router.post('/contexts/', authAPI, requestHandler(api.contexts.add));
 
-router.get('/entities/', authAPI, api.requestHandler(api.entities.browse));
-router.get('/entities/:id/', authAPI, api.requestHandler(api.entities.read));
-router.put('/entities/:id/', authAPI, api.requestHandler(api.entities.edit));
+router.get('/entities/', requestHandler(api.entities.browse));
+router.get('/entities/:id/', requestHandler(api.entities.read));
+router.put('/entities/:id/', authAPI, requestHandler(api.entities.edit));
 
-router.get('/entity-relations/', authAPI, api.requestHandler(api.entityRelations.browse));
-router.get('/entity-relations/:id/', authAPI, api.requestHandler(api.entityRelations.read));
-router.put('/entity-relations/:id/', authAPI, api.requestHandler(api.entityRelations.edit));
+router.get('/entity-relations/', requestHandler(api.entityRelations.browse));
+router.get('/entity-relations/:id/', requestHandler(api.entityRelations.read));
+router.put('/entity-relations/:id/', authAPI, requestHandler(api.entityRelations.edit));
 
-router.get('/entity-types/', authAPI, api.requestHandler(api.entityTypes.browse));
-router.get('/entity-types/:id/', authAPI, api.requestHandler(api.entityTypes.read));
-router.put('/entity-types/:id/', authAPI, api.requestHandler(api.entityTypes.edit));
+router.get('/entity-types/', requestHandler(api.entityTypes.browse));
+router.get('/entity-types/:id/', requestHandler(api.entityTypes.read));
+router.put('/entity-types/:id/', authAPI, requestHandler(api.entityTypes.edit));
 
-router.get('/inputs/', authAPI, api.requestHandler(api.inputs.browse));
-router.get('/inputs/:id/', authAPI, api.requestHandler(api.inputs.read));
-router.put('/inputs/:id/', authAPI, api.requestHandler(api.inputs.edit));
+router.get('/inputs/', requestHandler(api.inputs.browse));
+router.get('/inputs/:id/', requestHandler(api.inputs.read));
+router.put('/inputs/:id/', authAPI, requestHandler(api.inputs.edit));
 
-router.get('/qualifications/', authAPI, api.requestHandler(api.qualifications.browse));
-router.get('/qualifications/:id/', authAPI, api.requestHandler(api.qualifications.read));
-router.put('/qualifications/:id/', authAPI, api.requestHandler(api.qualifications.edit));
+router.get('/qualifications/', requestHandler(api.qualifications.browse));
+router.get('/qualifications/:id/', requestHandler(api.qualifications.read));
+router.put('/qualifications/:id/', authAPI, requestHandler(api.qualifications.edit));
 
-router.get('/quotes/', authAPI, api.requestHandler(api.quotes.browse));
-router.get('/quotes/:id/', authAPI, api.requestHandler(api.quotes.read));
-router.put('/quotes/:id/', authAPI, api.requestHandler(api.quotes.edit));
+router.get('/quotes/', requestHandler(api.quotes.browse));
+router.get('/quotes/:id/', requestHandler(api.quotes.read));
+router.put('/quotes/:id/', authAPI, requestHandler(api.quotes.edit));
 
-router.get('/rates/', authAPI, api.requestHandler(api.rates.browse));
-router.get('/rates/:id/', authAPI, api.requestHandler(api.rates.read));
-router.put('/rates/:id/', authAPI, api.requestHandler(api.rates.edit));
-router.post('/rates/', authAPI, api.requestHandler(api.rates.add));
+router.get('/rates/', requestHandler(api.rates.browse));
+router.get('/rates/:id/', requestHandler(api.rates.read));
+router.put('/rates/:id/', authAPI, requestHandler(api.rates.edit));
+router.post('/rates/', authAPI, requestHandler(api.rates.add));
 
-router.get('/relation-types/', authAPI, api.requestHandler(api.relationTypes.browse));
-router.get('/relation-types/:id/', authAPI, api.requestHandler(api.relationTypes.read));
-router.put('/relation-types/:id/', authAPI, api.requestHandler(api.relationTypes.edit));
+router.get('/relation-types/', requestHandler(api.relationTypes.browse));
+router.get('/relation-types/:id/', requestHandler(api.relationTypes.read));
+router.put('/relation-types/:id/', authAPI, requestHandler(api.relationTypes.edit));
 
-router.get('/role-types/', authAPI, api.requestHandler(api.roleTypes.browse));
-router.get('/role-types/:id/', authAPI, api.requestHandler(api.roleTypes.read));
-router.put('/role-types/:id/', authAPI, api.requestHandler(api.roleTypes.edit));
+router.get('/role-types/', requestHandler(api.roleTypes.browse));
+router.get('/role-types/:id/', requestHandler(api.roleTypes.read));
+router.put('/role-types/:id/', authAPI, requestHandler(api.roleTypes.edit));
 
-router.get('/scores/', authAPI, api.requestHandler(api.scores.browse));
-router.get('/scores/:id/', authAPI, api.requestHandler(api.scores.read));
-router.put('/scores/:id/', authAPI, api.requestHandler(api.scores.edit));
+router.get('/scores/', requestHandler(api.scores.browse));
+router.get('/scores/:id/', requestHandler(api.scores.read));
+router.put('/scores/:id/', authAPI, requestHandler(api.scores.edit));
 
-router.get('/checkups/:checkup_id/sources', authAPI, api.requestHandler(api.sources.browse));
-router.get('/sources/', authAPI, api.requestHandler(api.sources.browse));
-router.get('/sources/:id/', authAPI, api.requestHandler(api.sources.read));
-router.put('/sources/:id/', authAPI, api.requestHandler(api.sources.edit));
-router.post('/sources/', authAPI, api.requestHandler(api.sources.add));
+router.get('/checkups/:checkup_id/sources', requestHandler(api.sources.browse));
+router.get('/sources/', requestHandler(api.sources.browse));
+router.get('/sources/:id/', requestHandler(api.sources.read));
+router.put('/sources/:id/', authAPI, requestHandler(api.sources.edit));
+router.post('/sources/', authAPI, requestHandler(api.sources.add));
 
-router.get('/source-types/', authAPI, api.requestHandler(api.sourceTypes.browse));
-router.get('/source-types/:id/', authAPI, api.requestHandler(api.sourceTypes.read));
-router.put('/source-types/:id/', authAPI, api.requestHandler(api.sourceTypes.edit));
+router.get('/source-types/', requestHandler(api.sourceTypes.browse));
+router.get('/source-types/:id/', requestHandler(api.sourceTypes.read));
+router.put('/source-types/:id/', authAPI, requestHandler(api.sourceTypes.edit));
 
 module.exports = router;
