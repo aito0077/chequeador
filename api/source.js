@@ -62,22 +62,20 @@ sources = {
             },
             source_to_persist = _.extend(data, {
                 created_by: user_id,
-                type: _.indexOf(sourceTypes, data.type)
+                type: _.indexOf(sourceTypes, data.type || 0) + 1
             });
 
-        debug('ha insertar entidad');
-        entities.add(new_entity).then(function (result_entity) {
+        return persistence.Entity.add(new_entity).then(function (result_entity) {
             source_to_persist.source_entity_id = result_entity.id;
-            debug('ha insertar fuente');
-            persistence.Source.add(source_to_persist).then(function(source_persisted){
+            return persistence.Source.add(source_to_persist).then(function(source_persisted){
                 if(source_persisted) {
-                    debug('ha insertar accion');
                      action.add({
                         made_by: user_id,
                         on: source_persisted.id,
                         type: 2,
                         created_by: user_id
                     });
+                    source_persisted.set({entity: entity});
                     return source_persisted;
                 }
                 return when.reject({errorCode: 404, message: 'Checkup not inserted'});

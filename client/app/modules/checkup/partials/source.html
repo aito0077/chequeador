@@ -24,7 +24,7 @@
 
                     </div>
 
-                    <div class="well-sm col-md-9" ng-switch on="isCheckupPersisted()">
+                    <div class="well-sm col-md-9" ng-switch on="sourcePersisted">
                         <div ng-switch-when="false">
         
                             <form ng-submit="addSource()">
@@ -50,7 +50,7 @@
                                 <div id="original_source" ng-show="current_type == 'ORI'">
                                      <div class="row">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="name" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                            <input type="text" class="form-control" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" ng-model="source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
@@ -65,7 +65,7 @@
                                 <div ng-show="current_type != 'ORI'">
                                      <div class="row" ng-repeat="item_source in sources[current_type]">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="name" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                            <input type="text" class="form-control" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
                                         </div>
                                         <div class="form-group" ng-show="current_type == 'ALT'">
                                             <input type="text" class="form-control" ng-model="item_source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
@@ -102,13 +102,17 @@
                             </form>
                         </div>
                         <div ng-switch-when="true">
+
+                            <br/>
+                            <br/>
                                 <div class="row">
-                                    <div class="col-md-offset-4 col-md-3">
-                                        <h1>Felicitaciones!</h1>
-                                        <h3>Finalizaste con éxito el primer paso!</h3>
+                                    <div class="col-md-offset-3 col-md-8">
+                                        <h1>¡Felicitaciones!</h1>
+                                        <h5>Finalizaste con éxito el primer paso!</h5>
                                     </div>
-                 
                                 </div>
+
+                            <br/>
 
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-3">
@@ -121,6 +125,7 @@
                                 </div>
 
                         </div>
+
                     </div>
 
                 </div>

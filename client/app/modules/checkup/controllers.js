@@ -130,6 +130,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
     $scope.source = new Source();
     $scope.checkup_id = $routeParams.id;
+    $scope.sourcePersisted = false;
 
     console.log($routeParams.id);
     $scope.checkup = Checkup.get({
@@ -189,18 +190,19 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return; 
         }
 
-        console.dir(sources_to_persist);
         _.each(sources_to_persist, function(source) {
             if(_.isUndefined(source.id)) {
                 source.checkup_id = $scope.checkup_id;
                 source.$save();
             }
         });
+        $scope.sourcePersisted = true;
     };
 
     $scope.entityDescriptionPlaceholder = function() {
         return $scope.current_type == 'ORI' ? 'Qué cargo/rol tiene?' : 'Por qué es relevante?';
     };
+
 
 }])
 

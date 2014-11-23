@@ -59,10 +59,13 @@
 
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-3">
-                                        <button class="btn" ng-click="close()">
-                                           Ir al siguiente paso
-                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                                        </button>
+                                        <!--button class="btn" ng-click="close()"-->
+                                        <a ng-href="#/checkup/{{checkup.id}}">
+                                            <span class="btn">
+                                               Ir al siguiente paso
+                                                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                            </span>
+                                        </a>
                                     </div>
                  
                                 </div>
