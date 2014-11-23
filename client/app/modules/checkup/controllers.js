@@ -34,7 +34,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     ];
 
 
-
     if($routeParams.id == 'new') {
         $scope.checkup = new Checkup();
     } else {
@@ -73,7 +72,8 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         if(_.isUndefined($scope.checkup.id) && step != 'quote') {
             return;
         }
-        $state.go(step);
+        console.log('Checkup id: '+$scope.checkup.id);
+        $state.go(step, {checkup_id: $scope.checkup.id});
     };
 
     $scope.isStepDisabled = function(step) {
@@ -129,9 +129,11 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.source = new Source();
+    $scope.checkup_id = $routeParams.id;
 
+    console.log($routeParams.id);
     $scope.checkup = Checkup.get({
-        id: $routeParams.checkup_id || 1
+        id: $routeParams.id
     }, function() {
         $scope.sources['ORI'].entity = $scope.checkup.entity;
         $scope.source = $scope.sources['ORI'];
@@ -164,7 +166,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };   
 
     $scope.addNewSource = function() {
-        //validate
         var fullValidated = true;
         _.each($scope.sources[$scope.current_type], function(model) {
             model.invalid = (model.entity && model.entity.name && model.what ? false : true);
@@ -172,18 +173,28 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         });
         if(fullValidated) {
             var new_source = new Source();
+            new_source.checkup_id = $scope.checkup.id;
             new_source.type = $scope.current_type;
+            new_source.entity = {};
             $scope.sources[$scope.current_type].push(new_source);
         }
     };
 
     $scope.addSource = function(){
-        //validate
-        $scope.source.checkup_id = $scope.checkup.id;
-        $scope.source.type = $scope.source_type; 
-        $scope.source.entity = angular.fromJson($scope.entity); 
-        $scope.source.$save(function(){
-            $state.go('view');
+        $scope.message_error = null;
+
+        var sources_to_persist = _.union([$scope.sources['ORI']], $scope.sources['ALT'], $scope.sources['OFI']);
+        if(_.size(sources_to_persist) < 2) {
+            $scope.message_error = 'para finalizar el paso 2 tenes que consultar al menos 2 fuentes';
+            return; 
+        }
+
+        console.dir(sources_to_persist);
+        _.each(sources_to_persist, function(source) {
+            if(_.isUndefined(source.id)) {
+                source.checkup_id = $scope.checkup_id;
+                source.$save();
+            }
         });
     };
 
@@ -202,7 +213,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.contexts = [];
 
     $scope.checkup = Checkup.get({
-        id: $routeParams.checkup_id || 1
+        id: $routeParams.id 
     }, function() {
         $scope.contexts = $scope.checkup.contexts;        
         if(_.size($scope.contexts) == 0) {
@@ -245,7 +256,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.qualifications = [];
 
     $scope.checkup = Checkup.get({
-        id: $routeParams.checkup_id || 1
+        id: $routeParams.id
     }, function() {
         $scope.qualifications = $scope.checkup.qualifications;        
         if(_.size($scope.qualifications) == 0) {

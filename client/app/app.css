@@ -153,7 +153,8 @@ a:hover, a:visited, a:link, a:active {
     cursor: pointer;
 }
 
-h5 {
+h5, .call-atention {
     color: #ff0000;
+    text-transform: uppercase;
 }
 

@@ -46,7 +46,12 @@ entities = {
     },
 
     add: function add(data) {
-        return persistence.Entity.add(data);
+        return persistence.Entity.add(data).then(function(result) {
+            if(result) {
+                return result;
+            }
+            return when.reject({errorCode: 404, message: 'Entity not inserted'});
+        });
     }
 
 
