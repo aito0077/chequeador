@@ -34,7 +34,7 @@
                     <ul class="social-menu">
                     {{#user}}
                         <li class="login-name">{{ name }}</li>
-                        <li><img class="login-picture" src="{{ picture }}"</li>
+                        <li><img class="login-picture" src="{{ picture }}"/></li>
                     {{/user}}
                     {{^user}}
                         <li>Login</li>
@@ -95,6 +95,7 @@
             window.user_id = {{user.id}};
         </script>
         {{/user}}
+
 
     </body>
 </html>
