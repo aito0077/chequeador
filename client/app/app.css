@@ -144,7 +144,7 @@ a:hover, a:visited, a:link, a:active {
     cursor: none !important;
 }
 
-.process-view .step-call {
+.process-view .step-call, #help-action {
     cursor: pointer;
 }
 

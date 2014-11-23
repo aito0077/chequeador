@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ title }}</title>
+        <title>chequeador</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/normalize.css">
@@ -28,7 +28,7 @@
         <div class="container header">
             <div class="session-bar row">
                 <div class="brand col-md-9">
-                    <a href="/"> chequeador</a>
+                    <a href="#/home"> chequeador</a>
                 </div>
                 <div class="login col-md-3 text-left pull-right">
                     <ul class="social-menu">

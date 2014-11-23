@@ -72,7 +72,9 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         if(_.isUndefined($scope.checkup.id) && step != 'quote') {
             return;
         }
-        console.log('Checkup id: '+$scope.checkup.id);
+        if(_.isUndefined($scope.user_id)) {
+            return;
+        }
         $state.go(step, {checkup_id: $scope.checkup.id});
     };
 
