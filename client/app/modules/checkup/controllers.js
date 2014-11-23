@@ -70,7 +70,14 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.edit = function(step) {
+        if(_.isUndefined($scope.checkup.id) && step != 'quote') {
+            return;
+        }
         $state.go(step);
+    };
+
+    $scope.isStepDisabled = function(step) {
+        return (_.isUndefined($scope.checkup.id) && step != 'quote');
     };
 
     $scope.itemUrl= function(step) {
