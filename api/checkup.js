@@ -4,7 +4,7 @@ var when = require('when'),
     persistence = require('../models'),
     quotes = require('./quote'),
     action = require('./action'),
-    entity = require('./entity'),
+    entities = require('./entity'),
     filteredAttributes = ['created_by', 'created'],
     checkups;
 
@@ -107,26 +107,38 @@ checkups = {
         quote = data.quote,
         new_quote = {
             text: quote.text,
-            entity: quote.author.id || 1, //ENTITY
+            //entity: quote.author.id, //ENTITY
             _where: quote.where,
             when:   quote.when,
             category_id: quote.category.id,
             rate: quote.rate
+        },
+        new_entity = {
+            name: quote.author,
+            type: 1 //Hasta tanto administremos entidades
         };
-        return persistence.Checkup.add(checkup_to_persist).then(function (result) {
-            if (result) {
-                new_quote.checkup_id = result.id;
-                quotes.add(new_quote).then(function() {
-                    action.add({
-                        made_by: user_id,
-                        on: result.id,
-                        type: 3,
-                        created_by: user_id
+
+        return persistence.Entity.add(new_entity).then(function (result_entity) {
+            debug('insertada entidad');
+            checkup_to_persist.entity_id = result_entity.id;
+            new_quote.entity_id = result_entity.id;
+            return persistence.Checkup.add(checkup_to_persist).then(function (result) {
+                debug('insertada checkup');
+                if (result) {
+                    new_quote.checkup_id = result.id;
+                    quotes.add(new_quote).then(function() {
+                        debug('insertada quote');
+                        action.add({
+                            made_by: user_id,
+                            on: result.id,
+                            type: 3,
+                            created_by: user_id
+                        });
                     });
-                });
-                return result;
-            }
-            return when.reject({errorCode: 404, message: 'Checkup not inserted'});
+                    return result;
+                }
+                return when.reject({errorCode: 404, message: 'Checkup not inserted'});
+            });
         });
     }
 

@@ -9,9 +9,6 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
   });
 
  $stateProvider
-  .state('test2', {
-    templateUrl: 'modules/home/partials/test2.html'
-  })
   .state('list', {
     templateUrl: 'modules/home/partials/grid.html',
     controller: 'checkup-list'

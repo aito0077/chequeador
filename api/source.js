@@ -67,7 +67,7 @@ sources = {
 
         debug('ha insertar entidad');
         entities.add(new_entity).then(function (result_entity) {
-            source_to_persist.source_entity_id = result_entity.id || 1;
+            source_to_persist.source_entity_id = result_entity.id;
             debug('ha insertar fuente');
             persistence.Source.add(source_to_persist).then(function(source_persisted){
                 if(source_persisted) {

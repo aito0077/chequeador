@@ -2,7 +2,7 @@
             
             <div class="status-bar row">
                 <div class="col-md-9 status-action">
-                    <a ng-href="#/checkup/new">
+                    <a ng-href="#/checkup/new" ng-show="user_id">
                         Iniciar un Chequeo 
                         <i class="glyphicon glyphicon-play-circle"></i>
                     </a>
@@ -16,11 +16,11 @@
             <div class="container">
                 <div class="main-content">
 
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <div ui-view></div>
                     </div>
                     
-                    <div id="sidebar-wrapper" class="col-sm-3">
+                    <div id="sidebar-wrapper" class="col-sm-3" ng-show="showHelp">
                         <div class="sidebar-module sidebar-module-inset">
                             <p>
                                 El Chequeador es una herramienta participativa para realizar chequeos en forma colectiva desde cualquier plataforma gestionada de forma colectiva
