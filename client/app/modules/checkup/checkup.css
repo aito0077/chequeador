@@ -32,6 +32,10 @@
     margin-left: 30px;
 }
 
+.step-centered .step-entry.bg-active:before {
+    background: #ff0000 !important;
+}
+
 .step-centered .step-entry {
     position: relative;
     margin-top: 5px;

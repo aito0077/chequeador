@@ -120,6 +120,12 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         });
     };
 
+    $scope.isSourcesTypeEmpty = function(type) {
+        return _.isEmpty(_.filter($scope.checkup.sources, function(source) {
+                return source.type == type;
+        }));
+    };
+
 }])
 
 .controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', function($scope,Checkup, Quote, Category, $state){
