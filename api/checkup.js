@@ -3,6 +3,7 @@ var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
     quotes = require('./quote'),
+    contexts = require('./context'),
     action = require('./action'),
     entities = require('./entity'),
     filteredAttributes = ['created_by', 'created'],
@@ -36,13 +37,30 @@ checkups = {
         }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
-                return omitted;
+                
+                return contexts.browse({
+                    checkup_id: result.id
+                }).then(function(contexts_result) {
+                    omitted.full_contexts = contexts_result;
+                    return omitted;
+                });
+
             }
             return when.reject({errorCode: 404, message: 'Checkup not found'});
         });
     },
 
-    voteUp: function read(args) {
+    updatePhase: function updatePhase(checkup_id, phase) {
+
+        return persistence.Checkup.read({id: checkup_id}).then(function (result) {
+            if (result) {
+                return result.save({phase: phase});
+            }
+            return when.reject({errorCode: 404, message: 'Checkup not found'});
+        });
+    },
+
+    voteUp: function voteUp(args) {
         var user_id = this.user.id;
 
         return persistence.Checkup.read(args).then(function (result) {
@@ -64,7 +82,7 @@ checkups = {
         });
     },
 
-    voteDown: function read(args) {
+    voteDown: function voteDown(args) {
         var user_id = this.user.id;
 
         return persistence.Checkup.read(args).then(function (result) {
@@ -74,7 +92,7 @@ checkups = {
                     action.add({
                         made_by: user_id,
                         on: result.id,
-                        type: 1,
+                        type: 5,
                         created_by: user_id
                     });
                 });
@@ -84,6 +102,52 @@ checkups = {
             }
             return when.reject({errorCode: 404, message: 'Checkup not found'});
         });
+    },
+
+    checkups_collaborators: function edit(data) {
+        var user_id = _.isUndefined(this.user) ? false : this.user.id ;
+        debug('user_id: '+user_id);
+        return persistence.Persistence.knex
+                    .column('on', 'made_by', 'username', 'picture', 'type')
+                    .select()//.distinct('on','made_by')
+                    .from('Action')
+                    .innerJoin('User', 'Action.made_by', 'User.id')
+                    //.whereIn('type', [2, 3, 4])
+                    .groupBy('on', 'made_by', 'username', 'picture', 'type')
+                    .then(function(rows) {
+                        var map = {},
+                            votes = {},
+                            map_keys = {};
+                        
+                        _.each(rows, function(row) {
+                            var on = row['on'],
+                                made_by = row['made_by'],
+                                type = row['type'],
+                                uniq_key = on+'-'+made_by;
+
+                            if(!_.contains([1,5], type)) {
+                                if(_.isUndefined(map[on])) {
+                                    map[on] = [];
+                                } 
+                                if(_.isUndefined(map_keys[uniq_key])) {
+                                    map[on].push(row); 
+                                    map_keys[uniq_key] = true;
+                                }
+                            } else {
+                                debug('Usuario vota? '+row['made_by']+' - '+row['type']);
+                                if(user_id && made_by == user_id) {
+                                    votes[on] = type;
+                                }
+                            }
+                        });
+                        return {
+                            collaborators: map,
+                            own_votes: votes
+                        };
+                    }).catch(function(error) {
+                        debug(error);
+                        return {};
+                    });
     },
 
     edit: function edit(data) {

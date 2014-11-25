@@ -117,16 +117,13 @@ a:hover, a:visited, a:link, a:active {
     font-size: 20px;
 }
 
+.quote-text p {
+    padding-left: 15px;
+}
+
+
 .quote-text a:hover, .quote-text a:visited, .quote-text a:link, .quote-text a:active {
     text-decoration: none;
-}
-
-.voteBox.success {
-    color: #00ff00;
-}
-
-.voteBox.danger {
-    color: #ff1f1f;
 }
 
 .process-view {
@@ -162,3 +159,60 @@ h5, .call-atention {
     display:none !important;
 }
 
+.voteBox.success > .voteCount {
+    color: #00ff00;
+}
+
+.voteBox.danger > .voteCount {
+    color: #ff1f1f;
+}
+
+.voteBox.voted-up > .icon-up {
+    color: #00ff00;
+}
+
+.voteBox.voted-up, .voteBox.voted-down {
+    cursor: default !important;
+}
+
+.icon-up, .icon-down {
+    cursor: pointer;
+}
+
+.voteBox.voted-up > .icon-up {
+    color: #00ff00;
+}
+
+.voteBox.voted-down > .icon-down {
+    color: #ff1f1f;
+}
+
+.checkup-item {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    padding-bottom: 10px;
+}
+
+.checkup-status {
+    width: 8px;
+    height: 40px;
+    position: absolute;
+    margin-left: -10px;
+}
+
+.checkup-status.CREATION {
+  background: url(/static/img/creation.png);
+}
+.checkup-status.SOURCES {
+  background: url(/static/img/sources.png);
+}
+.checkup-status.CONTEXT {
+  background: url(/static/img/qualification.png);
+}
+.checkup-status.QUALIFICATION {
+  background: url(/static/img/qualification.png);
+}
+
+.collabola > img {
+    display: inline;
+}

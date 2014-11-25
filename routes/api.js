@@ -48,6 +48,7 @@ router.get('/categories/:id/', requestHandler(api.categories.read));
 router.put('/categories/:id/', authAPI, requestHandler(api.categories.edit));
 
 router.get('/checkups/', requestHandler(api.checkups.browse));
+router.get('/checkup/collaborators', requestHandler(api.checkups.checkups_collaborators));
 router.get('/checkups/:id/', requestHandler(api.checkups.read));
 router.get('/checkup/vote-up/:id', authAPI, requestHandler(api.checkups.voteUp));
 router.get('/checkup/vote-down/:id', authAPI, requestHandler(api.checkups.voteDown));

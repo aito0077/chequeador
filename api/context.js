@@ -1,30 +1,32 @@
 var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
+    _checkups = require('./checkup'),
     action = require('./action'),
-    filteredAttributes = ['created_by', 'created'],
+    debug = require('debug')('chequeador'),
+    filteredAttributes = ['created', 'tags'],
     contexts;
 
 contexts = {
     browse: function browse(options) {
-        return persistence.Context.browse(options).then(function (result) {
-            var i = 0,
-                omitted = {};
+        return persistence.Persistence.knex
+            .column('body', 'username', 'picture', 'tags', 'checkup_id')
+            .select()
+            .from('Context')
+            .innerJoin('User', 'Context.created_by', 'User.id')
+            .where('checkup_id', options.checkup_id)
+            .then(function(rows) {
+                return rows;
+            }).catch(function(error) {
+                return {error: error};
+            });
 
-            if (result) {
-                omitted = result.toJSON();
-            }
-
-            for (i = 0; i < omitted.length; i = i + 1) {
-                omitted[i] = _.omit(omitted[i], filteredAttributes);
-            }
-
-            return omitted;
-        });
     },
 
     read: function read(args) {
-        return persistence.Context.read(args).then(function (result) {
+        return persistence.Context.read(args, {
+            withRelated: ['creator']
+        }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;
@@ -45,7 +47,12 @@ contexts = {
     },
 
     add: function add(data) {
-        var user_id = this.user.id;
+        var user_id = this.user.id,
+            checkup_id = data.checkup_id;
+            if(_checkups) {
+                console.dir(_checkups);
+               // _checkups.updatePhase(checkup_id, 'CONTEXT');
+            }
         return persistence.Context.add(data).then(function(result) {
             action.add({
                 made_by: user_id,

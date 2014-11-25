@@ -1,6 +1,7 @@
 var when = require('when'),
     _ = require('underscore'),
     persistence = require('../models'),
+    checkups = require('./checkup'),
     filteredAttributes = ['created_by', 'created'],
     rates;
 
@@ -47,7 +48,13 @@ rates = {
     },
 
     add: function add(data) {
-        return persistence.Rate.add(data);
+        var user_id = this.user.id,
+            checkup_id = data.checkup_id;
+        data.user_id = user_id;
+        return persistence.Rate.add(data).then(function(rate_result) {
+            checkups.updatePhase(checkup_id, 'QUALIFICATION');
+            return rate_result;
+        });
     }
 
 

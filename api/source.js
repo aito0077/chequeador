@@ -2,6 +2,7 @@ var when = require('when'),
     debug = require('debug')('chequeador'),
     _ = require('underscore'),
     entities = require('./entity'),
+    checkups = require('./checkup'),
     persistence = require('../models'),
     action = require('./action'),
     filteredAttributes = [],
@@ -55,6 +56,7 @@ sources = {
     add: function add(data) {
         var entity = data.entity,
             user_id = this.user.id,
+            checkup_id = data.checkup_id,
             new_entity = {
                 name: entity.name,
                 description: entity.description,
@@ -75,6 +77,7 @@ sources = {
                         type: 2,
                         created_by: user_id
                     });
+                    checkups.updatePhase(checkup_id, 'SOURCES');
                     source_persisted.set({entity: entity});
                     return source_persisted;
                 }

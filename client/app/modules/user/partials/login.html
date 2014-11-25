@@ -1,30 +1,30 @@
-<div class="container">
+<div class="container login">
       
-    <script id="metamorph-1-start" type="text/x-placeholder">
-    </script>
-    <script id="metamorph-21-start" type="text/x-placeholder">
-    </script>
-
     <div class="container text-center">
         <form class="form-signin" data-ember-action="2">
             <h2 class="form-signin-heading">Entrar</h2>
 
-            <small class="text-muted">Conectar Chequeador con tu red social favorita</small>
+            <h5>Para continuar puedes ingresar con tu red social favorita</h5>
             <br/><br/>
             
             <p>
-                <a class="btn btn-primary social-login-btn social-facebook" href="/auth/facebook"><i class="fa fa-facebook"></i></a>
-                <a class="btn btn-primary social-login-btn social-twitter" href="/auth/twitter"><i class="fa fa-twitter"></i></a>
+
+            <a href="/auth/facebook?url={{back_url}}">
+                <span class="fa-stack fa-3x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+            </a>
+            <a href="/auth/twitter?url={{back_url}}">
+                <span style="colort: #000" class="fa-stack fa-3x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+            </a>
             </p>
-            <p>
-                <a class="btn btn-primary social-login-btn social-linkedin" href="/auth/linkedin"><i class="fa fa-linkedin"></i></a>
-                <a class="btn btn-primary social-login-btn social-google" href="/auth/google"><i class="fa fa-google-plus"></i></a>
-            </p>
-
-<br/><br/>
 
 
-            <small class="text-muted">O entrar de forma tradicional</small>
+            <!--small class="text-muted">O entrar de forma tradicional</small>
             <br/><br/>
             
             <input id="ember360" class="ember-view ember-text-field form-control login-input" placeholder="Email Address" type="text">
@@ -35,6 +35,6 @@
 
             <button class="btn btn-lg btn-primary btn-block btn-center" type="submit" data-bindattr-3="3">Entrar</button>
             <br/>
-            <small class="create-account text-muted">No tiene cuenta? <button id="ember363" class="ember-view btn btn-sm btn-default"> Registarse </button> </small>
+            <small class="create-account text-muted">No tiene cuenta? <button id="ember363" class="ember-view btn btn-sm btn-default"> Registarse </button> </small-->
         </form>
     </div>

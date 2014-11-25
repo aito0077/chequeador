@@ -46,33 +46,46 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         $scope.checkups = checkups;
     });
 
+    var collaborators = {};
+    var own_votes = {};
+
+    $http.get('/api/checkup/collaborators').
+    success(function(data, status, headers, config) {
+        collaborators = data.collaborators;
+        own_votes = data.own_votes;
+    }).error(function(data, status, headers, config) {
+
+    });
+
     var categories = Category.query(function(data) {
         $scope.categories = categories;
     });
 
     $scope.voteUp = function(checkup_id) {
+        if($scope.hasVote(checkup_id)) {
+            return;
+        }
         $http.get('/api/checkup/vote-up/'+checkup_id).
         success(function(data, status, headers, config) {
-            console.log('llego');
             var checkups = Checkup.query(function(data) {
                 $scope.checkups = checkups;
             });
         }).
         error(function(data, status, headers, config) {
-            console.log('err');
         });
     };
 
     $scope.voteDown = function(checkup_id) {
+        if($scope.hasVote(checkup_id)) {
+            return;
+        }
         $http.get('/api/checkup/vote-down/'+checkup_id).
         success(function(data, status, headers, config) {
-            console.log('llego');
             var checkups = Checkup.query(function(data) {
                 $scope.checkups = checkups;
             });
         }).
         error(function(data, status, headers, config) {
-            console.log('err');
         });
     };
 
@@ -84,6 +97,23 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
             return 'danger';
         }   
         return '';
-    }
+    };
+
+    $scope.getCollaborators = function(checkup_id) {
+        return  collaborators[checkup_id] || [];
+    };
+
+    $scope.hasVote = function(checkup_id) {
+        var voted = own_votes[checkup_id],
+            up = true;
+        if(!voted) return false;
+        up = (voted == 1 ? true : false);
+
+        return  {
+            class: 'voted-' + (up ? 'up' : 'down'),
+            up: up
+        }; 
+    };
+
 }]);
 

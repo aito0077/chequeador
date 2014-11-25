@@ -5,34 +5,43 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.phases = [
         {
             id: 'quote',
+            code: 'CREACION',
             title: 'Creación',
             text: 'Seleccionar una frase para chequear',
             empty: true,
+            active: true,
             icon: '1'
         },
         {
             id: 'source',
+            code: 'SOURCES',
             title: 'Fuentes',
             text: 'Consultar fuentes',
             empty: true,
+            active: true,
             icon: '2'
         },
         {
             id: 'context',
+            code: 'CONTEXT',
             title: 'Contexto',
             text: 'Poner en Contexto',
             empty: true,
+            active: true,
             icon: '3'
         },
         {
             id: 'qualification',
+            code: 'QUALIFICATION',
             title: 'Calificación',
             text: 'Calificar',
             empty: true,
+            active: true,
             icon: '4'
         }
     ];
 
+    $scope.current_phase = $scope.phases[0];
 
     if($routeParams.id == 'new') {
         $scope.checkup = new Checkup();
@@ -40,7 +49,9 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.checkup = Checkup.get({
             id: $routeParams.id
         }, function() {
+            
             _.each($scope.phases, function(phase) {
+                $scope.current_phase = (phase.code == $scope.checkup['phase']);
                 switch(phase.id) {
                     case 'quote':
                         phase['empty'] = !($scope.checkup['quote'] && $scope.checkup['quote'].text != '') ;
@@ -55,17 +66,31 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
                         phase['empty'] = _.isEmpty($scope.checkup['qualifications']);
                         break;
                 };
+                phase['active'] = !phase['empty'];
             });
         });
     }
 
 
-    $scope.current_phase = $scope.phases[0];
+    $scope.isActive = function(phase) {
+        return phase.active ? 'bg-active' : '';
+    };
     
     $scope.activePhase = function(phase) {
         $scope.current_phase = _.find($scope.phases, function(phase_item) {
             return phase_item.id == phase;
         });
+    };
+
+    $scope.add = function(step) {
+        if(_.isUndefined($scope.checkup.id) && step != 'quote') {
+            return;
+        }
+        if(_.isUndefined($scope.user_id)) {
+            return;
+        }
+
+        $state.go(step, {checkup_id: $scope.checkup.id});
     };
 
     $scope.edit = function(step) {
@@ -219,7 +244,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.checkup = Checkup.get({
         id: $routeParams.id 
     }, function() {
-        $scope.contexts = $scope.checkup.contexts;        
+        $scope.contexts = $scope.checkup.full_contexts;        
         if(_.size($scope.contexts) == 0) {
            $scope.context = new Context(); 
         }

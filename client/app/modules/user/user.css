@@ -1,20 +1,20 @@
+.container.login a {
+    decorator: none;
+    color:  #000;
+}
 
-/* brandico */
 [class*="brandico-"]:before {
   font-family: 'brandico', sans-serif;
 }
 
-/* entypo */
 [class*="entypo-"]:before {
   font-family: 'entypo', sans-serif;
 }
 
-/* openwebicons */
 [class*="openwebicons-"]:before {
   font-family: 'OpenWeb Icons', sans-serif;
 }
 
-/* zocial */
 [class*="zocial-"]:before {
   font-family: 'zocial', sans-serif;
 }
@@ -95,21 +95,21 @@
 }
 
 .social-twitter {
-  background-color: #1daee3;
-  border-color: #3997ba;
+  background-color: #000;
+  border-color: #000;
 }
 .social-twitter:hover {
-  background-color: #3997ba;
-  border-color: #347b95;
+  background-color: #000;
+  border-color: #000;
 }
 
 .social-facebook {
-  background-color: #4c699e;
-  border-color: #47618d;
+  background-color: #000;
+  border-color: #000;
 }
 .social-facebook:hover {
-  background-color: #47618d;
-  border-color: #3c5173;
+  background-color: #000;
+  border-color: #000;
 }
 
 .social-linkedin {

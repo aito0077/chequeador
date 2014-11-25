@@ -40,7 +40,9 @@
                             <form ng-submit="addContext()">
 
                                 <div class="row" ng-repeat="item_context in contexts">
+                                    
                                     <div class="form-group">
+                                        <h5> por {{item_context.username}}</h5>
                                         <textarea ng-model="item_context.body" class="form-control" rows="3" cols="25" disabled ></textarea>
                                     </div>
 
@@ -60,7 +62,7 @@
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     </button>
                                         ¿Quisieras analizar el contexto de manera diferente?
-                                        <span>Abrir un debate</span> 
+                                        <small ng-click="addNewContext()">Abrir un debate</small> 
                                 </div>
                      
 
