@@ -1,6 +1,6 @@
 angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
-.controller('CheckupViewController',['$scope', '$state', '$routeParams', 'Checkup', function($scope, $state, $routeParams, Checkup) {
+.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', function($scope, $state, $routeParams, $window, Checkup) {
 
     $scope.phases = [
         {
@@ -9,7 +9,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             title: 'Creación',
             text: 'Seleccionar una frase para chequear',
             empty: true,
-            active: true,
+            active: false,
             icon: '1'
         },
         {
@@ -18,7 +18,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             title: 'Fuentes',
             text: 'Consultar fuentes',
             empty: true,
-            active: true,
+            active: false,
             icon: '2'
         },
         {
@@ -27,7 +27,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             title: 'Contexto',
             text: 'Poner en Contexto',
             empty: true,
-            active: true,
+            active: false,
             icon: '3'
         },
         {
@@ -36,7 +36,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             title: 'Calificación',
             text: 'Calificar',
             empty: true,
-            active: true,
+            active: false,
             icon: '4'
         }
     ];
@@ -87,6 +87,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return;
         }
         if(_.isUndefined($scope.user_id)) {
+            $window.location.href = "/#/users/login?url="+ encodeURIComponent("checkup/"+$scope.checkup.id);
             return;
         }
 
@@ -98,8 +99,10 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return;
         }
         if(_.isUndefined($scope.user_id)) {
+            $window.location.href = "/#/users/login?url="+ encodeURIComponent("checkup/"+$scope.checkup.id);
             return;
         }
+
         $state.go(step, {checkup_id: $scope.checkup.id});
     };
 

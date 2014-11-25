@@ -6,6 +6,7 @@ var passport = require('passport'),
     gravatar = require('gravatar'),
     express = require('express'),
     router = express.Router(),
+    _ = require('underscore'),
     User = require('./models/user').User;
 
 
@@ -22,18 +23,39 @@ passport.deserializeUser(function(id, done) {
 });
 
 
+var keepReturnUrl = function(req, res, next) {
+  if(!req.session) req.session = {};
+    debug('Retorno a: '+req.url);
+  req.session.back_url = (req.url) || '/';
+  next();
+};
+
+var redirectReturnUrl = function(req, res) {
+  var back_url = '/';
+    debug('Session back: '+req.session.back_url);
+  if (!_.isUndefined(req.session.back_url)) {
+    back_url = req.session.back_url; 
+    debug('Retorno a: '+back_url);
+  }
+
+  res.redirect(back_url);
+};
+
+
+
+
 module.exports = function() {
 
 for(var strategy in keys) {
 
   (function(provider){
 
-    router.get('/' + provider, passport.authenticate(provider));
+    router.get('/' + provider, passport.authenticate(provider), keepReturnUrl);
 
     router.get('/' + provider + '/callback', passport.authenticate(provider, { 
-        failureRedirect: '/',
-        successRedirect: '/'
-    }));
+        failureRedirect: '/'
+        //successRedirect: '/'
+    }), redirectReturnUrl);
 
     var Strategy = require('passport-' + provider).Strategy;
 

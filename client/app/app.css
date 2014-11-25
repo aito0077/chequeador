@@ -207,10 +207,10 @@ h5, .call-atention {
   background: url(/static/img/sources.png);
 }
 .checkup-status.CONTEXT {
-  background: url(/static/img/qualification.png);
+  background: url(/static/img/context.png);
 }
 .checkup-status.QUALIFICATION {
-  background: url(/static/img/qualification.png);
+  background: url(/static/img/calification.png);
 }
 
 .collabola > img {

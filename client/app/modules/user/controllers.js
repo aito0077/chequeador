@@ -21,8 +21,9 @@ angular.module('userModule.controllers',['ngRoute'])
 }])
 
 .controller('UserLoginController', ['$scope', '$routeParams', 'User', function($scope,$routeParams,User){
+    console.log($routeParams.url);
 
-
+    $scope.back_url = encodeURIComponent($routeParams.url);
 }])
 
 
