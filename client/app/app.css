@@ -216,3 +216,47 @@ h5, .call-atention {
 .collabola > img {
     display: inline;
 }
+
+.checkup-item-view {
+
+}
+
+.checkup-item-view .checkup-item-header {
+    color: #ff0000;
+}
+
+.checkup-item-view blockquote {
+    border: 0px;
+    padding-left: 0px;
+}
+
+.checkup-item-view blockquote footer {
+    border: 0px;
+    padding-left: 0px;
+    display: block-inline;
+}
+
+.step-centered .step-entry .step-entry-inner .step-label p.text-quote {
+    font-size: 24px;
+    font-weight: bold;
+    display: block-inline;
+}
+
+.step-centered .step-entry .step-entry-inner .step-label p.text-context {
+    font-size: 14px;
+    font-weight: bold;
+    display: block-inline;
+}
+
+.checkup-item-view h2 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.checkup-item-view .text-source {
+    font-size: 12px;
+    color: #000;
+    padding-bottom: 5px;
+    
+}
+

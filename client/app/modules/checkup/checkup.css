@@ -141,7 +141,9 @@ font-size: 12px;
 
 .step-centered .step-entry .step-entry-inner .step-icon {
 background: #fff;
-color: #737881;
+color: #000;
+font-size: 16px;
+font-weight: bold;
 display: block;
 width: 40px;
 height: 40px;
@@ -161,7 +163,9 @@ float: left;
 }
 
 .step-centered .step-entry .step-entry-inner .step-icon.bg-active{
-color: #FF0000;
+color: #000;
+font-size: 16px;
+font-weight: bold;
 -moz-box-shadow: 0 0 0 2px #FF0000;
 -webkit-box-shadow: 0 0 0 2px #FF0000;
 box-shadow: 0 0 0 2px #FF0000;
@@ -199,7 +203,9 @@ color: #fff;
 
 .step-centered .step-entry .step-entry-inner .step-label {
 position: relative;
-padding: 1em;
+padding-left: 18px;
+padding-bottom: 18px;
+padding-right: 18px;
 margin-left: 60px;
 }
 
@@ -212,7 +218,7 @@ height: 0;
 }
 
 .step-centered .step-entry .step-entry-inner .step-label h2, .step-centered .step-entry .step-entry-inner .step-label p {
-color: #737881;
+color: #000;
 font-family: "Noto Sans",sans-serif;
 font-size: 12px;
 margin: 0;

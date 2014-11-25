@@ -1,21 +1,21 @@
-  <small>Las fuentes consultadas </smaill>
+  <small class="checkup-item-header">Las fuentes consultadas </smaill>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Original</h2>
-        <div ng-repeat="original in getSourcesByType(1)">
+        <div class="text-source" ng-repeat="original in getSourcesByType(1)">
            {{original.what}} 
         </div>
     </div>
     <div class="col-md-4">
         <h2>Oficial</h2>
-        <div ng-repeat="oficial in getSourcesByType(2)">
+        <div class="text-source" ng-repeat="oficial in getSourcesByType(2)">
            {{oficial.what}} 
         </div>
     </div>
     <div class="col-md-4">
         <h2>Alternativa</h2>
-        <div ng-repeat="alternativa in getSourcesByType(3)">
+        <div class="text-source" ng-repeat="alternativa in getSourcesByType(3)">
            {{alternativa.what}} 
         </div>
     </div>
