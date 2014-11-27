@@ -18,7 +18,6 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
 }])
 .controller('HomeController', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
 
-    console.log($scope.user_id);
     $scope.phases = [
         {
             id: 'creation',
@@ -46,20 +45,25 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         $scope.checkups = checkups;
     });
 
-    var collaborators = {};
-    var own_votes = {};
-
-    $http.get('/api/checkup/collaborators').
-    success(function(data, status, headers, config) {
-        collaborators = data.collaborators;
-        own_votes = data.own_votes;
-    }).error(function(data, status, headers, config) {
-
-    });
+    $scope.collaborators = {};
+    $scope.own_votes = {};
 
     var categories = Category.query(function(data) {
         $scope.categories = categories;
     });
+
+
+    var fetchCollaborators = function() {
+        $http.get('/api/checkup/collaborators').
+        success(function(data, status, headers, config) {
+            $scope.collaborators = data.collaborators;
+            $scope.own_votes = data.own_votes;
+        }).error(function(data, status, headers, config) {
+
+        });
+    }; 
+
+    fetchCollaborators();
 
     $scope.voteUp = function(checkup_id) {
         if($scope.hasVote(checkup_id)) {
@@ -67,6 +71,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         }
         $http.get('/api/checkup/vote-up/'+checkup_id).
         success(function(data, status, headers, config) {
+            fetchCollaborators();
             var checkups = Checkup.query(function(data) {
                 $scope.checkups = checkups;
             });
@@ -81,6 +86,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         }
         $http.get('/api/checkup/vote-down/'+checkup_id).
         success(function(data, status, headers, config) {
+            fetchCollaborators();
             var checkups = Checkup.query(function(data) {
                 $scope.checkups = checkups;
             });
@@ -100,11 +106,11 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
     };
 
     $scope.getCollaborators = function(checkup_id) {
-        return  collaborators[checkup_id] || [];
+        return  $scope.collaborators[checkup_id] || [];
     };
 
     $scope.hasVote = function(checkup_id) {
-        var voted = own_votes[checkup_id],
+        var voted = $scope.own_votes[checkup_id],
             up = true;
         if(!voted) return false;
         up = (voted == 1 ? true : false);

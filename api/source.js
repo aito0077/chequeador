@@ -67,6 +67,7 @@ sources = {
                 type: _.indexOf(sourceTypes, data.type || 0) + 1
             });
 
+        data.user_id = user_id;
         return persistence.Entity.add(new_entity).then(function (result_entity) {
             source_to_persist.source_entity_id = result_entity.id;
             return persistence.Source.add(source_to_persist).then(function(source_persisted){

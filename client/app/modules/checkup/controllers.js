@@ -83,9 +83,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.add = function(step) {
-        if(_.isUndefined($scope.checkup.id) && step != 'quote') {
-            return;
-        }
         if(_.isUndefined($scope.user_id)) {
             $window.location.href = "/#/users/login?url="+ encodeURIComponent("checkup/"+$scope.checkup.id);
             return;
@@ -95,7 +92,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.edit = function(step) {
-        if(_.isUndefined($scope.checkup.id) && step != 'quote') {
+        if(_.isUndefined($scope.checkup.id) || step == 'quote') {
             return;
         }
         if(_.isUndefined($scope.user_id)) {
@@ -285,23 +282,42 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
 }])
 
-.controller('CheckupQualificationController',['$scope', '$routeParams', '$state', 'Checkup', 'Rate', 'Qualification', 'Score', function($scope, $routeParams, $state, Checkup, Rate, Qualification, Score){
+.controller('CheckupQualificationController',['$scope', '$routeParams', '$state', '$http', 'Checkup', 'Rate', 'Qualification', 'Score', function($scope, $routeParams, $state, $http, Checkup, Rate, Qualification, Score){
 
-    var persisted = false;
+    $scope.persisted = false;
 
     $scope.qualification = null;
 
     $scope.qualifications = [];
 
+    $scope.votes = {
+        socres: {}
+    };
+
+    $scope.qualify_type = null;
+    $scope.selected_score = null;
+
     $scope.checkup = Checkup.get({
         id: $routeParams.id
     }, function() {
+        callVotes($scope.checkup.id);
         $scope.qualifications = $scope.checkup.qualifications;        
         if(_.size($scope.qualifications) == 0) {
            $scope.qualification = new Rate(); 
         }
 
     });
+
+    var callVotes = function(checkup_id) {
+        $http.get('/api/rates/checkup/'+checkup_id).
+        success(function(data, status, headers, config) {
+            console.dir(data);
+            $scope.votes = data;
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
+
 
     var quality_measures = Qualification.query(function(data) {
         $scope.quality_measures = quality_measures;
@@ -313,8 +329,10 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
     $scope.addQualification = function(){
         $scope.qualification.checkup_id = $scope.checkup.id;
+        $scope.qualification.qualification = $scope.qualify_type;
+        $scope.qualification.score = $scope.selected_score;
         $scope.qualification.$save(function(){
-            persisted = true;
+            $scope.persisted = true;
         });
     }
 
@@ -323,7 +341,8 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.isPersisted = function() {
-        return persisted;
+        console.log('is persisted? '+$scope.persisted);
+        return $scope.persisted;
     };
 
     $scope.addNewQualification = function() {
@@ -342,6 +361,33 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
     $scope.setType = function(type) {
         $scope.qualify_type = type;
+        $scope.selected_score = null;
+    };
+
+    $scope.setScore = function(score) {
+        $scope.selected_score = score;
+    };
+
+    $scope.markQualifySelected = function(qualify_item) {
+        return (qualify_item == $scope.qualify_type) ? 'selected' : '';
+    };
+
+    $scope.markScoreSelected= function(score_item) {
+        return (score_item == $scope.selected_score) ? 'selected' : '';
+    };
+ 
+    $scope.percentage = function(score_id) {
+        if(_.isUndefined($scope.votes.scores[score_id])) {
+            return 0;
+        }
+        return $scope.votes.scores[score_id].percentage; 
+    };
+
+    $scope.votesCount = function(score_id) {
+        if(_.isUndefined($scope.votes.scores[score_id])) {
+            return 0;
+        }
+        return $scope.votes.scores[score_id].votes; 
     };
 
 }]);

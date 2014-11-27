@@ -28,7 +28,13 @@
             <div class="col-md-2 checkup-collaborators">
                 <small>Colaboraron</small>
                 <div class="collabora">
-                    <img  ng-repeat="collaborator in getCollaborators(checkup.id)" class="login-picture" src="{{collaborator.picture}}" title="{{collaborator.username}}" />
+                    <ul class="list-inline">
+                        <li ng-repeat="collaborator in getCollaborators(checkup.id)">
+                            <a ng-href="/#/users/profile/{{collaborator.made_by}}">
+                                <img class="login-picture" src="{{collaborator.picture}}" title="{{collaborator.username}}" />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

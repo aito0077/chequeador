@@ -50,9 +50,10 @@ contexts = {
         var user_id = this.user.id,
             checkup_id = data.checkup_id;
             if(_checkups) {
-                console.dir(_checkups);
                // _checkups.updatePhase(checkup_id, 'CONTEXT');
             }
+
+        data.created_by = user_id;
         return persistence.Context.add(data).then(function(result) {
             action.add({
                 made_by: user_id,

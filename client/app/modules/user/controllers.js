@@ -15,15 +15,21 @@ angular.module('userModule.controllers',['ngRoute'])
 
 }])
 
-.controller('UserViewController',['$scope', '$routeParams', 'User', function($scope,$routeParams,User){
-
-
-}])
 
 .controller('UserLoginController', ['$scope', '$routeParams', 'User', function($scope,$routeParams,User){
-    console.log($routeParams.url);
-
     $scope.back_url = encodeURIComponent($routeParams.url);
+}])
+
+.controller('UserProfileController', ['$scope', '$routeParams', '$stateParams', 'User', function($scope,$routeParams, $stateParams,User ){
+    console.log('User id: '+$routeParams.id);
+    console.log('State User id: '+$stateParams.user_id);
+
+    var user_profile = User.get({
+        id: $routeParams.id
+    }, function(data) {
+        $scope.profile = user_profile;
+    });
+
 }])
 
 

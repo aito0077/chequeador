@@ -93,6 +93,7 @@ router.get('/quotes/:id/', requestHandler(api.quotes.read));
 router.put('/quotes/:id/', authAPI, requestHandler(api.quotes.edit));
 
 router.get('/rates/', requestHandler(api.rates.browse));
+router.get('/rates/checkup/:checkup_id', requestHandler(api.rates.ratesByCheckup));
 router.get('/rates/:id/', requestHandler(api.rates.read));
 router.put('/rates/:id/', authAPI, requestHandler(api.rates.edit));
 router.post('/rates/', authAPI, requestHandler(api.rates.add));

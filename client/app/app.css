@@ -266,3 +266,49 @@ h5, .call-atention {
 .checkup-item-view .ok {
     color: green;
 }
+
+.qualification-step {
+
+}
+
+
+.qualification-step .qualify-item {
+    border-color: #dbdbdb;
+    border-color: #ccc;
+    text-transform: uppercase; 
+}
+
+.qualification-step .score-item {
+    border: 0px;
+    text-transform: uppercase; 
+}
+
+.qualification-step .qualify-item.selected {
+    background: black;
+    color: #FFF;
+}
+
+.row.annotation {
+    text-transform: uppercase;
+}
+
+.qualification-step .score-item.selected {
+    color: green;
+}
+
+.status-green {
+    color: green;
+}
+
+.califications-amount {
+    font-size: 10px;
+}
+
+.califications-amount .progress {
+    height: 5px;
+}
+
+.califications-amount .progress-bar {
+    background-image: linear-gradient(to bottom, #000 0px, #000 100%);
+    background-repeat: repeat-x;
+}
