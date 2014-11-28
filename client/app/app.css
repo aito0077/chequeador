@@ -51,6 +51,17 @@ a:hover, a:visited, a:link, a:active {
     color: #FFF;
 }
 
+.status-bar .b-container {
+    height: 15px; 
+    line-height: 21.5px; 
+}
+
+.status-bar .breadcrumb {
+    color: #FFF;
+    background-color: #ff0000;
+    font-size: 15px; 
+    height: 15px; 
+}
 
 #main_container {
     min-height: 400px;
@@ -312,3 +323,31 @@ h5, .call-atention {
     background-image: linear-gradient(to bottom, #000 0px, #000 100%);
     background-repeat: repeat-x;
 }
+
+.qualification-col {
+}
+
+
+.qualify-item-preview  .score-label {
+    color: #ccc;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.qualify-item-preview.voted .score-label {
+    color: #000;
+}
+
+
+.bg-black , .bg-green {
+    color: #FFF;
+    text-transform:  uppercase
+}
+
+.bg-black , .bg-green {
+    background-color: #000;
+}
+
+
+.bg-green {
+    background-color: green;

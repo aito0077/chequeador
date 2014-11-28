@@ -97,6 +97,7 @@ router.get('/rates/checkup/:checkup_id', requestHandler(api.rates.ratesByCheckup
 router.get('/rates/:id/', requestHandler(api.rates.read));
 router.put('/rates/:id/', authAPI, requestHandler(api.rates.edit));
 router.post('/rates/', authAPI, requestHandler(api.rates.add));
+router.post('/rates/:id', authAPI, requestHandler(api.rates.add));
 
 router.get('/relation-types/', requestHandler(api.relationTypes.browse));
 router.get('/relation-types/:id/', requestHandler(api.relationTypes.read));

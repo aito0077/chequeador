@@ -11,6 +11,7 @@ var when = require('when'),
 
 checkups = {
     browse: function browse(options) {
+        debug('browse: ');
 
         var fetch_options = _.extend(options, {
             withRelated: ['quote', 'entity']
@@ -32,8 +33,10 @@ checkups = {
     },
 
     read: function read(args) {
+        var checkup_id = args.id;
+        debug('Checkup id: '+checkup_id);
         return persistence.Checkup.read(args, {
-            withRelated: ['quote', 'sources', 'contexts', 'entity', 'qualifications']
+            withRelated: ['quote', 'sources', 'contexts', 'entity']
         }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
@@ -41,8 +44,29 @@ checkups = {
                 return contexts.browse({
                     checkup_id: result.id
                 }).then(function(contexts_result) {
+
                     omitted.full_contexts = contexts_result;
-                    return omitted;
+
+                    return persistence.Persistence.knex
+                    .select()
+                    .column('Rates.qualification', 'Qualification.description')
+                    .count('score as votes')
+                    .from('Rates')
+                    .innerJoin('Qualification', 'Rates.qualification', 'Qualification.id')
+                    .innerJoin('Score', 'Rates.score', 'Score.id')
+                    .where('checkup_id', checkup_id)
+                    .groupBy('Rates.qualification')
+                    .groupBy('Qualification.description')
+                    .then(function(rows) {
+
+                        debug(rows);
+                        omitted.scores = rows;
+                        
+                        return omitted;
+
+                    });
+ 
+
                 });
 
             }

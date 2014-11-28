@@ -1,6 +1,6 @@
 angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
-.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', function($scope, $state, $routeParams, $window, Checkup) {
+.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', 'Qualification', function($scope, $state, $routeParams, $window, Checkup, Qualification) {
 
     $scope.phases = [
         {
@@ -48,10 +48,12 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     } else {
         $scope.checkup = Checkup.get({
             id: $routeParams.id
-        }, function() {
+        }, function(data) {
             
             _.each($scope.phases, function(phase) {
-                $scope.current_phase = (phase.code == $scope.checkup['phase']);
+                if(phase.code == $scope.checkup['phase']) {
+                    $scope.current_phase = phase;
+                }
                 switch(phase.id) {
                     case 'quote':
                         phase['empty'] = !($scope.checkup['quote'] && $scope.checkup['quote'].text != '') ;
@@ -63,11 +65,15 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
                         phase['empty'] = _.isEmpty($scope.checkup['contexts']);
                         break;
                     case 'qualification':
-                        phase['empty'] = _.isEmpty($scope.checkup['qualifications']);
+                        phase['empty'] = _.isEmpty($scope.checkup['scores']);
                         break;
                 };
                 phase['active'] = !phase['empty'];
             });
+
+
+            $scope.maxVoted = _.max(data.scores, function(item){ return item.votes; });
+
         });
     }
 
@@ -123,6 +129,14 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         }));
     };
 
+    Qualification.query(function(data) {
+        $scope.quality_measures = data;
+    });
+
+    $scope.isMaxVoted = function(item) {
+        return item.id == $scope.maxVoted.qualification
+    };
+
 }])
 
 .controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', function($scope,Checkup, Quote, Category, $state){
@@ -165,7 +179,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.checkup_id = $routeParams.id;
     $scope.sourcePersisted = false;
 
-    console.log($routeParams.id);
     $scope.checkup = Checkup.get({
         id: $routeParams.id
     }, function() {
@@ -284,15 +297,14 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
 .controller('CheckupQualificationController',['$scope', '$routeParams', '$state', '$http', 'Checkup', 'Rate', 'Qualification', 'Score', function($scope, $routeParams, $state, $http, Checkup, Rate, Qualification, Score){
 
+    $scope.hasOwnVote = false;
     $scope.persisted = false;
+    $scope.editing = false;
 
     $scope.qualification = null;
 
-    $scope.qualifications = [];
-
-    $scope.votes = {
-        socres: {}
-    };
+    $scope.votes = {};
+    $scope.rate = {};
 
     $scope.qualify_type = null;
     $scope.selected_score = null;
@@ -300,32 +312,47 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.checkup = Checkup.get({
         id: $routeParams.id
     }, function() {
-        callVotes($scope.checkup.id);
-        $scope.qualifications = $scope.checkup.qualifications;        
-        if(_.size($scope.qualifications) == 0) {
-           $scope.qualification = new Rate(); 
-        }
-
-    });
-
-    var callVotes = function(checkup_id) {
-        $http.get('/api/rates/checkup/'+checkup_id).
-        success(function(data, status, headers, config) {
-            console.dir(data);
-            $scope.votes = data;
-        }).error(function(data, status, headers, config) {
-
+        callVotes($scope.checkup.id, function() {
+            $scope.qualification = new Rate(); 
+            $scope.editing = !$scope.hasOwnVote;
         });
-    };
-
+    });
 
     var quality_measures = Qualification.query(function(data) {
         $scope.quality_measures = quality_measures;
+        $scope.ownRateValues();
     });
 
     var scores_measures = Score.query(function(data) {
         $scope.scores_measures = scores_measures;
+        $scope.ownRateValues();
     });
+
+    $scope.ownRateValues = function() {
+        if(_.isEmpty($scope.rate) ) {
+            if($scope.hasOwnVote && !_.isEmpty(quality_measures) && !_.isEmpty(scores_measures)) {
+                $scope.rate.qualification = _.find(quality_measures, function(item) {
+                    return item.id == $scope.votes.own_vote.qualification;
+                });
+                $scope.rate.score =  _.find(scores_measures, function(item) {
+                    return item.id == $scope.votes.own_vote.score;
+                });
+            }
+        }
+        return $scope.rate;
+    };
+
+    var callVotes = function(checkup_id, callback) {
+        $http.get('/api/rates/checkup/'+checkup_id).
+        success(function(data, status, headers, config) {
+            $scope.votes = data;
+            $scope.hasOwnVote = !_.isEmpty(data.own_vote);
+            $scope.ownRateValues();
+            callback();
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
 
     $scope.addQualification = function(){
         $scope.qualification.checkup_id = $scope.checkup.id;
@@ -333,6 +360,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.qualification.score = $scope.selected_score;
         $scope.qualification.$save(function(){
             $scope.persisted = true;
+            $scope.editing = false;
         });
     }
 
@@ -340,17 +368,9 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $state.go('view');
     };
 
-    $scope.isPersisted = function() {
-        console.log('is persisted? '+$scope.persisted);
-        return $scope.persisted;
-    };
-
     $scope.addNewQualification = function() {
         $scope.qualification = new Rate();
-    };
-
-    $scope.isCreating = function() {
-        return $scope.qualification != null;
+        $scope.editing = true;
     };
 
     $scope.scoreByType = function(type) {
@@ -362,10 +382,16 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.setType = function(type) {
         $scope.qualify_type = type;
         $scope.selected_score = null;
+        $scope.rate.qualification = _.find(quality_measures, function(item) {
+            return item.id == type;
+        });
     };
-
+    
     $scope.setScore = function(score) {
         $scope.selected_score = score;
+        $scope.rate.score =  _.find(scores_measures, function(item) {
+            return item.id == score;
+        });
     };
 
     $scope.markQualifySelected = function(qualify_item) {
@@ -377,14 +403,14 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
  
     $scope.percentage = function(score_id) {
-        if(_.isUndefined($scope.votes.scores[score_id])) {
+        if(_.isUndefined(score_id) ||  _.isUndefined($scope.votes) || _.isUndefined($scope.votes.scores) || _.isUndefined($scope.votes.scores[score_id])) {
             return 0;
         }
         return $scope.votes.scores[score_id].percentage; 
     };
 
     $scope.votesCount = function(score_id) {
-        if(_.isUndefined($scope.votes.scores[score_id])) {
+        if(_.isUndefined(score_id) ||  _.isUndefined($scope.votes) || _.isUndefined($scope.votes.scores) || _.isUndefined($scope.votes.scores[score_id])) {
             return 0;
         }
         return $scope.votes.scores[score_id].votes; 
