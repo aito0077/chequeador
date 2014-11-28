@@ -324,6 +324,25 @@ h5, .call-atention {
     background-repeat: repeat-x;
 }
 
+
+.btn-source-types label {
+    border-color: #dbdbdb;
+    border-color: #ccc;
+    text-transform: uppercase; 
+}
+
+.btn-source-types label {
+    border: 0px;
+    text-transform: uppercase; 
+}
+
+.btn-source-types label.active {
+    background: black;
+    color: #FFF;
+}
+
+
+
 .qualification-col {
 }
 
@@ -339,7 +358,7 @@ h5, .call-atention {
 }
 
 
-.bg-black , .bg-green {
+.bg-black , .bg-green, .bg-green:hover, .bg-black:hover {
     color: #FFF;
     text-transform:  uppercase
 }
@@ -351,3 +370,4 @@ h5, .call-atention {
 
 .bg-green {
     background-color: green;
+}

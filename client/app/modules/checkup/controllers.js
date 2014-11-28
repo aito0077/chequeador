@@ -42,6 +42,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     ];
 
     $scope.current_phase = $scope.phases[0];
+    $scope.maxVoted = -1;
 
     if($routeParams.id == 'new') {
         $scope.checkup = new Checkup();
@@ -134,7 +135,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     });
 
     $scope.isMaxVoted = function(item) {
-        return item.id == $scope.maxVoted.qualification
+        return item.id == $scope.maxVoted.qualification;
     };
 
 }])
@@ -185,6 +186,20 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.sources['ORI'].entity = $scope.checkup.entity;
         $scope.source = $scope.sources['ORI'];
         $scope.source.type = 'ORI';
+
+        $scope.sources['OFI'] = _.union($scope.sources['OFI'], _.filter($scope.checkup.sources, 
+            function(source) {
+                return source.type == 2;
+            })
+        );
+
+        $scope.sources['ALT'] = _.union($scope.sources['ALT'], _.filter($scope.checkup.sources, 
+            function(source) {
+                return source.type == 3;
+            })
+        );
+
+
     });
 
     $scope.setType = function(type) {
@@ -215,7 +230,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.addNewSource = function() {
         var fullValidated = true;
         _.each($scope.sources[$scope.current_type], function(model) {
-            model.invalid = (model.entity && model.entity.name && model.what ? false : true);
+            model.invalid = (model.id || (model.entity && model.entity.name && model.what) ? false : true);
             fullValidated = fullValidated && !model.invalid;
         });
         if(fullValidated) {

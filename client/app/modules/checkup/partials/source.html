@@ -33,17 +33,22 @@
                                     <span ng-show="message_error" class="call-atention"><small>{{message_error}}</small></span>
                                 </div>
                                 <div class="row">
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label ng-click="setType('ORI')" class="btn active">
+                                    <div class="btn-group col-md-12 btn-source-types" data-toggle="buttons">
+                                        <label ng-click="setType('ORI')" class="col-md-4 btn active">
                                             <input type="radio" ng-model="current_type" name="current_type" ng-value="ORI" autocomplete="off" checked> Fuente Original
                                         </label>
-                                        <label class="btn" ng-click="setType('OFI')">
+                                        <label class="col-md-4 btn" ng-click="setType('OFI')">
                                             <input type="radio" ng-model="current_type" name="current_type" ng-value="OFI" autocomplete="off"> Fuente Oficial
                                         </label>
-                                        <label class="btn" ng-click="setType('ALT')">
+                                        <label class="col-md-4 btn" ng-click="setType('ALT')">
                                             <input type="radio" ng-model="current_type" name="current_type" ng-value="ALT" autocomplete="off"> Fuente Alternativa
                                         </label>
                                     </div>
+                                </div>
+                                        
+                                <div class="row">
+                                    <span class="caret center-block"></span>
+                                    <br/>
                                 </div>
 
 
@@ -65,13 +70,13 @@
                                 <div ng-show="current_type != 'ORI'">
                                      <div class="row" ng-repeat="item_source in sources[current_type]">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                            <input type="text" class="form-control" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" ng-disabled="item_source.id" />
                                         </div>
                                         <div class="form-group" ng-show="current_type == 'ALT'">
-                                            <input type="text" class="form-control" ng-model="item_source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
+                                            <input type="text" class="form-control" ng-model="item_source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" ng-disabled="item_source.id"/>
                                         </div>
                                         <div class="form-group">
-                                            <textarea name="what" ng-model="item_source.what" class="form-control" rows="3" cols="25" required="required" placeholder="Qué te dijo?"></textarea>
+                                            <textarea name="what" ng-model="item_source.what" class="form-control" rows="3" cols="25" required="required" placeholder="Qué te dijo?" ng-disabled="item_source.id"></textarea>
                                         </div>
                                         <div class="row">
                                             <span ng-show="item_source.invalid" class="call-atention"><small>No esta completo</small></span>
