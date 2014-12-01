@@ -19,7 +19,7 @@ checkups = {
         return persistence.Checkup.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
-            
+
             if (result) {
                 omitted = result.toJSON();
             }
@@ -32,7 +32,7 @@ checkups = {
         });
     },
 
-    read: function read(args) {
+    _read: function read(args) {
         var checkup_id = args.id;
         debug('Checkup id: '+checkup_id);
         return persistence.Checkup.read(args, {
@@ -40,7 +40,7 @@ checkups = {
         }).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
-                
+
                 return contexts.browse({
                     checkup_id: result.id
                 }).then(function(contexts_result) {
@@ -61,11 +61,11 @@ checkups = {
 
                         debug(rows);
                         omitted.scores = rows;
-                        
+
                         return omitted;
 
                     });
- 
+
 
                 });
 
@@ -73,6 +73,81 @@ checkups = {
             return when.reject({errorCode: 404, message: 'Checkup not found'});
         });
     },
+
+    read: function read(args) {
+        var checkup_id = args.id,
+            omitted = {};
+        debug('Checkup id: '+checkup_id);
+        return persistence.Checkup.read(args, {
+            withRelated: ['quote', 'contexts', 'entity']
+        }).then(function (result) {
+            if (result) {
+                omitted = _.omit(result.toJSON(), filteredAttributes);
+
+                return contexts.browse({
+                    checkup_id: result.id
+                }).then(function(contexts_result) {
+
+                    omitted.full_contexts = contexts_result;
+
+                    return persistence.Persistence.knex
+                    .select()
+                    .column('Rates.qualification', 'Qualification.description')
+                    .count('score as votes')
+                    .from('Rates')
+                    .innerJoin('Qualification', 'Rates.qualification', 'Qualification.id')
+                    .innerJoin('Score', 'Rates.score', 'Score.id')
+                    .where('checkup_id', checkup_id)
+                    .groupBy('Rates.qualification')
+                    .groupBy('Qualification.description')
+                    .then(function(rows) {
+
+                        omitted.scores = rows;
+
+
+
+
+                          return persistence.Persistence.knex
+                                    .select()
+                                    .columns('Source.id', 'Source.checkup_id', 'Source.source_entity_id', 'Source.type', 'Source.what', 'Source.checked', 'Source.observation', 'Source.created_by', 'Entity.id as entity_id', 'Entity.name as entity_name', 'Entity.description as entity_description', 'Entity.type as entity_type')
+                                    .from('Source')
+                                    .innerJoin('Entity', 'Source.source_entity_id', 'Entity.id')
+                                    .where('checkup_id', checkup_id)
+                                    .then(function(sources_result) {
+                                        var sources = [];
+                                        _.each(sources_result, function(source) {
+                                            sources.push({
+                                                id: source.id,
+                                                type: source.type,
+                                                checkup_id: source.checkup_id,
+                                                what: source.what,
+                                                checked: source.checked,
+                                                observation: source.observation,
+                                                created_by: source.created_by,
+                                                entity: {
+                                                    id: source.entity_id,
+                                                    name: source.entity_name,
+                                                    description: source.entity_description,
+                                                    type: source.entity_type
+                                                }
+                                            });
+                                        });
+                                        omitted.sources = sources;
+                                        return omitted;
+
+                                    });
+
+                    });
+
+
+                });
+
+            }
+            return when.reject({errorCode: 404, message: 'Checkup not found'});
+        });
+    },
+
+
 
     updatePhase: function updatePhase(checkup_id, phase) {
 
@@ -130,48 +205,46 @@ checkups = {
 
     checkups_collaborators: function edit(data) {
         var user_id = _.isUndefined(this.user) ? false : this.user.id ;
-        debug('user_id: '+user_id);
         return persistence.Persistence.knex
-                    .column('on', 'made_by', 'username', 'picture', 'type')
-                    .select()//.distinct('on','made_by')
-                    .from('Action')
-                    .innerJoin('User', 'Action.made_by', 'User.id')
-                    //.whereIn('type', [2, 3, 4])
-                    .groupBy('on', 'made_by', 'username', 'picture', 'type')
-                    .then(function(rows) {
-                        var map = {},
-                            votes = {},
-                            map_keys = {};
-                        
-                        _.each(rows, function(row) {
-                            var on = row['on'],
-                                made_by = row['made_by'],
-                                type = row['type'],
-                                uniq_key = on+'-'+made_by;
+            .column('on', 'made_by', 'username', 'picture', 'type')
+            .select()
+            .from('Action')
+            .innerJoin('User', 'Action.made_by', 'User.id')
+            .groupBy('on', 'made_by', 'username', 'picture', 'type')
+            .then(function(rows) {
+                var map = {},
+                    votes = {},
+                    map_keys = {};
 
-                            if(!_.contains([1,5], type)) {
-                                if(_.isUndefined(map[on])) {
-                                    map[on] = [];
-                                } 
-                                if(_.isUndefined(map_keys[uniq_key])) {
-                                    map[on].push(row); 
-                                    map_keys[uniq_key] = true;
-                                }
-                            } else {
-                                debug('Usuario vota? '+row['made_by']+' - '+row['type']);
-                                if(user_id && made_by == user_id) {
-                                    votes[on] = type;
-                                }
-                            }
-                        });
-                        return {
-                            collaborators: map,
-                            own_votes: votes
-                        };
-                    }).catch(function(error) {
-                        debug(error);
-                        return {};
-                    });
+                _.each(rows, function(row) {
+                    var on = row['on'],
+                        made_by = row['made_by'],
+                        type = row['type'],
+                        uniq_key = on+'-'+made_by;
+
+                    if(!_.contains([1,5], type)) {
+                        if(_.isUndefined(map[on])) {
+                            map[on] = [];
+                        }
+                        if(_.isUndefined(map_keys[uniq_key])) {
+                            map[on].push(row);
+                            map_keys[uniq_key] = true;
+                        }
+                    } else {
+                        debug('Usuario vota? '+row['made_by']+' - '+row['type']);
+                        if(user_id && made_by == user_id) {
+                            votes[on] = type;
+                        }
+                    }
+                });
+                return {
+                    collaborators: map,
+                    own_votes: votes
+                };
+            }).catch(function(error) {
+                debug(error);
+                return {};
+            });
     },
 
     edit: function edit(data) {
@@ -211,7 +284,6 @@ checkups = {
             checkup_to_persist.entity_id = result_entity.id;
             new_quote.entity_id = result_entity.id;
             return persistence.Checkup.add(checkup_to_persist).then(function (result) {
-                debug('insertada checkup');
                 if (result) {
                     new_quote.checkup_id = result.id;
                     quotes.add(new_quote).then(function() {

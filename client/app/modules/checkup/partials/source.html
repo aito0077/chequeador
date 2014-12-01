@@ -55,20 +55,20 @@
                                 <div id="original_source" ng-show="current_type == 'ORI'">
                                      <div class="row">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" />
+                                            <input type="text" class="form-control" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required"  ng-disabled="source.id"/>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" ng-model="source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required" />
+                                            <input type="text" class="form-control" ng-model="source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required"  ng-disabled="source.id"/>
                                         </div>
                                         <div class="form-group">
-                                            <textarea name="what" id="what" ng-model="source.what" class="form-control" rows="3" cols="25" required="required" placeholder="Qué te dijo?"></textarea>
+                                            <textarea name="what" id="what" ng-model="source.what" class="form-control" rows="3" cols="25" required="required" placeholder="Qué te dijo?" ng-disabled="source.id" ></textarea>
                                         </div>
                                     </div>
 
                                 </div>
 
                                 <div ng-show="current_type != 'ORI'">
-                                     <div class="row" ng-repeat="item_source in sources[current_type]">
+                                     <div class="row" ng-repeat="item_source in getSourcesByType(current_type)">
                                         <div class="form-group">
                                             <input type="text" class="form-control" ng-model="item_source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required" ng-disabled="item_source.id" />
                                         </div>

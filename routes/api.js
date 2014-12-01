@@ -33,6 +33,8 @@ var authAPI = function(req, res, next) {
 
 router.get('/users/', requestHandler(api.users.browse));
 router.get('/users/:id/', requestHandler(api.users.read));
+router.get('/users/:id/stats', requestHandler(api.users.stats));
+router.get('/users/:id/', requestHandler(api.users.profile));
 router.put('/users/:id/', requestHandler(api.users.edit));
 
 router.get('/actions/', requestHandler(api.actions.browse));

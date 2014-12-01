@@ -50,6 +50,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.checkup = Checkup.get({
             id: $routeParams.id
         }, function(data) {
+            $scope.checkup_id = $scope.checkup.id;
             
             _.each($scope.phases, function(phase) {
                 if(phase.code == $scope.checkup['phase']) {
@@ -183,9 +184,20 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.checkup = Checkup.get({
         id: $routeParams.id
     }, function() {
-        $scope.sources['ORI'].entity = $scope.checkup.entity;
-        $scope.source = $scope.sources['ORI'];
-        $scope.source.type = 'ORI';
+
+        var original_persisted = _.find($scope.checkup.sources, function(source) {
+            return source.type == 1;
+        });
+
+        if(!_.isUndefined(original_persisted)) {
+            $scope.sources['ORI'] = original_persisted;
+            $scope.source = $scope.sources['ORI'];
+            $scope.source.type = 'ORI';
+        } else {
+            $scope.sources['ORI'].entity = $scope.checkup.entity;
+            $scope.source = $scope.sources['ORI'];
+            $scope.source.type = 'ORI';
+        }
 
         $scope.sources['OFI'] = _.union($scope.sources['OFI'], _.filter($scope.checkup.sources, 
             function(source) {
@@ -201,6 +213,12 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
 
     });
+
+    $scope.getSourcesByType = function(type) {
+        console.log('Type: '+type);
+        console.dir($scope.sources[type]);
+        return $scope.sources[type];
+    };
 
     $scope.setType = function(type) {
         $scope.current_type = type;
@@ -254,6 +272,8 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         _.each(sources_to_persist, function(source) {
             if(_.isUndefined(source.id)) {
                 source.checkup_id = $scope.checkup_id;
+                source.name = source.entity.name;
+                source.description = source.entity.description;
                 source.$save();
             }
         });

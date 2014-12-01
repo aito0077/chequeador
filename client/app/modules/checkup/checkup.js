@@ -30,7 +30,8 @@ angular.module('checkApp.checkupModule', ['ngRoute','ui.router','ngResource', 'c
      });
 
 }])
-.controller('CheckupController', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
+.controller('CheckupController', ['$scope', '$routeParams', '$state', function($scope, $routeParams, $state) {
+    $scope.checkup_id = $routeParams.id;
     $state.go('view');
 }]);
 

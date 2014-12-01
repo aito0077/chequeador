@@ -120,3 +120,32 @@
   background-color: #466b99;
   border-color: #3b5a7c;
 }
+
+
+.user-profile {
+    padding-top: 20px;
+}
+
+.user-profile .profile-info .header {
+    font-size: 20px;
+}
+
+.user-profile .profile-info .profile-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.user-profile .profile-stats{
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.user-profile .profile-stats .stats-amount {
+    color: #FF0000;
+}
+
+.user-profile .profile-action {
+    padding-top: 20px;
+}
+
+

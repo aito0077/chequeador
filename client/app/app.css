@@ -371,3 +371,35 @@ h5, .call-atention {
 .bg-green {
     background-color: green;
 }
+
+#sidebar-wrapper {
+    border-left-style: solid;
+    border-left-color: #ff0000;
+    border-left-width: 0.5px;
+    height: 100%;
+    display: inline-block;
+}
+
+.help-action {
+    border-left-style: solid;
+    border-left-color: #fff;
+    border-left-width: 0.5px;
+}
+
+.dropdown > .btn {
+    background: none !important;
+    font-size: 15px;
+    color: #ff0000;
+}
+
+.dropdown > .btn:hover {
+    background: none !important;
+    font-size: 15px;
+    color: #ff0000;
+}
+
+
+.dropdown .dropdown-menu li a{
+    font-size: 15px;
+    color: #ff0000 !important;
+}

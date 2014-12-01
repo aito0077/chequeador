@@ -6,8 +6,8 @@
         <div ng-switch on="isSourcesTypeEmpty(1)">
             <div ng-switch-when='false'>
                 <h2>Original <span class="glyphicon glyphicon-ok ok"></span></h2>
-                <div class="text-source" ng-repeat="original in getSourcesByType(1)">
-                   {{original.what}} 
+                <div class="text-source text-overflow" ng-repeat="original in getSourcesByType(1)">
+                  - {{original.what}} 
                 </div>
             </div>
 
@@ -25,7 +25,7 @@
             <div ng-switch-when='false'>
                 <h2>Oficial <span class="glyphicon glyphicon-ok ok"></span></h2>
                 <div class="text-source" ng-repeat="oficial in getSourcesByType(2)">
-                   {{oficial.what}} 
+                   - {{oficial.what}} 
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
             <div ng-switch-when='false'>
                 <h2>Alternativa <span class="glyphicon glyphicon-ok ok"></span></h2>
                 <div class="text-source" ng-repeat="alternativa in getSourcesByType(3)">
-                   {{alternativa.what}} 
+                   - {{alternativa.what}} 
                 </div>
             </div>
 

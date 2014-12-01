@@ -31,16 +31,18 @@
                     <a href="#/home"> chequeador</a>
                 </div>
                 <div class="login col-md-3 text-left pull-right">
-                    <ul class="social-menu">
+                    <ul class="list-inline">
                     {{#user}}
                         <li class="login-name">
-                            <div class="dropdows">
-                                <span class="dropdown-toggle" data-toggle="dropdown">{{ name }}</span>
-                                <span class="caret"></span>
+                            <div class="dropdown">
+                                <button class="btn" type="button"  class="dropdown-toggle" data-toggle="dropdown">
+                                    {{ name }}
+                                    <span class="caret"></span>
+                                </button>
 
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#/users/profile/{{id}}">Perfil</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Salir</a></li>
                                 </ul>
                             </div>
 
@@ -96,6 +98,7 @@
         <script src="/static/js/services.js"></script>
         <script src="/static/app.js"></script>
         <script src="/static/modules/home/home.js?1"></script>
+        <script src="/static/modules/help/help.js?1"></script>
 
         <script src="/static/modules/user/user.js"></script>
         <script src="/static/modules/user/controllers.js"></script>
