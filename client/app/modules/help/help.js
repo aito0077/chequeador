@@ -6,10 +6,8 @@ angular.module('checkApp.help', [])
 
 }])
 .controller('HelpController', ['$scope','$http', function($scope, $http) {
-    console.log('init');
     $scope.testClick = function() {
-        console.log('Ckic!');
-    };
 
+    };
 }]);
 

@@ -10,21 +10,21 @@
                 <li ng-show="{{current_phase}}" class="active">{{current_phase.title}}</li>
             </ol-->
         </div>
-        <div class="col-md-3 text-left">
+        <div class="col-md-3 text-left help-action">
             <span id="help-action"> Ayuda </span>
         </div>
     </div>
 
 
     <div class="container-fluid">
-        <div class="row  process-view">
+        <div class="row">
 
-            <div id="main-content" class="col-md-9">
+            <div id="main-content" class="process-view col-md-9 col-xs-12">
                 <div ui-view></div>
             </div>
             
-            <div id="sidebar-wrapper" class="col-md-3">
-                <div class="sidebar-module sidebar-module-inset">
+            <div id="sidebar-wrapper" class="col-md-3 hidden-xs">
+                <div class="sidebar-module sidebar-module-inset" ng-controller="HelpController">
                     <p>
                         El Chequeador es una herramienta participativa para realizar chequeos en forma colectiva desde cualquier plataforma gestionada de forma colectiva
                     </p>

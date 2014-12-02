@@ -349,7 +349,7 @@ h5, .call-atention {
 
 .qualify-item-preview  .score-label {
     color: #ccc;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -372,13 +372,12 @@ h5, .call-atention {
     background-color: green;
 }
 
-#sidebar-wrapper {
-    border-left-style: solid;
-    border-left-color: #ff0000;
-    border-left-width: 0.5px;
-    height: 100%;
-    display: inline-block;
+#main-content {
+    border-right-style: solid;
+    border-right-color: #ff0000;
+    border-right-width: 0.5px;
 }
+
 
 .help-action {
     border-left-style: solid;

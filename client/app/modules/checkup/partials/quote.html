@@ -21,28 +21,27 @@
                             <form  ng-submit="addCheckup()">
                                 <div class="row">
                                     <div class="form-group">
-                                        <textarea name="text" ng-model="checkup.quote.text" class="form-control" rows="3" cols="25" required="required" placeholder="Qué frase textual chequearías?"></textarea>
+                                        <textarea name="text" ng-model="checkup.quote.text" class="form-control input-lg" rows="{{quote_rows}}" cols="25" required="required" placeholder="Qué frase textual chequearías?" ng-blur="minus_size()" ng-focus="max_size()"></textarea>
+                                        <span class="btn center-block" ng-show="quote_rows == 12" style="position:relative;top: -30px">Listo</span>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text"  ng-model="checkup.quote.author" class="form-control" id="name" placeholder="Quién es el autor de la frase?" required="required" />
+                                    <div class="form-group" ng-show="quote_rows == 3">
+                                        <input type="text"  ng-model="checkup.quote.author" class="form-control input-lg" id="name" placeholder="Quién es el autor de la frase?" required="required" />
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" ng-model="checkup.quote.where" class="form-control" placeholder="Dónde la dijo?" required="required" />
+                                    <div class="form-group" ng-show="quote_rows == 3">
+                                        <input type="text" ng-model="checkup.quote.where" class="form-control input-lg" placeholder="Dónde la dijo?" required="required" />
                                     </div>
-                                    <div class="form-group col-md-6 col-md-offset-3">
-                                        <select class="form-control" ng-model="checkup.quote.category" ng-options="category.description for category in categories"></select>
+                                    <div class="form-group col-md-6 col-md-offset-3" ng-show="quote_rows == 3">
+                                        <select class="form-control input-lg" ng-model="checkup.quote.category" ng-options="category.description for category in categories"></select>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" ng-model="checkup.quote.checked" required="required">
-                                                No es ni opinión, ni proyección y contiene datos contrastables
-                                            </label>
-                                        </div>
+                                    <div class="form-group" ng-show="quote_rows == 3">
+                                        <label>
+                                            <input type="checkbox" class="input-lg" ng-model="checkup.quote.checked" required="required">
+                                            No es ni opinión, ni proyección y contiene datos contrastables
+                                        </label>
                                     </div>
              
                                 </div>
-                                <div class="row">
+                                <div class="row" ng-show="quote_rows == 3">
                                     <div class="col-md-offset-4 col-md-3">
                                         <button type="submit" class="btn">
                                             Siguiente
@@ -57,7 +56,7 @@
                             <br/>
                             <br/>
                                 <div class="row">
-                                    <div class="col-md-offset-3 col-md-8">
+                                    <div class="text-center col-md-offset-3 col-md-8">
                                         <h1>¡Felicitaciones!</h1>
                                         <h5>Finalizaste con éxito el primer paso!</h5>
                                     </div>

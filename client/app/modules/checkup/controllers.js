@@ -164,6 +164,15 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $state.go('view');
     };
 
+    $scope.quote_rows = 3;
+
+    $scope.max_size = function () {
+        $scope.quote_rows = 12;
+    };
+
+    $scope.minus_size = function () {
+        $scope.quote_rows = 3;
+    };
 }])
 
 .controller('CheckupSourceController', ['$scope', '$routeParams', '$state', 'Source', 'Checkup', 'Entity', function($scope,$routeParams, $state, Source, Checkup, Entity){
@@ -215,8 +224,6 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     });
 
     $scope.getSourcesByType = function(type) {
-        console.log('Type: '+type);
-        console.dir($scope.sources[type]);
         return $scope.sources[type];
     };
 
