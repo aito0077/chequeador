@@ -1,3 +1,4 @@
+
 -- ---
 -- Globals
 -- ---
@@ -414,14 +415,14 @@ INSERT INTO `Source_Type` (`code`, `description`) VALUES ('OFI', 'Oficial');
 INSERT INTO `Source_Type` (`code`, `description`) VALUES ('ALT', 'Alternativa');
 
 INSERT INTO `Qualification` (`code`, `description`) VALUES ('TRU', '100% Verdadero');
-INSERT INTO `Qualification` (`code`, `description`) VALUES ('FAL', 'Cualquiera');
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('FAL', '100% Falso');
 INSERT INTO `Qualification` (`code`, `description`) VALUES ('NTR', 'Parcialmente Verdadera');
 
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (1, 'TRU', 'Verdadero');
-INSERT INTO `Score` (qualification, `code`, `description`) VALUES (2, 'INS', 'Insostenible');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (2, 'FAL', 'Falso');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'VPE', 'Verdadero Pero');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'ENG', 'Engañoso');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'INS', 'Insostenible');
 
 INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('TRA', 'Trabaja en');
 INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('AFI', 'Afiliado a');
@@ -432,21 +433,33 @@ INSERT INTO `Role_Type` (`code`, `description`) VALUES ('COL', 'Colaborador');
 INSERT INTO `Category` (`code`, `description`) VALUES ('POL', 'Politica');
 INSERT INTO `Category` (`code`, `description`) VALUES ('CIE', 'Ciencia');
 INSERT INTO `Category` (`code`, `description`) VALUES ('MED', 'Medio');
-
-INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kierkegaard','aito0077@gmail.com','');
-
-INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
-
-INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
-
-INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
-
+INSERT INTO `Category` (`code`, `description`) VALUES ('ECO', 'Economia');
+INSERT INTO `Category` (`code`, `description`) VALUES ('EDU', 'Educacion');
+INSERT INTO `Category` (`code`, `description`) VALUES ('ENE', 'Energia');
+INSERT INTO `Category` (`code`, `description`) VALUES ('EQU', 'Equidad');
+INSERT INTO `Category` (`code`, `description`) VALUES ('INF', 'Infraestructura');
+INSERT INTO `Category` (`code`, `description`) VALUES ('JUS', 'Justicia');
+INSERT INTO `Category` (`code`, `description`) VALUES ('POL', 'Política');
+INSERT INTO `Category` (`code`, `description`) VALUES ('SAL', 'Salud');
+INSERT INTO `Category` (`code`, `description`) VALUES ('SEG', 'Seguridad');
+INSERT INTO `Category` (`code`, `description`) VALUES ('TRA', 'Trabajo');
+INSERT INTO `Category` (`code`, `description`) VALUES ('TRP', 'Transporte');
 
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('VOU', 'Voto +');
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('COL', 'Colaboro');
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('CRE', 'Creo');
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('CAL', 'Califico');
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('VOD', 'Voto -');
+
+
+--INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kierkegaard','aito0077@gmail.com','');
+
+--INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
+
+--INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
+
+--INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
+
 
 
 -- INSERT INTO `Rates` (`checkup_id`,`user_id`,`qualification`,`score`) VALUES ('','','','','');
