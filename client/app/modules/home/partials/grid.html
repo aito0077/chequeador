@@ -1,18 +1,18 @@
 <div class="row checkup-item" ng-repeat="checkup in checkups">
     <div class="col-md-12 checkup-row" data-checkup-id="{{checkup.id}}" >
         <div class="checkup-body">
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-9">
                 <a class="quote-text" ng-href="#/checkup/{{checkup.id}}">
                     <span class="checkup-status {{checkup.phase}}"></span>
                     <p>{{checkup.quote.text}}</p>
                 </a>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 col-xs-2">
                 <small class="pull-right text-muted">
                  {{checkup.entity.name}}
                 </small>
             </div>
-            <div class="votacion col-md-1">
+            <div class="votacion col-md-1 col-xs-1">
                 <div class="voteBox text-center {{getClassByRate(checkup.rate)}} {{hasVote(checkup.id).class}}" style="width: auto; font-size:14pt;">
                     <div class="text-center icon-up">
                         <i class="glyphicon glyphicon-chevron-up" ng-click="voteUp(checkup.id)" title="+1" ng-show="user_id"></i>

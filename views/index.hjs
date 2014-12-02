@@ -27,10 +27,10 @@
     <body>
         <div class="container header">
             <div class="session-bar row">
-                <div class="brand col-md-9">
+                <div class="brand col-md-9 col-xs-6">
                     <a href="#/home"> chequeador</a>
                 </div>
-                <div class="login col-md-3 text-left pull-right">
+                <div class="login col-md-3 col-xs-6 text-left pull-right">
                     <ul class="list-inline">
                     {{#user}}
                         <li class="login-name">
@@ -52,7 +52,7 @@
                         <li><a href="/#/users/profile/{{id}}"><img class="login-picture" src="{{ picture }}"/></a></li>
                     {{/user}}
                     {{^user}}
-                        <li>Login</li>
+                        <li class="hidden-xs">Login</li>
                         <li><a href="/auth/facebook"> 
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x"></i>
