@@ -1,5 +1,22 @@
 angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
+.filter('truncate', function () {
+    return function (text, length, end) {
+        if (isNaN(length))
+            length = 10;
+
+        if (end === undefined)
+            end = "...";
+
+        if (text.length <= length || text.length - end.length <= length) {
+            return text;
+        }
+        else {
+            return String(text).substring(0, length-end.length) + end;
+        }
+    };
+})
+
 .controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', 'Qualification', function($scope, $state, $routeParams, $window, Checkup, Qualification) {
 
     $scope.phases = [

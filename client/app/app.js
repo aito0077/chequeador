@@ -14,7 +14,8 @@ angular.module('checkApp', [
 config(['$routeProvider', function($routeProvider) {
   
     $routeProvider.otherwise({redirectTo: '/home'});
-}]).run(function($rootScope, $window) {
+}])
+.run(function($rootScope, $window) {
 
     $rootScope.user_id = $window.user_id;
 });

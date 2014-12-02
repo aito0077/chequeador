@@ -1,7 +1,7 @@
 
 <small class="checkup-item-header">El contexto</small>
 <div ng-repeat="context in checkup.contexts">
-  <p class="text-context">- {{context.body}}</p>
+  <p class="text-context">- {{context.body|truncate:100}}</p>
 </div >
 
 
