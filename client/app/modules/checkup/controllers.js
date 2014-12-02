@@ -270,10 +270,18 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.addSource = function(){
         $scope.message_error = null;
 
-        var sources_to_persist = _.union([$scope.sources['ORI']], $scope.sources['ALT'], $scope.sources['OFI']);
+        var sources_to_persist = _.union((!_.isUndefined($scope.sources['ORI'].what) ? [$scope.sources['ORI']] : []), $scope.sources['ALT'], $scope.sources['OFI']);
         if(_.size(sources_to_persist) < 2) {
             $scope.message_error = 'para finalizar el paso 2 tenes que consultar al menos 2 fuentes';
             return; 
+        } else {
+            var types = _.countBy(sources_to_persist, function(item) {
+                return item.type;
+            });;
+            if(_.size(types) < 2) {
+                $scope.message_error = 'para finalizar el paso 2 debes consultar al menos 2 tipos diferentes de fuentes';
+                return; 
+            }
         }
 
         _.each(sources_to_persist, function(source) {
