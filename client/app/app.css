@@ -286,11 +286,15 @@ h5, .call-atention {
 .qualification-step .qualify-item {
     border-color: #dbdbdb;
     border-color: #ccc;
+    font-size: 10px; 
+	padding: 1px;
     text-transform: uppercase; 
 }
 
 .qualification-step .score-item {
     border: 0px;
+    font-size: 10px; 
+	padding: 1px;
     text-transform: uppercase; 
 }
 
