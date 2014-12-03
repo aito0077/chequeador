@@ -42,7 +42,7 @@
             <div ng-switch-when='false'>
                 <h2>Alternativa <span class="glyphicon glyphicon-ok ok"></span></h2>
                 <div class="text-source" ng-repeat="alternativa in getSourcesByType(3)">
-                   - {{alternativa.what|truncate:100}} 
+                   - <span ng-show="alternativa.what != ''"> {{alternativa.what|truncate:120}} </span>
                 </div>
             </div>
 

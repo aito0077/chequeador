@@ -416,13 +416,14 @@ INSERT INTO `Source_Type` (`code`, `description`) VALUES ('ALT', 'Alternativa');
 
 INSERT INTO `Qualification` (`code`, `description`) VALUES ('TRU', '100% Verdadero');
 INSERT INTO `Qualification` (`code`, `description`) VALUES ('FAL', '100% Falso');
-INSERT INTO `Qualification` (`code`, `description`) VALUES ('NTR', 'Parcialmente Verdadera');
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('NTR', 'Parcialmente Falso/Verdadero');
+INSERT INTO `Qualification` (`code`, `description`) VALUES ('SID', 'No hay datos');
 
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (1, 'TRU', 'Verdadero');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (2, 'FAL', 'Falso');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'VPE', 'Verdadero Pero');
 INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'ENG', 'Engañoso');
-INSERT INTO `Score` (qualification, `code`, `description`) VALUES (3, 'INS', 'Insostenible');
+INSERT INTO `Score` (qualification, `code`, `description`) VALUES (4, 'INS', 'Insostenible');
 
 INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('TRA', 'Trabaja en');
 INSERT INTO `Relation_Type` (`code`, `description`) VALUES ('AFI', 'Afiliado a');
@@ -452,13 +453,13 @@ INSERT INTO `Action_Type` (`code`, `description`) VALUES ('CAL', 'Califico');
 INSERT INTO `Action_Type` (`code`, `description`) VALUES ('VOD', 'Voto -');
 
 
---INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kierkegaard','aito0077@gmail.com','');
+-- INSERT INTO `User` (`username`,`password`,`mail`,`picture`) VALUES ('aito','kierkegaard','aito0077@gmail.com','');
 
---INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
+-- INSERT INTO `Entity` (`name`,`description`,`type`) VALUES ('Leonardo Garcia', 'Desarrollador', '1');
 
---INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
+-- INSERT INTO `Checkup` (`status`,`phase`,`entity_id`, `created_by`) VALUES ('OPEN','CREATION', 1, 'aito' );
 
---INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
+-- INSERT INTO `Quote` (`checkup_id`,`text`,`entity_id`,`_where`,`when`,`category_id`,`rate`, created_by) VALUES ('1','Esta frase es un ejemplo para chequear.', 1, 'La Nacion', now(), 1, 5, 'aito');
 
 
 
