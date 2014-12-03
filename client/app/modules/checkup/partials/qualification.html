@@ -69,11 +69,11 @@
              
                             </div>
 
-                            <button ng-click="addNewQualification()" class="btn">
+                            <!--button ng-click="addNewQualification()" class="btn">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </button>
                             ¿Tienes otro criterio de calificación?
-                            <span class="call-atention">Sumalo!</span> 
+                            <span class="call-atention">Sumalo!</span--> 
                         </div>
 
 
@@ -87,7 +87,7 @@
 
                             <div class="row qualification-step" >
 
-                                <div class="col-md-4 qualification-col" ng-repeat="calification in quality_measures">
+                                <div class="col-md-3 qualification-col" ng-repeat="calification in quality_measures">
                                     <div class="row">
                                         <label ng-click="setType(calification.id)" class="btn btn-block qualify-item {{markQualifySelected(calification.id)}}" >
                                             <span class="fa-stack pull-left" ng-switch on="qualify_type == calification.id">
