@@ -28,7 +28,7 @@
         <div class="container header">
             <div class="session-bar row">
                 <div class="brand col-md-9 col-xs-6">
-                    <a href="#/home"> chequeador</a>
+                    <a href="#/home"> <img src="/static/img/logo.png"/> </a>
                 </div>
                 <div class="login col-md-3 col-xs-6 text-left pull-right">
                     <ul class="list-inline">
