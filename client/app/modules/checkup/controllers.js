@@ -115,6 +115,26 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return;
         }
 
+        switch(step) {
+            case 'source':
+                if($scope.phases[0].empty) {
+                    return;
+                }
+                break;
+            case 'context':
+                if($scope.phases[1].empty) {
+                    return;
+                }
+                break;
+            case 'qualification':
+                if($scope.phases[2].empty) {
+                    return;
+                }
+                break;
+            default:
+                break;
+        }; 
+
         Help.setSection(step+'_base');
         $state.go(step, {checkup_id: $scope.checkup.id});
     };
@@ -231,7 +251,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             $scope.source = $scope.sources['ORI'];
             $scope.source.type = 'ORI';
         } else {
-            $scope.sources['ORI'].entity = $scope.checkup.entity;
+//            $scope.sources['ORI'].entity = $scope.checkup.entity;
             $scope.source = $scope.sources['ORI'];
             $scope.source.type = 'ORI';
         }
@@ -328,7 +348,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.entityDescriptionPlaceholder = function() {
-        return $scope.current_type == 'ORI' ? 'Qué cargo/rol tiene?' : 'Por qué es relevante?';
+        return $scope.current_type == 'OFI' ? 'Qué cargo/rol tiene?' : 'Por qué es relevante?';
     };
 
 
