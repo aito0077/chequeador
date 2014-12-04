@@ -16,7 +16,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
 
 
 }])
-.controller('HomeController', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
+.controller('HomeController', ['$scope','$http', 'Checkup', 'Category', '$state', 'Help', function($scope, $http, Checkup, Category, $state, Help) {
 
     $scope.phases = [
         {
@@ -37,6 +37,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         }
     ];
     $state.go('list');
+    Help.setSection('home');
 }])
 
 .controller('checkup-list', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
@@ -50,6 +51,7 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
 
     var categories = Category.query(function(data) {
         $scope.categories = categories;
+        Help.setSection('home');
     });
 
 

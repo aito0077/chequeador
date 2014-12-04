@@ -30,8 +30,13 @@ angular.module('checkApp.checkupModule', ['ngRoute','ui.router','ngResource', 'c
      });
 
 }])
-.controller('CheckupController', ['$scope', '$routeParams', '$state', function($scope, $routeParams, $state) {
+.controller('CheckupController', ['$scope', '$routeParams', '$state', 'Help', function($scope, $routeParams, $state, Help) {
     $scope.checkup_id = $routeParams.id;
     $state.go('view');
+    Help.setSection('checkup_base');
+    $scope.goControlPanel = function() {
+        $state.go('view');
+        Help.setSection('checkup_base');
+    };
 }]);
 

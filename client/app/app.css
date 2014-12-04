@@ -362,8 +362,12 @@ h5, .call-atention {
 
 
 .qualification-col {
+
 }
 
+.score-group {
+    border: 1px solid;
+}
 
 .qualify-item-preview  .score-label {
     color: #ccc;
@@ -416,4 +420,8 @@ h5, .call-atention {
 .dropdown .dropdown-menu li a{
     font-size: 15px;
     color: #ff0000 !important;
+}
+
+.help-container {
+    padding: 10px 5px 0px 10px
 }

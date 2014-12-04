@@ -23,10 +23,8 @@
             </div>
             
             <div id="sidebar-wrapper" class="col-md-3 hidden-xs">
-                <div class="sidebar-module sidebar-module-inset" ng-controller="HelpController">
-                    <p ng-click="testClick()">
-                        El Chequeador es una herramienta participativa para realizar chequeos en forma colectiva desde cualquier plataforma gestionada de forma colectiva
-                    </p>
+                <div class="sidebar-module sidebar-module-inset help-container" ng-controller="HelpController">
+                    <ng-include src="'modules/help/partials/text.html'"/>
                 </div>
             </div>
 

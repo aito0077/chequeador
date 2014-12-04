@@ -17,7 +17,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 })
 
-.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', 'Qualification', function($scope, $state, $routeParams, $window, Checkup, Qualification) {
+.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', 'Qualification', 'Help', function($scope, $state, $routeParams, $window, Checkup, Qualification, Help) {
 
     $scope.phases = [
         {
@@ -67,6 +67,8 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.checkup = Checkup.get({
             id: $routeParams.id
         }, function(data) {
+            Help.setSection('checkup_base');
+
             $scope.checkup_id = $scope.checkup.id;
             
             _.each($scope.phases, function(phase) {
@@ -113,6 +115,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return;
         }
 
+        Help.setSection(step+'_base');
         $state.go(step, {checkup_id: $scope.checkup.id});
     };
 
@@ -125,6 +128,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             return;
         }
 
+        Help.setSection(step+'_base');
         $state.go(step, {checkup_id: $scope.checkup.id});
     };
 
@@ -156,9 +160,13 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         return item.id == $scope.maxVoted.qualification;
     };
 
+    $scope.show_help = function(item_id) {
+        Help.setSection(item_id+'_item');
+    };
+
 }])
 
-.controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', function($scope,Checkup, Quote, Category, $state){
+.controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', 'Help', function($scope,Checkup, Quote, Category, $state, Help){
 
     $scope.checkup = new Checkup();
     $scope.checkup.quote = new Quote();
@@ -174,6 +182,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.isCheckupPersisted = function(){
+        Help.setSection('quote_base');
         return $scope.checkup.id != null;
     };
 
@@ -190,9 +199,11 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.minus_size = function () {
         $scope.quote_rows = 3;
     };
+
+
 }])
 
-.controller('CheckupSourceController', ['$scope', '$routeParams', '$state', 'Source', 'Checkup', 'Entity', function($scope,$routeParams, $state, Source, Checkup, Entity){
+.controller('CheckupSourceController', ['$scope', '$routeParams', '$state', 'Source', 'Checkup', 'Entity', 'Help', function($scope,$routeParams, $state, Source, Checkup, Entity, Help){
 
     $scope.current_type = 'ORI';
 
@@ -237,6 +248,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
             })
         );
 
+        Help.setSection('source_base');
 
     });
 
@@ -249,6 +261,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         switch(type) {
             case 'ORI':
                 $scope.source = $scope.sources['ORI'];
+                Help.setSection('source_original');
                 break;
             case 'OFI':
                 if(_.size($scope.sources['OFI']) == 0) {
@@ -256,6 +269,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
                     new_source.type = 'OFI';
                     $scope.sources['OFI'].push(new_source);
                 }
+                Help.setSection('source_oficial');
                 break;
             case 'ALT':
                 if(_.size($scope.sources['ALT']) == 0) {
@@ -263,6 +277,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
                     new_source.type = 'ALT';
                     $scope.sources['ALT'].push(new_source);
                 }
+                Help.setSection('source_alternativa');
                 break;
             default:
                 break;
@@ -320,7 +335,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 }])
 
 
-.controller('CheckupContextController',['$scope', '$routeParams', '$state', 'Checkup', 'Context', function($scope, $routeParams, $state, Checkup, Context){
+.controller('CheckupContextController',['$scope', '$routeParams', '$state', 'Checkup', 'Context', 'Help', function($scope, $routeParams, $state, Checkup, Context, Help){
 
     var persisted = false;
     $scope.context = null;
@@ -360,9 +375,10 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         return $scope.context != null;
     };
 
+    Help.setSection('context_base');
 }])
 
-.controller('CheckupQualificationController',['$scope', '$routeParams', '$state', '$http', 'Checkup', 'Rate', 'Qualification', 'Score', function($scope, $routeParams, $state, $http, Checkup, Rate, Qualification, Score){
+.controller('CheckupQualificationController',['$scope', '$routeParams', '$state', '$http', 'Checkup', 'Rate', 'Qualification', 'Score', 'Help', function($scope, $routeParams, $state, $http, Checkup, Rate, Qualification, Score, Help){
 
     $scope.hasOwnVote = false;
     $scope.persisted = false;
@@ -452,6 +468,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.rate.qualification = _.find(quality_measures, function(item) {
             return item.id == type;
         });
+        Help.setSection('qualification_after');
     };
     
     $scope.setScore = function(score) {

@@ -103,8 +103,10 @@
                                         <span class="caret"></span>
                                     </div>
 
-                                    <div class="row" ng-show="qualify_type"> 
-                                        <div  ng-repeat="item in scoreByType(calification.id )" >
+                                    <div class="row score-col" ng-show="qualify_type"> 
+
+                                        <div ng-repeat="item in scoreByType(calification.id )" >
+                                            <div class="score-group">
                                             <div class="row col-md-12">
                                                 <label  ng-click="setScore(item.id)" class="btn btn-block score-item {{markScoreSelected(item.id)}}" ng-disabled="qualify_type != item.qualification">
                                                     <span class="fa-stack pull-left" ng-switch on="markScoreSelected(item.id) == 'selected'">
@@ -115,7 +117,7 @@
                                                     <span class="score-description ">{{item.description}}</span>
                                                 </label>
                                             </div>
-                                            <div class="row califications-amount">
+                                            <div class="califications-amount">
                                                 <div class="row col-md-12">
                                                     <div class="progress col-md-8">
                                                         <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage(item.id)}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentage(item.id)}}%;"> </div>
@@ -130,16 +132,20 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                        </div>
+                                    </div><!-- score-col -->
+
+                                </div><!--qual-col-->
+
+                            </div>
+
+                            <div class="row footer">
+                                <div class="pull-right col-md-3">
+                                    <button type="submit" ng-click="addQualification()" class="btn ">
+                                        Finalizar 
+                                    </button>
                                 </div>
                             </div>
-                                <div class="row footer">
-                                    <div class="pull-right col-md-3">
-                                        <button type="submit" ng-click="addQualification()" class="btn ">
-                                            Finalizar 
-                                        </button>
-                                    </div>
-                                </div>
                         </div>
 
                         <div ng-show="persisted">
