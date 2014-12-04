@@ -399,6 +399,7 @@ h5, .call-atention {
     border-right-style: solid;
     border-right-color: #ff0000;
     border-right-width: 1px;
+    min-height: 400px;
 }
 
 
