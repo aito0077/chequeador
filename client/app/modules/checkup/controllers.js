@@ -348,7 +348,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.entityDescriptionPlaceholder = function() {
-        return $scope.current_type == 'OFI' ? 'Qué cargo/rol tiene?' : 'Por qué es relevante?';
+        return $scope.current_type == 'OFI' ? '¿Qué cargo/rol tiene?' : '¿Por qué es relevante?';
     };
 
 
