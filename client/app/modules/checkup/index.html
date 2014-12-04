@@ -1,14 +1,6 @@
-
     <div class="status-bar row">
-        <div class="col-md-2">
-            Paso a Paso 
-        </div>
-        <div class="b-container col-md-7">
-            <!--ol class="breadcrumb">
-                <li><a ng-href="/#/home">Home</a></li>
-                <li class="active"><a ng-href="/#/checkup/{{checkup_id}}">Chequeo</a></li>
-                <li ng-show="{{current_phase}}" class="active">{{current_phase.title}}</li>
-            </ol-->
+        <div class="col-md-9 col-xs-12 status-action" >
+            <a ng-click="goControlPanel()" href="">Paso a Paso </a>
         </div>
         <div class="col-md-3 text-left help-action">
             <span id="help-action"> Ayuda </span>
@@ -16,7 +8,7 @@
     </div>
 
 
-    <div class="container-fluid">
+    <div>
         <div class="row">
 
             <div id="main-content" class="process-view col-md-9 col-xs-12">
@@ -24,10 +16,8 @@
             </div>
             
             <div id="sidebar-wrapper" class="col-md-3 hidden-xs">
-                <div class="sidebar-module sidebar-module-inset" ng-controller="HelpController">
-                    <p>
-                        El Chequeador es una herramienta participativa para realizar chequeos en forma colectiva desde cualquier plataforma gestionada de forma colectiva
-                    </p>
+                <div class="sidebar-module sidebar-module-inset help-container" ng-controller="HelpController">
+                    <ng-include src="'modules/help/partials/text.html'"/>
                 </div>
             </div>
 

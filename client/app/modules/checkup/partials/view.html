@@ -16,7 +16,7 @@
                                 {{step.text}}
                             </div>
                             <small class="pull-left text-muted">
-                                <span id="help-{{step.id}}">¿Que es esto?</span>
+                                <span id="help-{{step.id}}" ng-click="show_help(step.id)">¿Que es esto?</span>
                             </small>
                         </div>
                         <div ng-show="!step.empty">

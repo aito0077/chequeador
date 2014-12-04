@@ -331,6 +331,8 @@ h5, .call-atention {
 
 .califications-amount {
     font-size: 10px;
+    border-color: #dbdbdb;
+    border-color: #ccc;
 }
 
 .califications-amount .progress {
@@ -362,8 +364,11 @@ h5, .call-atention {
 
 
 .qualification-col {
+
 }
 
+.score-group {
+}
 
 .qualify-item-preview  .score-label {
     color: #ccc;
@@ -417,4 +422,8 @@ h5, .call-atention {
 .dropdown .dropdown-menu li a{
     font-size: 15px;
     color: #ff0000 !important;
+}
+
+.help-container {
+    padding: 10px 5px 0px 10px
 }

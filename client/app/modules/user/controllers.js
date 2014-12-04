@@ -9,7 +9,6 @@ angular.module('userModule.controllers',['ngRoute'])
         $scope.users = data;
     }).
     error(function(data, status, headers, config) {
-        console.log(data);
     });
 
 
@@ -21,8 +20,6 @@ angular.module('userModule.controllers',['ngRoute'])
 }])
 
 .controller('UserProfileController', ['$scope', '$routeParams', '$stateParams', '$http', 'User', function($scope,$routeParams, $stateParams, $http, User ){
-    console.log('User id: '+$routeParams.id);
-    console.log('State User id: '+$stateParams.user_id);
 
     var user_profile = User.get({
         id: $routeParams.id

@@ -1,4 +1,4 @@
-angular.module('checkApp.services',['ngResource']).
+angular.module('checkApp.services',['ngResource', 'checkApp.help']).
     factory('User',['$resource', function($resource){
         return $resource('http://chequeador.collab-dev.com/api/users/:id', { id:'@id' }, {
             update: {
@@ -82,5 +82,11 @@ angular.module('checkApp.services',['ngResource']).
                 method: 'PUT'
             }
         });
+    }]).
+    factory('Help',['$rootScope', function($rootScope) {
+        return {
+            setSection: function(section) {
+                $rootScope.help_section = section;
+            }
+        };
     }]);
-;
