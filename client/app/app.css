@@ -331,6 +331,8 @@ h5, .call-atention {
 
 .califications-amount {
     font-size: 10px;
+    border-color: #dbdbdb;
+    border-color: #ccc;
 }
 
 .califications-amount .progress {
@@ -366,7 +368,6 @@ h5, .call-atention {
 }
 
 .score-group {
-    border: 1px solid;
 }
 
 .qualify-item-preview  .score-label {
