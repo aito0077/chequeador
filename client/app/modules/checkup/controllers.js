@@ -418,6 +418,8 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         callVotes($scope.checkup.id, function() {
             $scope.qualification = new Rate(); 
             $scope.editing = !$scope.hasOwnVote;
+
+
         });
     });
 
@@ -440,6 +442,10 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
                 $scope.rate.score =  _.find(scores_measures, function(item) {
                     return item.id == $scope.votes.own_vote.score;
                 });
+
+                $scope.rate.qualification_stats = $scope.votes.qualifications[$scope.votes.own_vote.qualification];
+                $scope.rate.score_stats = $scope.votes.scores[$scope.votes.own_vote.score];
+
             }
         }
         return $scope.rate;
