@@ -57,11 +57,11 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control" ng-model="source.entity.name" id="entity_name" placeholder="Nombre del Contacto" required="required"  ng-disabled="source.id"/>
                                         </div>
-                                        <!--div class="form-group">
-                                            <input type="text" class="form-control" ng-model="source.entity.description" id="entity_description" placeholder="{{entityDescriptionPlaceholder()}}" required="required"  ng-disabled="source.id"/>
-                                        </div-->
                                         <div class="form-group">
                                             <textarea name="what" id="what" ng-model="source.what" class="form-control" rows="3" cols="25" required="required" placeholder="¿Qué te dijo?" ng-disabled="source.id" ></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="observation" id="observation" ng-model="source.observation" class="form-control" rows="3" cols="25" placeholder="Pegar link a base de datos" ng-disabled="source.id" ></textarea>
                                         </div>
                                     </div>
 
@@ -77,6 +77,9 @@
                                         </div>
                                         <div class="form-group">
                                             <textarea name="what" ng-model="item_source.what" class="form-control" rows="3" cols="25" required="required" placeholder="¿Qué te dijo?" ng-disabled="item_source.id"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="observation" id="observation" ng-model="item_source.observation" class="form-control" rows="3" cols="25" placeholder="Pegar link a base de datos" ng-disabled="item_source.id" ng-show="(item_source.id && item_source.observation) || !item_source.id" ></textarea>
                                         </div>
                                         <div class="row">
                                             <span ng-show="item_source.invalid" class="call-atention"><small>No esta completo</small></span>
