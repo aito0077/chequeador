@@ -34,8 +34,9 @@
                     </a>
                 </div>
                 <div class="login col-md-3 col-xs-6 text-left pull-right">
-                    <ul class="social-menu">
                     {{#user}}
+                    <ul class="list-inline">
+                        <li><a href="/#/users/profile/{{id}}"><img class="login-picture" src="{{ picture }}"/></a></li>
                         <li class="login-name">
                             <div class="dropdown">
                                 <button class="btn" type="button"  class="dropdown-toggle" data-toggle="dropdown">
@@ -52,9 +53,10 @@
 
                         </li>
 
-                        <li><a href="/#/users/profile/{{id}}"><img class="login-picture" src="{{ picture }}"/></a></li>
+                    </ul>
                     {{/user}}
                     {{^user}}
+                    <ul class="social-menu list-inline">
                         <li class="hidden-xs">Login</li>
                         <li><a href="/auth/facebook"> 
                             <span class="fa-stack">
@@ -71,8 +73,8 @@
                         <!--li><a href="/auth/mail">
 
                         </a></li-->
-                    {{/user}}
                     </ul>
+                    {{/user}}
                 </div>
             </div>
         </div>

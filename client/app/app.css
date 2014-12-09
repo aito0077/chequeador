@@ -49,6 +49,13 @@ a:hover, a:visited, a:link, a:active {
 .login-name {
     font-size: 15px;
     color: #ff0000;
+    display: block-inline;
+}
+
+.login-name .dropdown .btn,
+.login-name .dropdown .btn:hover {
+    font-size: 12px;
+    display: block-inline;
 }
 
 .login-picture {
