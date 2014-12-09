@@ -40,14 +40,14 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
     Help.setSection('home');
 }])
 
-.controller('checkup-list', ['$scope','$http', 'Checkup', 'Category', '$state', function($scope, $http, Checkup, Category, $state) {
+.controller('checkup-list', ['$scope','$http', 'Checkup', 'Category', 'Help', '$state', function($scope, $http, Checkup, Category, Help, $state) {
 
+    $scope.filteredCheckups = $scope.checkups;
     var checkups = Checkup.query(function(data) {
-        $scope.checkups = checkups;
+        $scope.filteredCheckups = $scope.checkups = checkups;
     });
 
 
-    $scope.filteredCheckups = $scope.checkups;
 
     $scope.collaborators = {};
     $scope.own_votes = {};
