@@ -10,7 +10,27 @@
                         <div class="step-icon bg-active">
                             1
                         </div>
-
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="step-icon step-muted">
+                            2
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="step-icon step-muted">
+                            3
+                        </div>
+                        <div class="step-label">
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="step-icon step-muted">
+                            4
+                        </div>
                         <div class="step-label">
                         </div>
 
@@ -30,19 +50,19 @@
                                     <div class="form-group" ng-show="quote_rows == 3">
                                         <input type="text" ng-model="checkup.quote.where" class="form-control input-lg" placeholder="¿Dónde la dijo?" required="required" />
                                     </div>
-                                    <div class="form-group col-md-6 col-md-offset-3" ng-show="quote_rows == 3">
+                                    <div class="form-group col-md-6 resetSelect" ng-show="quote_rows == 3">
                                         <select class="form-control input-lg" ng-model="checkup.quote.category" ng-options="category.description for category in categories"></select>
                                     </div>
                                     <div class="form-group" ng-show="quote_rows == 3">
                                         <label>
-                                            <input type="checkbox" class="input-lg" ng-model="checkup.quote.checked" required="required">
+                                            <input type="checkbox" class="" ng-model="checkup.quote.checked" required="required">
                                             No es ni opinión, ni proyección y contiene datos contrastables
                                         </label>
                                     </div>
              
                                 </div>
                                 <div class="row" ng-show="quote_rows == 3">
-                                    <div class="col-md-offset-4 col-md-3">
+                                    <div class="col-md-offset-5 col-md-3">
                                         <button type="submit" class="btn">
                                             Siguiente
                                             <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>

@@ -4,6 +4,7 @@ angular.module('checkApp', [
     'ngRoute',
     'ngResource',
     'ui.router',
+    'ui.bootstrap',
     'checkApp.services',
     'checkApp.home',
     'checkApp.help',

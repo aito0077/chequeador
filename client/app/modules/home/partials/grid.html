@@ -1,24 +1,24 @@
 <div class="row checkup-item" ng-repeat="checkup in checkups">
     <div class="col-md-12 checkup-row" data-checkup-id="{{checkup.id}}" >
         <div class="checkup-body">
-            <div class="col-md-8 col-xs-9">
+            <div class="col-md-9 col-xs-10">
+                <span class="checkup-status {{checkup.phase}}"></span>
                 <a class="quote-text" ng-href="#/checkup/{{checkup.id}}">
-                    <span class="checkup-status {{checkup.phase}}"></span>
-                    <p>{{checkup.quote.text}}</p>
+                    <span>{{checkup.quote.text}}
+                        <span class="checkup-list-entity text-muted">
+                        .&nbsp;  
+                         {{checkup.entity.name}}
+                        </span>
+                    </span>
                 </a>
-            </div>
-            <div class="col-md-1 col-xs-2">
-                <small class="pull-right text-muted">
-                 {{checkup.entity.name}}
-                </small>
             </div>
             <div class="votacion col-md-1 col-xs-1">
                 <div class="voteBox text-center {{getClassByRate(checkup.rate)}} {{hasVote(checkup.id).class}}" style="width: auto; font-size:14pt;">
                     <div class="text-center icon-up">
                         <i class="glyphicon glyphicon-chevron-up" ng-click="voteUp(checkup.id)" title="+1" ng-show="user_id"></i>
                     </div>
-                    <div class="text-center voteCount ">
-                        {{checkup.rate}}
+                    <div class="text-center voteCount">
+                        <span ng-show="checkup.rate > 0">+</span>{{checkup.rate}}
                     </div>
                     <div class="text-center icon-down">
                         <i class="glyphicon glyphicon-chevron-down" ng-click="voteDown(checkup.id)" title="-1" ng-show="user_id"></i>

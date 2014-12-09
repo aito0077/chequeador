@@ -2,12 +2,17 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
 
 .filter('truncate', function () {
     return function (text, length, end) {
-        if (isNaN(length))
+        if (isNaN(length)) {
             length = 10;
+        }
 
-        if (end === undefined)
+        if (end === undefined) {
             end = "...";
+        }
 
+        if(_.isUndefined(text) || text == null) {
+            return text;
+        }
         if (text.length <= length || text.length - end.length <= length) {
             return text;
         }
