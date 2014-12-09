@@ -46,6 +46,9 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         $scope.checkups = checkups;
     });
 
+
+    $scope.filteredCheckups = $scope.checkups;
+
     $scope.collaborators = {};
     $scope.own_votes = {};
 
@@ -121,6 +124,48 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
             class: 'voted-' + (up ? 'up' : 'down'),
             up: up
         }; 
+    };
+
+    $scope.categorySelected = null;
+    $scope.filterSelected = null;
+
+    $scope.filterBy = function(filter) {
+        $scope.filterSelected = filter;
+        $scope.categorySelected = null;
+        $scope.doFilter();
+    };
+
+    $scope.filterByCategory = function(category) {
+        $scope.filterSelected = 'category';
+        $scope.categorySelected = category;
+        $scope.doFilter();
+    };
+
+    $scope.doFilter = function() {
+        switch($scope.filterSelected) {
+            case 'all':
+                $scope.filteredCheckups = $scope.checkups;
+                break;
+            case 'finish':
+                $scope.filteredCheckups = _.filter($scope.checkups, function(item) {
+                    return item.phase == 'QUALIFICATION';
+                });
+                break;
+            case 'in_progress':
+                $scope.filteredCheckups = _.filter($scope.checkups, function(item) {
+                    return item.phase != 'QUALIFICATION';
+                });
+                break;
+            case 'category':
+                $scope.filteredCheckups = _.filter($scope.checkups, function(item) {
+                    return item.quote.category_id == $scope.categorySelected;
+                });
+                break;
+            default:
+                $scope.filteredCheckups = $scope.checkups;
+                break;
+        }
+
     };
 
 }]);

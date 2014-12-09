@@ -1,7 +1,10 @@
-<div class="row checkup-item" ng-repeat="checkup in checkups">
+<div class="row filters-container">
+    <ng-include src="'modules/home/partials/filter.html'"/>
+</div>
+<div class="row checkup-item" ng-repeat="checkup in filteredCheckups">
     <div class="col-md-12 checkup-row" data-checkup-id="{{checkup.id}}" >
         <div class="checkup-body">
-            <div class="col-md-9 col-xs-10">
+            <div class="col-md-8 col-xs-10">
                 <span class="checkup-status {{checkup.phase}}"></span>
                 <a class="quote-text" ng-href="#/checkup/{{checkup.id}}">
                     <span>{{checkup.quote.text}}
@@ -12,7 +15,7 @@
                     </span>
                 </a>
             </div>
-            <div class="votacion col-md-1 col-xs-1">
+            <div class="votacion col-md-2 col-xs-2">
                 <div class="voteBox text-center {{getClassByRate(checkup.rate)}} {{hasVote(checkup.id).class}}" style="width: auto; font-size:14pt;">
                     <div class="text-center icon-up">
                         <i class="glyphicon glyphicon-chevron-up" ng-click="voteUp(checkup.id)" title="+1" ng-show="user_id"></i>
@@ -40,4 +43,3 @@
         </div>
     </div>
 </div>
-

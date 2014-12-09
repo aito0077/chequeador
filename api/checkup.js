@@ -77,7 +77,6 @@ checkups = {
     read: function read(args) {
         var checkup_id = args.id,
             omitted = {};
-        debug('Checkup id: '+checkup_id);
         return persistence.Checkup.read(args, {
             withRelated: ['quote', 'contexts', 'entity']
         }).then(function (result) {

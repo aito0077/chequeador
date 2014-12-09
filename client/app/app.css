@@ -482,7 +482,7 @@ h5, .call-atention {
 
 
 .dropdown .dropdown-menu li a{
-    font-size: 15px;
+    font-size: 12px;
     color: #ff0000 !important;
 }
 
@@ -509,3 +509,59 @@ h5, .call-atention {
 
 .score-col {
 }
+
+.filter-bar {
+    font-size: 12px;
+}
+
+.filter-bar .filters {
+}
+
+.filter-bar .filters .filter {
+    padding: 15px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #ff0000;
+}
+
+.filter-bar .filters li.active a {
+    color: #000;
+
+}
+
+.filter-bar .filters li a {
+    padding: 15px 15px 0px 15px !important;
+    cursor: pointer;
+}
+
+
+#filter-navbar .filter-bar,
+.navbar.checkup-list-filter-navbar {
+    background: none;
+    border: none;
+    margin-bottom: 0px;
+}
+
+.filters-container {
+    padding: 0px;
+    margin: 0px -15px 0px -15px;
+	border-bottom: solid 1px #cccccc;
+}
+
+.dropdwon-menu a {
+    font-size: 12px;
+}
+/*
+.filters > .nav > li:before {
+    content: "|";
+    color: #ff0000;
+}
+
+.filters > .nav > li:nth-child(1) {
+}
+
+.filters > .nav > li:nth-child(1):before {
+  content: "";
+}
+
+*/
