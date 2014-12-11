@@ -327,7 +327,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.addSource = function(){
         $scope.message_error = null;
 
-        var sources_to_persist = _.union((!_.isUndefined($scope.sources['ORI'].what) ? [$scope.sources['ORI']] : []), $scope.sources['ALT'], $scope.sources['OFI']);
+        var sources_to_persist = _.union((!_.isUndefined($scope.sources['ORI'].what) &&  !_.isUndefined($scope.sources['ORI'].entity)? [$scope.sources['ORI']] : []), $scope.sources['ALT'], $scope.sources['OFI']);
         if(_.size(sources_to_persist) < 2) {
             $scope.message_error = 'para finalizar el paso 2 tenes que consultar al menos 2 fuentes';
             return; 
@@ -342,7 +342,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         }
 
         _.each(sources_to_persist, function(source) {
-            if(_.isUndefined(source.id)) {
+            if(_.isUndefined(source.id) && !_.isUndefined(source.entity)) {
                 source.checkup_id = $scope.checkup_id;
                 source.name = source.entity.name;
                 source.description = source.entity.description;
@@ -353,7 +353,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.entityDescriptionPlaceholder = function() {
-        return $scope.current_type == 'OFI' ? '¿Qué cargo/rol tiene?' : '¿Por qué es relevante?';
+        return $scope.current_type != 'ALT' ? '¿Qué cargo/rol tiene?' : '¿Por qué es relevante?';
     };
 
 
