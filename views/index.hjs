@@ -87,7 +87,8 @@
                 Es un proyecto de <img class="footer-brand" src="/static/img/logoChqFooter.png"></img>
             </div>
             <div class="sponsor col-md-6 text-right">
-                Acelerado por HackHackers
+                Acelerado por <a target="_blank" href="http://hackslabs.org"><img class="footer-brand" src="/static/img/hl.png"></img></a> <a target="_blank" href="http://www.icfj.org/"><img class="footer-brand" src="/static/img/icfj.png"></img></a>
+
             </div>
         </div>
 

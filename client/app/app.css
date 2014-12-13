@@ -177,6 +177,10 @@ a:hover, a:visited, a:link, a:active {
     padding-top: 6px;
 }
 
+.sponsor img {
+    height: 30px;
+}
+
 .checkup-body {
     font-size: 15px; 
     height: 80px;
