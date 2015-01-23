@@ -31,7 +31,7 @@
 
                 <div class="well-sm col-md-10">
 
-                        <div ng-show="hasOwnVote && !editing && !persisted" class="row">
+                        <div ng-show="showOwnVote()" class="row">
 
                             <div class="row">
                                 
@@ -101,16 +101,6 @@
                                 </div><!-- score-col -->
                             </div>
 
-
-
-
-
-
-                            <!--button ng-click="addNewQualification()" class="btn">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </button>
-                            ¿Tienes otro criterio de calificación?
-                            <span class="call-atention">Sumalo!</span--> 
                         </div>
 
 
@@ -127,7 +117,7 @@
                                 <div class="col-md-3 qualification-col" ng-repeat="calification in quality_measures">
                                     <div class="row">
                                         <label ng-click="setType(calification.id)" class="btn btn-block qualify-item {{markQualifySelected(calification.id)}}" >
-                                            <span class="fa-stack pull-left" ng-switch on="qualify_type == calification.id">
+                                            <span class="fa-stack pull-left" ng-switch on="switchOnQualifyType(calification.id)">
                                                 <i class="fa fa-circle-thin fa-stack-1x" ng-switch-when="false"></i>
                                                 <i class="fa fa-circle fa-stack-1x status-green" ng-switch-when="true"></i>
                                                 <i class="fa fa-check fa-stack fa-inverse" ng-switch-when="true"></i>
