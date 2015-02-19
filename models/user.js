@@ -1,5 +1,8 @@
 var User,
     Users,
+    when           = require('when'),
+    nodefn         = require('when/node/function'),
+    bcrypt         = require('bcryptjs'),
     _              = require('underscore'),
     Persistence    = require('./base');
 
@@ -9,7 +12,7 @@ User = Persistence.Model.extend({
     tableName: 'User',
 
     permittedAttributes: [
-        'id', 'name', 'password', 'mail', 'picture', 'provider', 'provider_id', 'username' ],
+        'id', 'name', 'password', 'mail', 'picture', 'provider', 'provider_id', 'username', 'blocked' ],
 
     validate: function () {
         //Persistence.validator.check(this.get('email'), "Please enter a valid email address. That one looks a bit dodgy.").isEmail();
@@ -68,7 +71,6 @@ User = Persistence.Model.extend({
 
     },
 
-    /*
     check: function (_userdata) {
         var self = this,
             s;
@@ -101,7 +103,6 @@ User = Persistence.Model.extend({
             return when.reject(error);
         });
     },
-    */
 
     getByEmail: function (email) {
         return Users.forge().fetch({require: true}).then(function (users) {

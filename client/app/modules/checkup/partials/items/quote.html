@@ -1,4 +1,10 @@
-<small class="checkup-item-header">La frase seleccionada</small>
+<div class="pull-right" ng-show="can_edit()">
+   <span class="btn btn-default btn-xs btn-remove" ng-really-message="Desea ELIMINAR el presente chequeo?" ng-really-click="do_remove()">Eliminar</span> 
+   <span ng-show="checkup.status == 'OPEN'" class="btn btn-default btn-xs btn-remove" ng-really-message="Desea congelar el chequeo?" ng-really-click="do_freeze()">Freeze</span> 
+   <span ng-show="checkup.status == 'CLOSED'" class="btn btn-default btn-xs btn-remove" ng-click="do_unfreeze()">Unfreeze</span> 
+</div>
+
+<small class="checkup-item-header">La frase seleccionada <span class="btn btn-default btn-xs btn-remove" ng-show="can_edit()" ng-click="do_edit_quote()">Editar</span></small>
 <blockquote>
   <p class="text-quote">{{checkup.quote.text}}</p>
   <footer>{{checkup.entity.name}}</footer>

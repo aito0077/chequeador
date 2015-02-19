@@ -51,7 +51,29 @@ angular.module('userModule.controllers',['ngRoute'])
     $scope.follow = function() {
         //ToDo: Implementar
         
-    }
+    };
+
+    $scope.do_block = function() {
+        $http.get('/api/users/block/'+$scope.profile.id).
+        success(function(data, status, headers, config) {
+            $scope.profile.blocked = true;
+        }).error(function(data, status, headers, config) {
+        });
+    };
+
+    $scope.do_unblock = function() {
+        $http.get('/api/users/unblock/'+$scope.profile.id).
+        success(function(data, status, headers, config) {
+            $scope.profile.blocked = false;
+        }).error(function(data, status, headers, config) {
+        });
+    };
+
+
+
+    $scope.can_edit = function () {
+        return is_admin && $routeParams.id != user_id;
+    };
 
 }])
 

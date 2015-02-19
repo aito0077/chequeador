@@ -1,6 +1,6 @@
 {
   "name": "chequeador",
-  "version": "0.0.0",
+  "version": "0.8.2",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -28,5 +28,10 @@
     "when": "3.6.2",
     "bcryptjs": "0.7.10",
     "gravatar": "~1.0.6"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.4.3",
+    "gulp-filter": "^2.0.0",
+    "main-bower-files": "^2.5.0"
   }
 }

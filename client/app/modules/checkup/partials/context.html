@@ -48,8 +48,18 @@
                                     
                                     <div class="form-group">
                                         <h5> por {{item_context.username}}</h5>
-                                        <textarea ng-model="item_context.body" class="form-control" rows="3" cols="25" disabled ></textarea>
+                                        <textarea ng-model="item_context.body" class="form-control" rows="3" cols="25" ng-disabled="!item_context.editing" ></textarea>
+
+                                        <div class="pull-right" ng-show="can_edit() && !item_context.editing">
+                                            <span class="btn btn-default btn-xs btn-remove" ng-click="do_edit(item_context)">Editar</span> 
+                                            <span class="btn btn-default btn-xs btn-remove"  ng-really-message="Desea ELIMINAR el contexto?" ng-really-click="do_remove(item_context)">Eliminar</span> 
+                                        </div>
+
+                                        <div class="pull-right" ng-show="can_edit() && item_context.editing">
+                                            <span class="btn btn-default btn-xs btn-remove" ng-click="do_update(item_context)">Guardar</span> 
+                                        </div>
                                     </div>
+
 
                                 </div>
 
@@ -73,9 +83,13 @@
 
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-3">
-                                        <button type="submit" class="btn ">
-                                           Finalizar 
+                                        <button class="btn" type="submit" ng-show="isCreating()">
+                                           Guardar
                                         </button>
+                                        <button class="btn" ng-click="close()" ng-show="!isCreating()">
+                                           Volver
+                                        </button>
+
                                     </div>
                  
                                 </div>

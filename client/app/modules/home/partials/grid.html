@@ -2,7 +2,7 @@
     <ng-include src="'modules/home/partials/filter.html'"/>
 </div>
 <div class="row checkup-item" ng-repeat="checkup in filteredCheckups">
-    <div class="col-md-12 checkup-row" data-checkup-id="{{checkup.id}}" >
+    <div class="col-md-12 checkup-row checkup-{{checkup.status}}" data-checkup-id="{{checkup.id}}" >
         <div class="checkup-body">
             <div class="col-md-8 col-xs-10 move">
                 <span class="checkup-status {{checkup.phase}}"></span>
@@ -34,7 +34,7 @@
                     <ul class="list-inline">
                         <li ng-repeat="collaborator in getCollaborators(checkup.id)">
                             <a ng-href="/#/users/profile/{{collaborator.made_by}}">
-                                <img class="login-picture" src="{{collaborator.picture}}" title="{{collaborator.username}}" />
+                                <img class="login-picture" ng-src="{{collaborator.picture}}" title="{{collaborator.username}}" />
                             </a>
                         </li>
                     </ul>

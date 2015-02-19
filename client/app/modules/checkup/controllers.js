@@ -22,7 +22,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 })
 
-.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', 'Checkup', 'Qualification', 'Help', function($scope, $state, $routeParams, $window, Checkup, Qualification, Help) {
+.controller('CheckupViewController',['$scope', '$state', '$routeParams', '$window', '$http', '$location', 'Checkup', 'Qualification', 'Help', function($scope, $state, $routeParams, $window, $http, $location, Checkup, Qualification, Help) {
 
     $scope.phases = [
         {
@@ -145,7 +145,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.edit = function(step) {
-        if(_.isUndefined($scope.checkup.id) || step == 'quote') {
+        if(_.isUndefined($scope.checkup.id) || (step == 'quote' && !is_admin) ) {
             return;
         }
         if(_.isUndefined($scope.user_id)) {
@@ -177,38 +177,96 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         }));
     };
 
-    Qualification.query(function(data) {
-        $scope.quality_measures = data;
+    var quality_measures = Qualification.query(function(data) {
+        $scope.quality_measures = quality_measures;
     });
 
     $scope.isMaxVoted = function(item) {
         return item.id == $scope.maxVoted.qualification;
     };
 
+    $scope.do_remove = function() {
+        $scope.checkup.$remove(function() {
+            $location.url('/');
+        });
+    };
+
+    $scope.do_unfreeze = function() {
+        $http.get('/api/checkup/unfreeze/'+$scope.checkup_id).
+        success(function(data, status, headers, config) {
+            $scope.checkup.status = 'OPEN';
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
+
+    $scope.do_freeze= function() {
+        $http.get('/api/checkup/freeze/'+$scope.checkup_id).
+        success(function(data, status, headers, config) {
+            $scope.checkup.status = 'CLOSED';
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
+
+    $scope.do_edit_quote = function() {
+
+    };
+
     $scope.show_help = function(item_id) {
         Help.setSection(item_id+'_item');
     };
 
+    $scope.can_edit = function () {
+        return is_admin ;
+    };
+
 }])
 
-.controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', 'Help', function($scope,Checkup, Quote, Category, $state, Help){
+.controller('CheckupQuoteController',['$scope', 'Checkup', 'Quote', 'Category', '$state', '$routeParams', 'Help', function($scope,Checkup, Quote, Category, $state, $routeParams, Help){
 
-    $scope.checkup = new Checkup();
-    $scope.checkup.quote = new Quote();
 
-    var categories = Category.query(function(data) {
-        $scope.categories = categories;
-    });
+    $scope.isEditAction = false;
+    $scope.checkup_id = $routeParams.id;
+    var categories = [];
+    $scope.checkup = {};
+
+    if($scope.checkup_id != 'new') {
+        categories = Category.query(function(data) {
+            $scope.categories = categories;
+
+            $scope.checkup = Checkup.get({
+                id: $routeParams.id
+            }, function(check_data) {
+                $scope.checkup = check_data;
+                $scope.checkup.quote.where = $scope.checkup.quote._where;
+                $scope.checkup.quote.author = $scope.checkup.entity.name;
+                $scope.checkup.quote.category = $scope.checkup.quote.category_id;
+                $scope.isEditAction = true;
+            });
+        });
+
+    } else {
+        categories = Category.query(function(data) {
+            $scope.categories = categories;
+        });
+
+        $scope.checkup = new Checkup();
+        $scope.checkup.quote = new Quote();
+    }
 
     $scope.addCheckup = function(){
         $scope.checkup.$save(function() {
-
+            if($scope.isEditAction) {
+                $state.go('view');
+            }
+            $scope.isEditAction = false;
         });
     };
 
     $scope.isCheckupPersisted = function(){
         Help.setSection('quote_base');
-        return $scope.checkup.id != null;
+        return $scope.checkup.id != null && !$scope.isEditAction;
     };
 
     $scope.close = function(){
@@ -357,10 +415,23 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
 
+    $scope.can_edit = function (source_id) {
+        return is_admin && source_id;
+    };
+
+    $scope.do_edit = function () {
+
+    };
+
+    $scope.do_remove= function () {
+
+    };
+
+
 }])
 
 
-.controller('CheckupContextController',['$scope', '$routeParams', '$state', 'Checkup', 'Context', 'Help', function($scope, $routeParams, $state, Checkup, Context, Help){
+.controller('CheckupContextController',['$scope', '$routeParams', '$state', 'Checkup', 'Context', '$location', 'Help', function($scope, $routeParams, $state, Checkup, Context, $location, Help){
 
     var persisted = false;
     $scope.context = null;
@@ -370,17 +441,17 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     $scope.checkup = Checkup.get({
         id: $routeParams.id 
     }, function() {
-        $scope.contexts = $scope.checkup.full_contexts;        
+        $scope.contexts = $scope.checkup.full_contexts;
         if(_.size($scope.contexts) == 0) {
            $scope.context = new Context(); 
         }
-
     });
 
     $scope.addContext = function(){
         $scope.context.checkup_id = $scope.checkup.id;
         $scope.context.$save(function(){
             persisted = true;
+            $scope.editing = false;
         });
     }
 
@@ -397,7 +468,57 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     $scope.isCreating = function() {
-        return $scope.context != null;
+        return $scope.context != null && !$scope.editing;
+    };
+
+    $scope.can_edit = function () {
+        return is_admin;
+    };
+
+    $scope.do_edit = function (item) {
+        $scope.editing = true;
+        $scope.context = new Context(item);
+        item.editing = true;
+    };
+
+    $scope.do_remove = function (item) {
+        console.dir(item);
+        var item_contexto = new Context(item);
+        item_contexto.$remove(function() {
+            $scope.checkup = Checkup.get({
+                id: $routeParams.id 
+            }, function() {
+                $scope.contexts = $scope.checkup.full_contexts;
+                if(_.size($scope.contexts) == 0) {
+                   $scope.context = new Context(); 
+                }
+            });
+
+
+
+        });
+    };
+
+
+
+    $scope.do_update= function (item) {
+        var item_contexto = new Context(item);
+        item_contexto.$save(function() {
+            $scope.checkup = Checkup.get({
+                id: $routeParams.id 
+            }, function() {
+
+                $scope.editing = false;
+                $scope.context = null;
+                $scope.contexts = $scope.checkup.full_contexts;
+                if(_.size($scope.contexts) == 0) {
+                   $scope.context = new Context(); 
+                }
+            });
+
+
+
+        });
     };
 
     Help.setSection('context_base');

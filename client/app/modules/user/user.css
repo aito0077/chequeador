@@ -3,22 +3,6 @@
     color:  #000;
 }
 
-[class*="brandico-"]:before {
-  font-family: 'brandico', sans-serif;
-}
-
-[class*="entypo-"]:before {
-  font-family: 'entypo', sans-serif;
-}
-
-[class*="openwebicons-"]:before {
-  font-family: 'OpenWeb Icons', sans-serif;
-}
-
-[class*="zocial-"]:before {
-  font-family: 'zocial', sans-serif;
-}
-
 .form-signin{
   max-width: 330px;
   padding: 15px;
@@ -49,7 +33,6 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
 
 
 .create-account {
@@ -111,16 +94,6 @@
   background-color: #000;
   border-color: #000;
 }
-
-.social-linkedin {
-  background-color: #4875B4;
-  border-color: #466b99;
-}
-.social-linkedin:hover {
-  background-color: #466b99;
-  border-color: #3b5a7c;
-}
-
 
 .user-profile {
     padding-top: 20px;

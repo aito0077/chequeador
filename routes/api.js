@@ -32,6 +32,8 @@ var authAPI = function(req, res, next) {
 };
 
 router.get('/users/', requestHandler(api.users.browse));
+router.get('/users/block/:id', authAPI, requestHandler(api.users.block));
+router.get('/users/unblock/:id', authAPI, requestHandler(api.users.unblock));
 router.get('/users/:id/', requestHandler(api.users.read));
 router.get('/users/:id/stats', requestHandler(api.users.stats));
 router.get('/users/:id/', requestHandler(api.users.profile));
@@ -50,37 +52,43 @@ router.get('/categories/:id/', requestHandler(api.categories.read));
 router.put('/categories/:id/', authAPI, requestHandler(api.categories.edit));
 
 router.get('/checkups/', requestHandler(api.checkups.browse));
+router.get('/checkup/freeze/:id', authAPI, requestHandler(api.checkups.freeze));
+router.get('/checkup/unfreeze/:id', authAPI, requestHandler(api.checkups.unfreeze));
 router.get('/checkup/collaborators', requestHandler(api.checkups.checkups_collaborators));
 router.get('/checkups/:id/', requestHandler(api.checkups.read));
 router.get('/checkup/vote-up/:id', authAPI, requestHandler(api.checkups.voteUp));
 router.get('/checkup/vote-down/:id', authAPI, requestHandler(api.checkups.voteDown));
-router.put('/checkups/:id/', authAPI, requestHandler(api.checkups.edit));
+router.put('/checkups/:id', authAPI, requestHandler(api.checkups.edit));
+router.post('/checkups/:id', authAPI, requestHandler(api.checkups.edit));
+router.delete('/checkups/:id', authAPI, requestHandler(api.checkups.remove));
 router.post('/checkups/', authAPI, requestHandler(api.checkups.add));
 
 router.get('/checkup-users/', requestHandler(api.checkupUsers.browse));
-router.get('/checkup-users/:id/', requestHandler(api.checkupUsers.read));
-router.put('/checkup-users/:id/', authAPI, requestHandler(api.checkupUsers.edit));
+router.get('/checkup-users/:id', requestHandler(api.checkupUsers.read));
+router.put('/checkup-users/:id', authAPI, requestHandler(api.checkupUsers.edit));
 
 router.get('/comments/', requestHandler(api.comments.browse));
-router.get('/comments/:id/', requestHandler(api.comments.read));
-router.put('/comments/:id/', authAPI, requestHandler(api.comments.edit));
+router.get('/comments/:id', requestHandler(api.comments.read));
+router.put('/comments/:id', authAPI, requestHandler(api.comments.edit));
 
 router.get('/contexts/', requestHandler(api.contexts.browse));
-router.get('/contexts/:id/', requestHandler(api.contexts.read));
-router.put('/contexts/:id/', authAPI, requestHandler(api.contexts.edit));
+router.get('/contexts/:id', requestHandler(api.contexts.read));
+router.put('/contexts/:id', authAPI, requestHandler(api.contexts.edit));
+router.post('/contexts/:id', authAPI, requestHandler(api.contexts.edit));
 router.post('/contexts/', authAPI, requestHandler(api.contexts.add));
+router.delete('/contexts/:id', authAPI, requestHandler(api.contexts.remove));
 
 router.get('/entities/', requestHandler(api.entities.browse));
-router.get('/entities/:id/', requestHandler(api.entities.read));
-router.put('/entities/:id/', authAPI, requestHandler(api.entities.edit));
+router.get('/entities/:id', requestHandler(api.entities.read));
+router.put('/entities/:id', authAPI, requestHandler(api.entities.edit));
 
 router.get('/entity-relations/', requestHandler(api.entityRelations.browse));
-router.get('/entity-relations/:id/', requestHandler(api.entityRelations.read));
-router.put('/entity-relations/:id/', authAPI, requestHandler(api.entityRelations.edit));
+router.get('/entity-relations/:id', requestHandler(api.entityRelations.read));
+router.put('/entity-relations/:id', authAPI, requestHandler(api.entityRelations.edit));
 
 router.get('/entity-types/', requestHandler(api.entityTypes.browse));
-router.get('/entity-types/:id/', requestHandler(api.entityTypes.read));
-router.put('/entity-types/:id/', authAPI, requestHandler(api.entityTypes.edit));
+router.get('/entity-types/:id', requestHandler(api.entityTypes.read));
+router.put('/entity-types/:id', authAPI, requestHandler(api.entityTypes.edit));
 
 router.get('/inputs/', requestHandler(api.inputs.browse));
 router.get('/inputs/:id/', requestHandler(api.inputs.read));
@@ -118,6 +126,7 @@ router.get('/sources/', requestHandler(api.sources.browse));
 router.get('/sources/:id/', requestHandler(api.sources.read));
 router.put('/sources/:id/', authAPI, requestHandler(api.sources.edit));
 router.post('/sources/', authAPI, requestHandler(api.sources.add));
+router.delete('/sources/:id', authAPI, requestHandler(api.sources.remove));
 
 router.get('/source-types/', requestHandler(api.sourceTypes.browse));
 router.get('/source-types/:id/', requestHandler(api.sourceTypes.read));

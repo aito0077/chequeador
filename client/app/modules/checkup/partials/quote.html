@@ -54,8 +54,8 @@
                                         <select class="form-control input-lg" ng-model="checkup.quote.category" ng-options="category.description for category in categories"></select>
                                     </div>
                                     <div class="form-group" ng-show="quote_rows == 3">
-                                        <label>
-                                            <input type="checkbox" class="" ng-model="checkup.quote.checked" required="required">
+                                        <label ng-show="!isEditAction">
+                                            <input type="checkbox" class="" ng-model="checkup.quote.checked" ng-required="!isEditAction">
                                             No es ni opinión, ni proyección y contiene datos contrastables
                                         </label>
                                     </div>

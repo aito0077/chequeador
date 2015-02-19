@@ -42,18 +42,20 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
 
 .controller('checkup-list', ['$scope','$http', 'Checkup', 'Category', 'Help', '$state', function($scope, $http, Checkup, Category, Help, $state) {
 
+
     $scope.filteredCheckups = $scope.checkups;
     var checkups = Checkup.query(function(data) {
-        $scope.filteredCheckups = $scope.checkups = checkups;
+        $scope.filteredCheckups = data;
+        $scope.checkups = data;
+        fetchCollaborators();
     });
 
 
-
-    $scope.collaborators = {};
+    $scope.collaborators = [];
     $scope.own_votes = {};
 
     var categories = Category.query(function(data) {
-        $scope.categories = categories;
+        $scope.categories = data;
         Help.setSection('home');
     });
 
@@ -68,7 +70,6 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         });
     }; 
 
-    fetchCollaborators();
 
     $scope.voteUp = function(checkup_id) {
         if($scope.hasVote(checkup_id)) {
@@ -76,9 +77,9 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         }
         $http.get('/api/checkup/vote-up/'+checkup_id).
         success(function(data, status, headers, config) {
-            fetchCollaborators();
-            var checkups = Checkup.query(function(data) {
-                $scope.checkups = checkups;
+            Checkup.query(function(data) {
+                $scope.checkups = data;
+                $scope.doFilter();
             });
         }).
         error(function(data, status, headers, config) {
@@ -91,9 +92,9 @@ angular.module('checkApp.home', ['ngRoute','ui.router','ngResource'])
         }
         $http.get('/api/checkup/vote-down/'+checkup_id).
         success(function(data, status, headers, config) {
-            fetchCollaborators();
-            var checkups = Checkup.query(function(data) {
-                $scope.checkups = checkups;
+            Checkup.query(function(data) {
+                $scope.checkups = data;
+                $scope.doFilter();
             });
         }).
         error(function(data, status, headers, config) {

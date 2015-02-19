@@ -88,6 +88,13 @@
                                             <textarea name="observation" id="observation" ng-model="source.observation" class="form-control" rows="3" cols="25" placeholder="Pegar link a base de datos" ng-disabled="source.id" ></textarea>
                                         </div>
                                     </div>
+                                    <div ng-show="can_edit(source.id)" class="row">
+                                        <div class="pull-right">
+                                            <span class="btn btn-default btn-xs btn-remove" ng-click="do_edit()">Editar</span> 
+                                            <span class="btn btn-default btn-xs btn-remove" ng-really-message="Desea ELIMINAR la fuente?" ng-really-click="do_remove()">Eliminar</span> 
+                                        </div>
+                                    </div>
+
 
                                 </div>
 
@@ -104,6 +111,13 @@
                                         </div>
                                         <div class="form-group">
                                             <textarea name="observation" id="observation" ng-model="item_source.observation" class="form-control" rows="3" cols="25" placeholder="Pegar link a base de datos" ng-disabled="item_source.id" ng-show="(item_source.id && item_source.observation) || !item_source.id" ></textarea>
+                                        </div>
+
+                                        <div ng-show="can_edit(item_source.id)" class="row">
+                                            <div class="pull-right">
+                                                <span class="btn btn-default btn-xs btn-remove" ng-click="do_edit()">Editar</span> 
+                                                <span class="btn btn-default btn-xs btn-remove" ng-click="do_remove()">Eliminar</span> 
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <span ng-show="item_source.invalid" class="call-atention"><small>No esta completo</small></span>

@@ -7,6 +7,7 @@ var passport = require('passport'),
     express = require('express'),
     router = express.Router(),
     _ = require('underscore'),
+    LocalStrategy = require('passport-local').Strategy,
     User = require('./models/user').User;
 
 
@@ -113,6 +114,31 @@ for(var strategy in keys) {
   })(strategy);
 
 }
+
+passport.use(new LocalStrategy({
+        usernameField: 'username',
+        passwordField: 'password'
+    },
+    function(username, password, done) {
+        /*
+        User.read({provider_id: profile.id, provider: provider}, {}).then(function(user) {
+            function setPicture(){
+
+        users.authenticate(username, password, function(err, user) {
+            if (err) { return done(err); }
+            if (us.isEmpty(user)) {
+                return done(null, false, { message: 'Usuario/Password incorrecto.' });
+            }
+            return done(null, user);
+        });
+        */
+    }
+));
+
+
+
+
+
     return router;
 };
 

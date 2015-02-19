@@ -9,10 +9,14 @@
         <title>chequeador</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--
         <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/normalize.css">
         <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/main.css">
         <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+        -->
+        <link rel="stylesheet" href="/static/third-party.css">
+        
 
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
@@ -23,7 +27,9 @@
         <link rel="stylesheet" href="/static/modules/user/user.css">
 
         <link rel="stylesheet" href="/static/app.css">
+        <!--
         <script src="/static/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+        -->
     </head>
     <body>
         <div class="header">
@@ -92,6 +98,7 @@
             </div>
         </div>
 
+        <!--
         <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="/static/bower_components/underscore/underscore-min.js"></script>
 
@@ -103,6 +110,9 @@
         <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
         <script src="/static/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
+        -->
+
+        <script src="/static/third-party.js"></script>
 
         <script src="/static/js/services.js"></script>
         <script src="/static/app.js"></script>
@@ -115,12 +125,16 @@
         <script src="/static/modules/checkup/checkup.js"></script>
         <script src="/static/modules/checkup/controllers.js"></script>
         
-        {{#user}}
         <script>
+        {{#user}}
             window.user_id = {{user.id}};
-        </script>
+            window.is_admin = {{user.admin}};
         {{/user}}
-
+        {{^user}}
+            window.user_id = false;
+            window.is_admin = false; 
+        {{/user}}
+        </script>
 
     </body>
 </html>

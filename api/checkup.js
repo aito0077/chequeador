@@ -11,17 +11,20 @@ var when = require('when'),
 
 checkups = {
     browse: function browse(options) {
-        debug('browse: ');
+        var user_is_admin = this.user && this.user.admin;
 
         var fetch_options = _.extend(options, {
             withRelated: ['quote', 'entity']
         });
+
         return persistence.Checkup.browse(fetch_options).then(function (result) {
             var i = 0,
                 omitted = {};
 
             if (result) {
-                omitted = result.toJSON();
+                omitted = user_is_admin ? result.toJSON() :  _.filter(result.toJSON(), function(model) {
+                    return model.status != 'REMOVED';
+                });
             }
 
             for (i = 0; i < omitted.length; i = i + 1) {
@@ -202,6 +205,52 @@ checkups = {
         });
     },
 
+    remove: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        return persistence.Checkup.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                return result.save({status: 'REMOVED'}).then(function(model) {
+                    var omitted = _.omit(model.toJSON(), filteredAttributes);
+                    return omitted;
+                });
+            }
+            return when.reject({errorCode: 404, message: 'Checkup not found'});
+        });
+    },
+
+    freeze: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        debug('User is admin? '+user_is_admin);
+
+        return persistence.Checkup.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                return result.save({status: 'CLOSED'}).then(function(model) {
+                    var omitted = _.omit(model.toJSON(), filteredAttributes);
+                    return omitted;
+                });
+            } else {
+                return when.reject({errorCode: 404, message: 'Checkup not found'});
+            }
+        });
+    },
+
+    unfreeze: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        return persistence.Checkup.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                return result.save({status: 'OPEN'}).then(function(model) {
+                    var omitted = _.omit(model.toJSON(), filteredAttributes);
+                    return omitted;
+                });
+            } else {
+                return when.reject({errorCode: 404, message: 'Checkup not found'});
+            }
+        });
+    },
+
     checkups_collaborators: function edit(data) {
         var user_id = _.isUndefined(this.user) ? false : this.user.id ;
         return persistence.Persistence.knex
@@ -247,14 +296,36 @@ checkups = {
     },
 
     edit: function edit(data) {
-        data.id = this.checkup;
-        return persistence.Checkup.edit(data).then(function (result) {
-            if (result) {
-                var omitted = _.omit(result.toJSON(), filteredAttributes);
-                return omitted;
-            }
-            return when.reject({errorCode: 404, message: 'Checkup not found'});
-        });
+        var user_is_admin = this.user.admin,
+            quote = data.quote,
+            existing_quote = {
+                id: quote.id,
+                text: quote.text,
+                _where: quote.where,
+                when:   quote.when,
+                category_id: quote.category.id
+            },
+            new_entity = {
+                name: quote.author,
+                type: 1 //Hasta tanto administremos entidades
+            };
+
+
+        if(user_is_admin) {
+            return persistence.Entity.add(new_entity).then(function (result_entity) {
+                existing_quote.entity_id = result_entity.id;
+                return quotes.edit(existing_quote).then(function(result) {
+                    return persistence.Checkup.read({id: data.id}).then(function (checkup_data) {
+                        return checkup_data.save({entity_id: result_entity.id}).then(function(model) {
+                            var omitted = _.omit(model.toJSON(), filteredAttributes);
+                            return omitted;
+                        });
+                    });
+                });
+            });
+        }
+        return when.reject({errorCode: 404, message: 'Quote not found'});
+
     },
 
     add: function add(data) {

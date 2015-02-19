@@ -1,0 +1,2 @@
+ALTER TABLE User ADD admin BOOLEAN DEFAULT false;
+ALTER TABLE User ADD blocked BOOLEAN DEFAULT false;

@@ -4,6 +4,10 @@
     </div>
     <div class="col-md-10">
 
+        <div class="pull-right" ng-show="can_edit()" style="padding-bottom: 20px;">
+           <span ng-show="!profile.blocked" class="btn btn-default btn-xs btn-remove" ng-really-message="Desea BLOQUEAR al usuario?" ng-really-click="do_block()">Bloquear</span> 
+           <span ng-show="profile.blocked" class="btn btn-default btn-xs btn-remove" ng-really-message="Desea BLOQUEAR al usuario?" ng-really-click="do_block()">Desbloquear</span> 
+        </div>
         <div class="row profile-info">
             <span class="header">Perfil</span>
             <h2 class="profile-name">{{profile.name}}</h2>

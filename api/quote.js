@@ -34,8 +34,7 @@ quotes = {
     },
 
     edit: function edit(data) {
-        data.id = this.quote;
-        return persistence.Quote.edit(data).then(function (result) {
+        return persistence.Quote.edit(data, {id: data.id}).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;

@@ -15,5 +15,10 @@
     "jquery": "2.1.1",
     "bootstrap": "3.3.1",
     "underscore": "1.7.0"
-  }
+  },
+       "overrides": {
+        "BOWER-PACKAGE": {
+            "main": "**/*.min.js"
+        }
+    }
 }

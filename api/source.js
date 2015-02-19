@@ -87,7 +87,25 @@ sources = {
         });
 
 
+    },
+
+    remove: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        debug('User is admin? '+user_is_admin);
+
+        return persistence.Source.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                result.delete(args).then(function(model) {
+                    var omitted = _.omit(model.toJSON(), filteredAttributes);
+                    return omitted;
+                });
+            }
+            return when.reject({errorCode: 404, message: 'Source not found'});
+        });
     }
+
+
 
 
 };

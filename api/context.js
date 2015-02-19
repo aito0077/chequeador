@@ -10,7 +10,7 @@ var when = require('when'),
 contexts = {
     browse: function browse(options) {
         return persistence.Persistence.knex
-            .column('body', 'username', 'picture', 'tags', 'checkup_id')
+            .column('Context.id', 'body', 'username', 'picture', 'tags', 'checkup_id')
             .select()
             .from('Context')
             .innerJoin('User', 'Context.created_by', 'User.id')
@@ -36,8 +36,7 @@ contexts = {
     },
 
     edit: function edit(data) {
-        data.id = this.context;
-        return persistence.Context.edit(data).then(function (result) {
+        return persistence.Context.edit(data, {id: data.id}).then(function (result) {
             if (result) {
                 var omitted = _.omit(result.toJSON(), filteredAttributes);
                 return omitted;
@@ -62,14 +61,26 @@ contexts = {
                 created_by: user_id
             });
         });
+    },
+
+    remove: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        debug('User is admin? '+user_is_admin);
+
+        if (user_is_admin) {
+            return persistence.Context.delete(args.id).then(function (result) {
+            return result;
+            });
+        }
+        return when.reject({errorCode: 404, message: 'Context not found'});
     }
+
+
 
 
 };
 
 module.exports = contexts;
 module.exports.filteredAttributes = filteredAttributes;
-
-
-
 

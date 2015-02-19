@@ -25,7 +25,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'bl33d1ngums' }));
+app.use(session({ 
+    secret: 'bl33d1ngums',
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

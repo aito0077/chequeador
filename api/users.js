@@ -70,6 +70,36 @@ users = {
         });
     },
 
+    block: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        return persistence.User.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                return result.save({blocked: true}).then(function(model) {
+                    return {errorCode: 202, message: 'User blocked'};
+                });
+            } else {
+                return when.reject({errorCode: 404, message: 'User not found to block or not admin'});
+            }
+        });
+    },
+
+    unblock: function remove(args) {
+        var user_is_admin = this.user.admin;
+
+        return persistence.User.read(args).then(function (result) {
+            if (result && user_is_admin) {
+                return result.save({blocked: false}).then(function(model) {
+                    return {errorCode: 202, message: 'User unblocked'};
+                });
+            } else {
+                return when.reject({errorCode: 404, message: 'User not found to unblock or not admin'});
+            }
+        });
+    },
+
+
+
     add: function add(data) {
         return persistence.User.add(data);
     }
