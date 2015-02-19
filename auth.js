@@ -75,6 +75,7 @@ for(var strategy in keys) {
 
           user.picture = user.picture || '/default_avatar.png';
         }
+        debug(user);
 
         if(!user) {
             debug('New user');
@@ -95,6 +96,11 @@ for(var strategy in keys) {
             done(null, user_persisted);
           });
         } else { 
+            debug('User blocked: '+user.toJSON().blocked);
+            if(user.toJSON().blocked == 1) {
+                debug('User blocked');
+                return done(null, false, { message: 'User blocked.' });
+            }
             debug('Existing user');
             var picBefore = user.picture;
             setPicture();

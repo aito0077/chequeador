@@ -345,15 +345,17 @@ h5, .call-atention {
 }
 
 .step-centered .step-entry .step-entry-inner .step-label p.text-quote {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 22px;
+    font-weight: 500;
     display: block-inline;
+    line-height: 27px;
 }
 
 .step-centered .step-entry .step-entry-inner .step-label p.text-context {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 300;
     display: block-inline;
+    line-height: 20px;
 }
 
 .checkup-item-view h2 {
@@ -362,9 +364,10 @@ h5, .call-atention {
 }
 
 .checkup-item-view .text-source {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     padding-bottom: 5px;
+    line-height: 18px;
 }
 
 .checkup-item-view .red {
@@ -375,23 +378,37 @@ h5, .call-atention {
     color: green;
 }
 
+.qualify-description {
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: 15px;
+}
+
 .qualification-step {
     min-height: 300px;
+    padding:0px;
+    margin-top: 20px;
+
 }
 
 .qualification-step .qualify-item {
+    height:35px;
     border-color: #dbdbdb;
     border-color: #ccc;
     font-size: 10px; 
-	padding: 1px;
-    text-transform: uppercase; 
+	padding: 6px 45px 0px 5px;
+    text-transform: uppercase;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+	-moz-border-radius: 0px; 
 }
 
 .qualification-step .score-item {
+	font-family: "Roboto Condensed";
     border: 0px;
-    font-size: 10px; 
+    font-size: 14px; 
 	padding: 1px;
-    text-transform: uppercase; 
+    text-transform: uppercase;
+
 }
 
 .qualification-step .qualify-item.selected {
@@ -404,24 +421,44 @@ h5, .call-atention {
 }
 
 .qualification-step .score-item.selected {
-    color: green;
+    color: rgb(2, 213, 2);
 }
 
 .status-green {
-    color: green;
+    font-size: 22px;
+    color: rgb(2, 166, 2);
 }
 
 .califications-amount {
-    font-size: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: -8px; /*borrar si no funca en FF o IE*/
+
+}
+
+.califications-amount .text-left {
+    font-weight: lighter;
+}
+
+.progress {
+	margin-top: 5px;
+	padding-left:0px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
 }
 
 .califications-amount .progress {
     height: 5px;
+    height: 8px;
+	margin-right: 8px;
+	background: rgb(224, 224, 224);
 }
 
 .califications-amount .progress-bar {
     background-image: linear-gradient(to bottom, #000 0px, #000 100%);
     background-repeat: repeat-x;
+    bottom: -5px; /*borrar si no funca en FF o IE*/
 }
 
 
@@ -446,13 +483,15 @@ h5, .call-atention {
 
 
 .qualification-col {
-
+    margin-right: 7px;
+    width: 165px;
 }
 
 .score-group {
-    border-color: #ccc;
-    border-width: 1px;
-    border-style: solid;
+	padding: 10px 0px 10px 10px;
+	border-color: #ccc;
+	border-width: 0px 1px 1px 1px;
+	border-style: dotted;
 }
 
 .qualify-item-preview  .score-label {
@@ -557,7 +596,10 @@ h5, .call-atention {
     font-size: 12px;
 }
 
-.score-col {
+.score-col .fa-stack {
+	text-align:left;
+	padding-left:1px;
+	color:rgb(2, 213, 2);
 }
 
 .filter:hover {
@@ -608,6 +650,34 @@ h5, .call-atention {
 
 .dropdwon-menu a {
     font-size: 12px;
+}
+
+.qualification-step .fa-stack {
+	font-size: 15px;
+	line-height:22px;
+	width: 1.9em;
+}
+
+.fa-circle-thin:before {
+	color: #ccc;
+}
+
+.caret {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.score-group .score-item {
+text-align: left;
+}
+
+.row .score-col .fa-circle-thin {
+	width:0px;
+	} 
+
+.score-group .status-green {
+	text-align: left;
+	color: black;
 }
 /*
 .filters > .nav > li:before {
