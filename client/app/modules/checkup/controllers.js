@@ -559,6 +559,14 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
         $scope.ownRateValues();
     });
 
+    $scope.showOwnVote = function() {
+        return $scope.hasOwnVote && !$scope.editing && !$scope.persisted;
+    };
+
+    $scope.switchOnQualifyType = function(calification_id) {
+        return $scope.qualify_type == calification_id;
+    };
+
     $scope.ownRateValues = function() {
         if(_.isEmpty($scope.rate) ) {
             if($scope.hasOwnVote && !_.isEmpty(quality_measures) && !_.isEmpty(scores_measures)) {
@@ -578,7 +586,7 @@ angular.module('checkupModule.controllers',['ngRoute', 'ui.router'])
     };
 
     var callVotes = function(checkup_id, callback) {
-        $http.get('/api/rates/checkup/'+checkup_id).
+        $http.get('http://chequeador.collab-dev.com/api/rates/checkup/'+checkup_id).
         success(function(data, status, headers, config) {
             $scope.votes = data;
             $scope.hasOwnVote = !_.isEmpty(data.own_vote);
