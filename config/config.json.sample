@@ -6,5 +6,6 @@
     "database": "chequeador",
     "pool": 5
   },  
+  "token_secret": "bl33d",
   "session": "bl33d"
 }
