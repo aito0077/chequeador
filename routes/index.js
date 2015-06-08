@@ -21,6 +21,18 @@ router.get('/', function(req, res) {
     });
 });
 
+
+/*
+router.get('/useraut', function(req, res) {
+    res.render('user-auth', { 
+        title: 'Express',
+        user: req.user
+    });
+});
+*/
+
+
+
 router.get('/logout', logout, redirect('/'));
 
 

@@ -22,9 +22,9 @@ checkups = {
                 omitted = {};
 
             if (result) {
-                omitted = user_is_admin ? result.toJSON() :  _.filter(result.toJSON(), function(model) {
+                omitted = (user_is_admin ? result.toJSON() :  _.filter(result.toJSON(), function(model) {
                     return model.status != 'REMOVED';
-                });
+                })).reverse();
             }
 
             for (i = 0; i < omitted.length; i = i + 1) {

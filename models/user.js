@@ -4,6 +4,7 @@ var User,
     nodefn         = require('when/node/function'),
     bcrypt         = require('bcryptjs'),
     _              = require('underscore'),
+    debug = require('debug')('chequeador'),
     Persistence    = require('./base');
 
 
@@ -15,30 +16,18 @@ User = Persistence.Model.extend({
         'id', 'name', 'password', 'mail', 'picture', 'provider', 'provider_id', 'username', 'blocked' ],
 
     validate: function () {
-        //Persistence.validator.check(this.get('email'), "Please enter a valid email address. That one looks a bit dodgy.").isEmail();
+        //Persistence.validator.check(this.get('mail'), "Please enter a valid email address. That one looks a bit dodgy.").isEmail();
         return true;
     },
 
     creating: function () {
         var self = this;
-
         Persistence.Model.prototype.creating.call(this);
-
     },
 
     saving: function () {
-
-        // sanitization ?
-
         return Persistence.Model.prototype.saving.apply(this, arguments);
     }
-
-    /*
-    posts: function () {
-        return this.hasMany(Posts, 'created_by');
-    },
-    */
-
 
 }, {
 
@@ -46,6 +35,12 @@ User = Persistence.Model.extend({
 
         var self = this,
             userData = _.extend({}, _user);
+            
+            debug('Usuario recibido');
+            debug(_user);
+
+            debug('Usuario a persistir');
+            debug(userData);
             return Persistence.Model.add.call(self, userData);
         /*
         return validatePasswordLength(userData.password).then(function () {
@@ -75,7 +70,7 @@ User = Persistence.Model.extend({
         var self = this,
             s;
 
-        return this.getByEmail(_userdata.email).then(function (user) {
+        return this.getByEmail(_userdata.mail).then(function (user) {
             if (user.get('status') !== 'locked') {
                 return nodefn.call(bcrypt.compare, _userdata.pw, user.get('password')).then(function (matched) {
                     if (!matched) {
@@ -104,10 +99,11 @@ User = Persistence.Model.extend({
         });
     },
 
-    getByEmail: function (email) {
+    getByEmail: function (mail) {
+        debug('Email: '+mail);
         return Users.forge().fetch({require: true}).then(function (users) {
             var userWithEmail = users.find(function (user) {
-                return user.get('email').toLowerCase() === email.toLowerCase();
+                return (user.get('mail') ?  user.get('mail') : '').toLowerCase() === mail.toLowerCase();
             });
 
             if (userWithEmail) {
